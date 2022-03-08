@@ -258,14 +258,6 @@ void ActionImpl::arm_async(const Action::ResultCallback& callback) const
 
 void ActionImpl::disarm_async(const Action::ResultCallback& callback) const
 {
-    Action::Result ret = disarming_allowed();
-    if (ret != Action::Result::Success) {
-        if (callback) {
-            callback(ret);
-        }
-        return;
-    }
-
     MavlinkCommandSender::CommandLong command{};
 
     command.command = MAV_CMD_COMPONENT_ARM_DISARM;
@@ -547,44 +539,10 @@ void ActionImpl::transition_to_multicopter_async(const Action::ResultCallback& c
         });
 }
 
-Action::Result ActionImpl::taking_off_allowed() const
-{
-    if (!_in_air_state_known) {
-        return Action::Result::CommandDeniedLandedStateUnknown;
-    }
-
-    if (_in_air) {
-        return Action::Result::CommandDeniedNotLanded;
-    }
-
-    return Action::Result::Success;
-}
-
-Action::Result ActionImpl::disarming_allowed() const
-{
-    if (!_in_air_state_known) {
-        return Action::Result::CommandDeniedLandedStateUnknown;
-    }
-
-    if (_in_air) {
-        return Action::Result::CommandDeniedNotLanded;
-    }
-
-    return Action::Result::Success;
-}
-
 void ActionImpl::process_extended_sys_state(const mavlink_message_t& message)
 {
     mavlink_extended_sys_state_t extended_sys_state;
     mavlink_msg_extended_sys_state_decode(&message, &extended_sys_state);
-    if (extended_sys_state.landed_state == MAV_LANDED_STATE_IN_AIR ||
-        extended_sys_state.landed_state == MAV_LANDED_STATE_TAKEOFF ||
-        extended_sys_state.landed_state == MAV_LANDED_STATE_LANDING) {
-        _in_air = true;
-    } else if (extended_sys_state.landed_state == MAV_LANDED_STATE_ON_GROUND) {
-        _in_air = false;
-    }
-    _in_air_state_known = true;
 
     if (extended_sys_state.vtol_state != MAV_VTOL_STATE_UNDEFINED) {
         _vtol_transition_possible = true;
