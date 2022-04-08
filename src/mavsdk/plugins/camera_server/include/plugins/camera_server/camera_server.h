@@ -13,43 +13,30 @@
 #include <utility>
 #include <vector>
 
-#include "mavsdk/plugin_base.h"
+#include "mavsdk/server_plugin_base.h"
 
 namespace mavsdk {
 
-class System;
+class ServerComponent;
 class CameraServerImpl;
 
 /**
  * @brief Provides handling of camera trigger commands.
  */
-class CameraServer : public PluginBase {
+class CameraServer : public ServerPluginBase {
 public:
     /**
-     * @brief Constructor. Creates the plugin for a specific System.
+     * @brief Constructor. Creates the plugin for a server component.
      *
      * The plugin is typically created as shown below:
      *
      *     ```cpp
-     *     auto camera_server = CameraServer(system);
+     *     auto camera_server = CameraServer(server_component);
      *     ```
      *
-     * @param system The specific system associated with this plugin.
+     * @param server_component The specific server component associated with this plugin.
      */
-    explicit CameraServer(System& system); // deprecated
-
-    /**
-     * @brief Constructor. Creates the plugin for a specific System.
-     *
-     * The plugin is typically created as shown below:
-     *
-     *     ```cpp
-     *     auto camera_server = CameraServer(system);
-     *     ```
-     *
-     * @param system The specific system associated with this plugin.
-     */
-    explicit CameraServer(std::shared_ptr<System> system); // new
+    explicit CameraServer(std::shared_ptr<ServerComponent> server_component);
 
     /**
      * @brief Destructor (internal use only).
@@ -246,9 +233,9 @@ public:
     Result respond_take_photo(CaptureInfo capture_info) const;
 
     /**
-     * @brief Copy constructor.
+     * @brief Copy constructor (object is not copyable).
      */
-    CameraServer(const CameraServer& other);
+    CameraServer(const CameraServer& other) = delete;
 
     /**
      * @brief Equality operator (object is not copyable).

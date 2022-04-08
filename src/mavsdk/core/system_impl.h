@@ -3,7 +3,6 @@
 #include "mavlink_address.h"
 #include "mavlink_include.h"
 #include "mavlink_parameters.h"
-#include "mavlink_command_receiver.h"
 #include "mavlink_command_sender.h"
 #include "mavlink_ftp.h"
 #include "mavlink_message_handler.h"
@@ -64,7 +63,7 @@ public:
 
     void subscribe_is_connected(System::IsConnectedCallback callback);
 
-    void process_mavlink_message(mavlink_message_t& message);
+    // void process_mavlink_message(mavlink_message_t& message);
 
     typedef std::function<void(const mavlink_message_t&)> mavlink_message_handler_t;
 
@@ -95,10 +94,6 @@ public:
         std::function<void(const MavlinkStatustextHandler::Statustext&)>, void* cookie);
     void unregister_statustext_handler(void* cookie);
 
-    mavlink_message_t
-    make_command_ack_message(const MavlinkCommandReceiver::CommandLong& command, MAV_RESULT result);
-    mavlink_message_t
-    make_command_ack_message(const MavlinkCommandReceiver::CommandInt& command, MAV_RESULT result);
     bool send_message(mavlink_message_t& message) override;
 
     Autopilot autopilot() const override { return _autopilot; };
@@ -296,7 +291,7 @@ public:
 
     bool is_connected() const;
 
-    Time& get_time() { return _time; };
+    Time& get_time();
     AutopilotTime& get_autopilot_time() { return _autopilot_time; };
 
     double get_ping_time_s() const { return _ping.last_ping_time_s(); }
@@ -323,24 +318,6 @@ public:
     // Non-copyable
     SystemImpl(const SystemImpl&) = delete;
     const SystemImpl& operator=(const SystemImpl&) = delete;
-
-    void register_mavlink_command_handler(
-        uint16_t cmd_id,
-        const MavlinkCommandReceiver::MavlinkCommandIntHandler& callback,
-        const void* cookie);
-    void register_mavlink_command_handler(
-        uint16_t cmd_id,
-        const MavlinkCommandReceiver::MavlinkCommandLongHandler& callback,
-        const void* cookie);
-    void unregister_mavlink_command_handler(uint16_t cmd_id, const void* cookie);
-    void unregister_all_mavlink_command_handlers(const void* cookie);
-
-    bool register_mavlink_request_message_handler(
-        uint32_t message_id,
-        const MavlinkRequestMessageHandler::Callback& callback,
-        const void* cookie);
-    void unregister_mavlink_request_message_handler(uint32_t message_id, const void* cookie);
-    void unregister_all_mavlink_request_message_handlers(const void* cookie);
 
     double timeout_s() const;
 
@@ -413,11 +390,7 @@ private:
 
     MAVLinkAddress _target_address{};
 
-    Time _time{};
     AutopilotTime _autopilot_time{};
-
-    // Needs to be before anything else because they can depend on it.
-    MAVLinkMessageHandler _message_handler{};
 
     MavlinkStatustextHandler _statustext_handler{};
 
@@ -452,8 +425,7 @@ private:
 
     MAVLinkParameters _params;
     MavlinkCommandSender _command_sender;
-    MavlinkCommandReceiver _command_receiver;
-    MavlinkRequestMessageHandler _request_message_handler;
+    // MavlinkRequestMessageHandler _request_message_handler;
 
     Timesync _timesync;
     Ping _ping;

@@ -5,6 +5,7 @@
 #include "plugin_impl_base.h"
 #include "px4_custom_mode.h"
 #include "ardupilot_custom_mode.h"
+#include "request_message.h"
 #include <cstdlib>
 #include <functional>
 #include <future>
@@ -17,13 +18,20 @@ SystemImpl::SystemImpl(MavsdkImpl& parent) :
     _parent(parent),
     _params(*this),
     _command_sender(*this),
-    _command_receiver(*this),
-    _request_message_handler(*this),
+    //_request_message_handler(
+    //    *this,
+    //    _command_sender,
+    //    _parent.mavlink_message_handler,
+    //    _parent.timeout_handler),
     _timesync(*this),
     _ping(*this),
     _mission_transfer(
-        *this, _message_handler, _parent.timeout_handler, [this]() { return timeout_s(); }),
-    _request_message(*this, _command_sender, _message_handler, _parent.timeout_handler),
+        *this,
+        _parent.mavlink_message_handler,
+        _parent.timeout_handler,
+        [this]() { return timeout_s(); }),
+    _request_message(
+        *this, _command_sender, _parent.mavlink_message_handler, _parent.timeout_handler),
     _mavlink_ftp(*this)
 {
     _system_thread = new std::thread(&SystemImpl::system_thread, this);
@@ -32,7 +40,7 @@ SystemImpl::SystemImpl(MavsdkImpl& parent) :
 SystemImpl::~SystemImpl()
 {
     _should_exit = true;
-    _message_handler.unregister_all(this);
+    _parent.mavlink_message_handler.unregister_all(this);
 
     if (!_always_connected) {
         unregister_timeout_handler(_heartbeat_timeout_cookie);
@@ -56,27 +64,35 @@ void SystemImpl::init(uint8_t system_id, uint8_t comp_id, bool connected)
         set_connected();
     }
 
-    _message_handler.register_one(
+    _parent.mavlink_message_handler.register_one(
         MAVLINK_MSG_ID_HEARTBEAT,
         [this](const mavlink_message_t& message) { process_heartbeat(message); },
         this);
 
-    _message_handler.register_one(
+    _parent.mavlink_message_handler.register_one(
         MAVLINK_MSG_ID_STATUSTEXT,
         [this](const mavlink_message_t& message) { process_statustext(message); },
         this);
 
-    _message_handler.register_one(
+    _parent.mavlink_message_handler.register_one(
         MAVLINK_MSG_ID_AUTOPILOT_VERSION,
         [this](const mavlink_message_t& message) { process_autopilot_version(message); },
         this);
 
-    register_mavlink_command_handler(
-        MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES,
-        [this](const MavlinkCommandReceiver::CommandLong& command) {
-            return process_autopilot_version_request(command);
-        },
-        this);
+    // register_mavlink_command_handler(
+    //    MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES,
+    //    [this](const MavlinkCommandReceiver::CommandLong& command) {
+    //        return process_autopilot_version_request(command);
+    //    },
+    //    this);
+
+    //// TO-DO!
+    // register_mavlink_command_handler(
+    //    MAV_CMD_REQUEST_MESSAGE,
+    //    [this](const MavlinkCommandReceiver::CommandLong& command) {
+    //        return make_command_ack_message(command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
+    //    },
+    //    this);
 
     add_new_component(comp_id);
 }
@@ -89,29 +105,29 @@ bool SystemImpl::is_connected() const
 void SystemImpl::register_mavlink_message_handler(
     uint16_t msg_id, const mavlink_message_handler_t& callback, const void* cookie)
 {
-    _message_handler.register_one(msg_id, callback, cookie);
+    _parent.mavlink_message_handler.register_one(msg_id, callback, cookie);
 }
 
 void SystemImpl::register_mavlink_message_handler(
     uint16_t msg_id, uint8_t cmp_id, const mavlink_message_handler_t& callback, const void* cookie)
 {
-    _message_handler.register_one(msg_id, cmp_id, callback, cookie);
+    _parent.mavlink_message_handler.register_one(msg_id, cmp_id, callback, cookie);
 }
 
 void SystemImpl::unregister_mavlink_message_handler(uint16_t msg_id, const void* cookie)
 {
-    _message_handler.unregister_one(msg_id, cookie);
+    _parent.mavlink_message_handler.unregister_one(msg_id, cookie);
 }
 
 void SystemImpl::unregister_all_mavlink_message_handlers(const void* cookie)
 {
-    _message_handler.unregister_all(cookie);
+    _parent.mavlink_message_handler.unregister_all(cookie);
 }
 
 void SystemImpl::update_componentid_messages_handler(
     uint16_t msg_id, uint8_t cmp_id, const void* cookie)
 {
-    _message_handler.update_component_id(msg_id, cmp_id, cookie);
+    _parent.mavlink_message_handler.update_component_id(msg_id, cmp_id, cookie);
 }
 
 void SystemImpl::register_timeout_handler(
@@ -151,20 +167,21 @@ void SystemImpl::subscribe_is_connected(System::IsConnectedCallback callback)
     _is_connected_callback = std::move(callback);
 }
 
-void SystemImpl::process_mavlink_message(mavlink_message_t& message)
-{
-    // This is a low level interface where incoming messages can be tampered
-    // with or even dropped.
-    if (_incoming_messages_intercept_callback) {
-        const bool keep = _incoming_messages_intercept_callback(message);
-        if (!keep) {
-            LogDebug() << "Dropped incoming message: " << int(message.msgid);
-            return;
-        }
-    }
-
-    _message_handler.process_message(message);
-}
+// FIXME: fix intercept
+// void SystemImpl::process_mavlink_message(mavlink_message_t& message)
+//{
+//    // This is a low level interface where incoming messages can be tampered
+//    // with or even dropped.
+//    if (_incoming_messages_intercept_callback) {
+//        const bool keep = _incoming_messages_intercept_callback(message);
+//        if (!keep) {
+//            LogDebug() << "Dropped incoming message: " << int(message.msgid);
+//            return;
+//        }
+//    }
+//
+//    //_mavlink_message_handler.process_message(message);
+//}
 
 void SystemImpl::add_call_every(std::function<void()> callback, float interval_s, void** cookie)
 {
@@ -275,11 +292,11 @@ void SystemImpl::system_thread()
         _timesync.do_work();
         _mission_transfer.do_work();
 
-        if (_time.elapsed_since_s(last_ping_time) >= SystemImpl::_ping_interval_s) {
+        if (_parent.time.elapsed_since_s(last_ping_time) >= SystemImpl::_ping_interval_s) {
             if (_connected) {
                 _ping.run_once();
             }
-            last_ping_time = _time.steady_time();
+            last_ping_time = _parent.time.steady_time();
         }
 
         if (_connected) {
@@ -292,16 +309,16 @@ void SystemImpl::system_thread()
     }
 }
 
-std::optional<mavlink_message_t>
-SystemImpl::process_autopilot_version_request(const MavlinkCommandReceiver::CommandLong& command)
-{
-    if (_should_send_autopilot_version) {
-        send_autopilot_version();
-        return make_command_ack_message(command, MAV_RESULT::MAV_RESULT_ACCEPTED);
-    }
-
-    return {};
-}
+// std::optional<mavlink_message_t>
+// SystemImpl::process_autopilot_version_request(const MavlinkCommandReceiver::CommandLong& command)
+//{
+//    if (_should_send_autopilot_version) {
+//        send_autopilot_version();
+//        return make_command_ack_message(command, MAV_RESULT::MAV_RESULT_ACCEPTED);
+//    }
+//
+//    return {};
+//}
 
 std::string SystemImpl::component_name(uint8_t component_id)
 {
@@ -449,46 +466,6 @@ bool SystemImpl::has_camera(int camera_id) const
 bool SystemImpl::has_gimbal() const
 {
     return get_gimbal_id() == MAV_COMP_ID_GIMBAL;
-}
-
-mavlink_message_t SystemImpl::make_command_ack_message(
-    const MavlinkCommandReceiver::CommandLong& command, MAV_RESULT result)
-{
-    const uint8_t progress = std::numeric_limits<uint8_t>::max();
-    const uint8_t result_param2 = 0;
-
-    mavlink_message_t msg{};
-    mavlink_msg_command_ack_pack(
-        _parent.get_own_system_id(),
-        _parent.get_own_component_id(),
-        &msg,
-        command.command,
-        result,
-        progress,
-        result_param2,
-        command.origin_system_id,
-        command.origin_component_id);
-    return msg;
-}
-
-mavlink_message_t SystemImpl::make_command_ack_message(
-    const MavlinkCommandReceiver::CommandInt& command, MAV_RESULT result)
-{
-    const uint8_t progress = std::numeric_limits<uint8_t>::max();
-    const uint8_t result_param2 = 0;
-
-    mavlink_message_t msg{};
-    mavlink_msg_command_ack_pack(
-        _parent.get_own_system_id(),
-        _parent.get_own_component_id(),
-        &msg,
-        command.command,
-        result,
-        progress,
-        result_param2,
-        command.origin_system_id,
-        command.origin_component_id);
-    return msg;
 }
 
 bool SystemImpl::send_message(mavlink_message_t& message)
@@ -1454,48 +1431,6 @@ void SystemImpl::intercept_outgoing_messages(std::function<bool(mavlink_message_
     _outgoing_messages_intercept_callback = std::move(callback);
 }
 
-void SystemImpl::register_mavlink_command_handler(
-    uint16_t cmd_id,
-    const MavlinkCommandReceiver::MavlinkCommandIntHandler& callback,
-    const void* cookie)
-{
-    _command_receiver.register_mavlink_command_handler(cmd_id, callback, cookie);
-}
-
-void SystemImpl::register_mavlink_command_handler(
-    uint16_t cmd_id,
-    const MavlinkCommandReceiver::MavlinkCommandLongHandler& callback,
-    const void* cookie)
-{
-    _command_receiver.register_mavlink_command_handler(cmd_id, callback, cookie);
-}
-
-void SystemImpl::unregister_mavlink_command_handler(uint16_t cmd_id, const void* cookie)
-{
-    _command_receiver.unregister_mavlink_command_handler(cmd_id, cookie);
-}
-
-void SystemImpl::unregister_all_mavlink_command_handlers(const void* cookie)
-{
-    _command_receiver.unregister_all_mavlink_command_handlers(cookie);
-}
-
-bool SystemImpl::register_mavlink_request_message_handler(
-    uint32_t message_id, const MavlinkRequestMessageHandler::Callback& callback, const void* cookie)
-{
-    return _request_message_handler.register_handler(message_id, callback, cookie);
-}
-
-void SystemImpl::unregister_mavlink_request_message_handler(uint32_t message_id, const void* cookie)
-{
-    _request_message_handler.unregister_handler(message_id, cookie);
-}
-
-void SystemImpl::unregister_all_mavlink_request_message_handlers(const void* cookie)
-{
-    _request_message_handler.unregister_all_handlers(cookie);
-}
-
 void SystemImpl::set_server_armed(bool armed)
 {
     uint8_t base_mode = _parent.get_base_mode();
@@ -1521,5 +1456,10 @@ uint32_t SystemImpl::get_custom_mode() const
 {
     return _parent.get_custom_mode();
 }
+
+Time& SystemImpl::get_time()
+{
+    return _parent.time;
+};
 
 } // namespace mavsdk

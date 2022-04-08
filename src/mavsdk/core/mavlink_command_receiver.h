@@ -13,11 +13,11 @@
 
 namespace mavsdk {
 
-class SystemImpl;
+class MavsdkImpl;
 
 class MavlinkCommandReceiver {
 public:
-    explicit MavlinkCommandReceiver(SystemImpl& system_impl);
+    explicit MavlinkCommandReceiver(MavsdkImpl& mavsdk_impl);
     ~MavlinkCommandReceiver();
 
     struct CommandInt {
@@ -115,7 +115,7 @@ public:
     void unregister_all_mavlink_command_handlers(const void* cookie);
 
 private:
-    SystemImpl& _parent;
+    MavsdkImpl& _mavsdk_impl;
 
     void receive_command_int(const mavlink_message_t& message);
     void receive_command_long(const mavlink_message_t& message);

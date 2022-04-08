@@ -15,14 +15,9 @@ using Position = CameraServer::Position;
 using Quaternion = CameraServer::Quaternion;
 using CaptureInfo = CameraServer::CaptureInfo;
 
-CameraServer::CameraServer(System& system) :
-    PluginBase(),
-    _impl{std::make_unique<CameraServerImpl>(system)}
-{}
-
-CameraServer::CameraServer(std::shared_ptr<System> system) :
-    PluginBase(),
-    _impl{std::make_unique<CameraServerImpl>(system)}
+CameraServer::CameraServer(std::shared_ptr<ServerComponent> server_component) :
+    ServerPluginBase(),
+    _impl{std::make_unique<CameraServerImpl>(server_component)}
 {}
 
 CameraServer::~CameraServer() {}

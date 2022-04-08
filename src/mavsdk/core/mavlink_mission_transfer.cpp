@@ -7,7 +7,7 @@ namespace mavsdk {
 
 MavlinkMissionTransfer::MavlinkMissionTransfer(
     Sender& sender,
-    MAVLinkMessageHandler& message_handler,
+    MavlinkMessageHandler& message_handler,
     TimeoutHandler& timeout_handler,
     TimeoutSCallback timeout_s_callback) :
     _sender(sender),

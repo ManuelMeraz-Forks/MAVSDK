@@ -230,13 +230,14 @@ void MavsdkImpl::receive_message(mavlink_message_t& message, Connection* connect
 
     if (_should_exit) {
         // Don't try to call at() if systems have already been destroyed
-        // in descructor.
+        // in destructor.
         return;
     }
 
     for (auto& system : _systems) {
         if (system.first == message.sysid) {
-            system.second->system_impl()->process_mavlink_message(message);
+            // system.second->system_impl()->process_mavlink_message(message);
+            mavlink_message_handler.process_message(message);
             break;
         }
     }

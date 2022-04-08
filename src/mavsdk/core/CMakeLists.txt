@@ -30,6 +30,8 @@ target_sources(mavsdk
     ping.cpp
     plugin_impl_base.cpp
     serial_connection.cpp
+    server_component_impl.cpp
+    server_plugin_impl_base.cpp
     tcp_connection.cpp
     timeout_handler.cpp
     udp_connection.cpp

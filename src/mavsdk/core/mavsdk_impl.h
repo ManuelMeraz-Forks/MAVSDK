@@ -11,6 +11,8 @@
 #include "mavsdk.h"
 #include "mavlink_include.h"
 #include "mavlink_address.h"
+#include "mavlink_message_handler.h"
+#include "mavlink_command_receiver.h"
 #include "safe_queue.h"
 #include "system.h"
 #include "timeout_handler.h"
@@ -93,6 +95,9 @@ public:
     uint32_t get_custom_mode() const;
     void set_system_status(uint8_t system_status);
     uint8_t get_system_status();
+
+    MavlinkMessageHandler mavlink_message_handler{};
+    Time time{};
 
 private:
     void add_connection(const std::shared_ptr<Connection>&);

@@ -1,21 +1,17 @@
 #pragma once
 
 #include "plugins/camera_server/camera_server.h"
-#include "plugin_impl_base.h"
+#include "server_plugin_impl_base.h"
 
 namespace mavsdk {
 
-class CameraServerImpl : public PluginImplBase {
+class CameraServerImpl : public ServerPluginImplBase {
 public:
-    explicit CameraServerImpl(System& system);
-    explicit CameraServerImpl(std::shared_ptr<System> system);
+    explicit CameraServerImpl(std::shared_ptr<ServerComponent> server_component);
     ~CameraServerImpl();
 
     void init() override;
     void deinit() override;
-
-    void enable() override;
-    void disable() override;
 
     CameraServer::Result set_information(CameraServer::Information information);
     CameraServer::Result set_in_progress(bool in_progress);
