@@ -115,6 +115,27 @@ std::vector<std::shared_ptr<System>> MavsdkImpl::systems() const
     return systems_result;
 }
 
+std::shared_ptr<ServerComponent> MavsdkImpl::server_component(uint8_t component_id)
+{
+    if (component_id == 0) {
+        LogErr() << "Server component with component ID 0 not allowed";
+        return nullptr;
+    }
+
+    std::lock_guard<std::mutex> lock(_server_components_mutex);
+
+    for (auto& it : _server_components) {
+        if (it.first == component_id) {
+            return it.second;
+        }
+    }
+
+    _server_components.emplace_back(std::pair<uint8_t, std::shared_ptr<ServerComponent>>(
+        component_id, std::make_shared<ServerComponent>(*this, component_id)));
+
+    return _server_components.back().second;
+}
+
 void MavsdkImpl::forward_message(mavlink_message_t& message, Connection* connection)
 {
     // Forward_message Function implementing Mavlink routing rules.
@@ -480,7 +501,7 @@ void MavsdkImpl::make_system_with_component(
     if (static_cast<int>(system_id) == 0 && static_cast<int>(comp_id) == 0) {
         LogDebug() << "Initializing connection to remote system...";
     } else {
-        LogDebug() << "New: System ID: " << static_cast<int>(system_id)
+        LogDebug() << "New system ID: " << static_cast<int>(system_id)
                    << " Comp ID: " << static_cast<int>(comp_id);
     }
 

@@ -1,5 +1,6 @@
 #include "mavlink_command_receiver.h"
 #include "mavsdk_impl.h"
+#include "log.h"
 #include <cmath>
 #include <future>
 #include <memory>

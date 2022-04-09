@@ -1,14 +1,28 @@
 #include "server_component_impl.h"
+#include "server_plugin_impl_base.h"
 #include "mavsdk_impl.h"
 
 namespace mavsdk {
 
-ServerComponentImpl::ServerComponentImpl(MavsdkImpl& mavsdk_impl) :
+ServerComponentImpl::ServerComponentImpl(MavsdkImpl& mavsdk_impl, uint8_t component_id) :
     _mavsdk_impl(mavsdk_impl),
-    _mavlink_command_receiver(mavsdk_impl)
+    _mavlink_command_receiver(mavsdk_impl),
+    _own_component_id(component_id)
 {}
 
 ServerComponentImpl::~ServerComponentImpl() {}
+
+void ServerComponentImpl::register_plugin(ServerPluginImplBase* server_plugin_impl)
+{
+    // This is a bit pointless now but just mirrors what is done for the client plugins.
+    server_plugin_impl->init();
+}
+
+void ServerComponentImpl::unregister_plugin(ServerPluginImplBase* server_plugin_impl)
+{
+    // This is a bit pointless now but just mirrors what is done for the client plugins.
+    server_plugin_impl->deinit();
+}
 
 void ServerComponentImpl::register_mavlink_command_handler(
     uint16_t cmd_id,

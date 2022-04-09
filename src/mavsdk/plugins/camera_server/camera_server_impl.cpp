@@ -3,15 +3,14 @@
 
 namespace mavsdk {
 
-CameraServerImpl::CameraServerImpl(std::shared_ptr<ServerComponent> server_component) :
-    ServerPluginImplBase(server_component)
+CameraServerImpl::CameraServerImpl(Mavsdk& mavsdk) : ServerPluginImplBase(mavsdk)
 {
-    //_server_component_impl->register_plugin(this);
+    _server_component_impl->register_plugin(this);
 }
 
 CameraServerImpl::~CameraServerImpl()
 {
-    //_server_component_impl->unregister_plugin(this);
+    _server_component_impl->unregister_plugin(this);
 }
 
 void CameraServerImpl::init()
@@ -135,6 +134,7 @@ void CameraServerImpl::init()
 void CameraServerImpl::deinit()
 {
     stop_image_capture_interval();
+    _server_component_impl->unregister_all_mavlink_command_handlers(this);
 }
 
 bool CameraServerImpl::parse_version_string(const std::string& version_str)

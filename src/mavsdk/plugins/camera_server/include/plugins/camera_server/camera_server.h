@@ -17,7 +17,7 @@
 
 namespace mavsdk {
 
-class ServerComponent;
+class Mavsdk;
 class CameraServerImpl;
 
 /**
@@ -26,17 +26,17 @@ class CameraServerImpl;
 class CameraServer : public ServerPluginBase {
 public:
     /**
-     * @brief Constructor. Creates the plugin for a server component.
+     * @brief Constructor. Creates a server plugin.
      *
      * The plugin is typically created as shown below:
      *
      *     ```cpp
-     *     auto camera_server = CameraServer(server_component);
+     *     auto camera_server = CameraServer(mavsdk);
      *     ```
      *
-     * @param server_component The specific server component associated with this plugin.
+     * @param mavsdk The MAVSDK instance associated with this server plugin.
      */
-    explicit CameraServer(std::shared_ptr<ServerComponent> server_component);
+    explicit CameraServer(Mavsdk& mavsdk);
 
     /**
      * @brief Destructor (internal use only).

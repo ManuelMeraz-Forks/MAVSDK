@@ -1,20 +1,25 @@
 #pragma once
 
+#include <cstdint>
+#include <memory>
+
 namespace mavsdk {
 
+class MavsdkImpl;
 class ServerComponentImpl;
+class ServerPluginImplBase;
 
 /**
  * TODO: add comments
  */
 class ServerComponent {
 public:
+    ServerComponent(MavsdkImpl& mavsdk_impl, uint8_t component_id);
+
 private:
-    std::shared_ptr<ServerComponentImpl> server_component_impl() { return _server_component_impl; };
-
-    std::shared_ptr<ServerComponentImpl> _server_component_impl;
-
     friend ServerPluginImplBase;
+
+    std::shared_ptr<ServerComponentImpl> _impl;
 };
 
 } // namespace mavsdk

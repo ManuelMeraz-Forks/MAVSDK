@@ -8,11 +8,15 @@
 namespace mavsdk {
 
 class MavsdkImpl;
+class ServerPluginImplBase;
 
 class ServerComponentImpl {
 public:
-    explicit ServerComponentImpl(MavsdkImpl& parent);
+    ServerComponentImpl(MavsdkImpl& mavsdk_impl, uint8_t component_id);
     ~ServerComponentImpl();
+
+    void register_plugin(ServerPluginImplBase* server_plugin_impl);
+    void unregister_plugin(ServerPluginImplBase* server_plugin_impl);
 
     void register_mavlink_command_handler(
         uint16_t cmd_id,

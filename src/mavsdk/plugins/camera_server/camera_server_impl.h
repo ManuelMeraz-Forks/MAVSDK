@@ -7,7 +7,7 @@ namespace mavsdk {
 
 class CameraServerImpl : public ServerPluginImplBase {
 public:
-    explicit CameraServerImpl(std::shared_ptr<ServerComponent> server_component);
+    explicit CameraServerImpl(Mavsdk& mavsdk);
     ~CameraServerImpl();
 
     void init() override;

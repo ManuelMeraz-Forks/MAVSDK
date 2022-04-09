@@ -7,9 +7,12 @@
 
 #include "deprecated.h"
 #include "system.h"
+#include "server_component.h"
 #include "connection_result.h"
 
 namespace mavsdk {
+
+class ServerPluginImplBase;
 
 /**
  * @brief ForwardingOption for Connection, used to set message forwarding option.
@@ -303,6 +306,8 @@ public:
 private:
     /* @private. */
     std::shared_ptr<MavsdkImpl> _impl{};
+
+    friend ServerPluginImplBase;
 
     // Non-copyable
     Mavsdk(const Mavsdk&) = delete;

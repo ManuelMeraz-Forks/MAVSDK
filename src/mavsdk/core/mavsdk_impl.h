@@ -65,6 +65,8 @@ public:
 
     std::vector<std::shared_ptr<System>> systems() const;
 
+    std::shared_ptr<ServerComponent> server_component(uint8_t component_id);
+
     void set_configuration(Mavsdk::Configuration new_configuration);
 
     uint8_t get_own_system_id() const;
@@ -118,6 +120,10 @@ private:
 
     mutable std::recursive_mutex _systems_mutex{};
     std::vector<std::pair<uint8_t, std::shared_ptr<System>>> _systems{};
+
+    mutable std::mutex _server_components_mutex{};
+    std::vector<std::pair<uint8_t, std::shared_ptr<ServerComponent>>> _server_components{};
+
     Mavsdk::NewSystemCallback _new_system_callback{nullptr};
 
     Time _time{};

@@ -7,11 +7,11 @@
 
 namespace mavsdk {
 
-class ServerComponent;
+class Mavsdk;
 
 class ServerPluginImplBase {
 public:
-    explicit ServerPluginImplBase(std::shared_ptr<ServerComponent> server_component);
+    explicit ServerPluginImplBase(Mavsdk& mavsdk);
     virtual ~ServerPluginImplBase() = default;
 
     /*
