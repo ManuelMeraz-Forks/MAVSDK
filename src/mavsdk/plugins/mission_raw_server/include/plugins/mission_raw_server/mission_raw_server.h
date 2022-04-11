@@ -14,44 +14,31 @@
 #include <utility>
 #include <vector>
 
-#include "mavsdk/plugin_base.h"
+#include "mavsdk/server_plugin_base.h"
 
 namespace mavsdk {
 
-class System;
+class Mavsdk;
 class MissionRawServerImpl;
 
 /**
  * @brief Acts as a vehicle and receives incoming missions from GCS (in raw MAVLINK format).
  * Provides current mission item state, so the server can progress through missions.
  */
-class MissionRawServer : public PluginBase {
+class MissionRawServer : public ServerPluginBase {
 public:
     /**
-     * @brief Constructor. Creates the plugin for a specific System.
+     * @brief Constructor. Creates the plugin for a Mavsdk instance.
      *
      * The plugin is typically created as shown below:
      *
      *     ```cpp
-     *     auto mission_raw_server = MissionRawServer(system);
+     *     auto mission_raw_server = MissionRawServer(mavsdk);
      *     ```
      *
-     * @param system The specific system associated with this plugin.
+     * @param system The Mavsdk instance associated with this server plugin.
      */
-    explicit MissionRawServer(System& system); // deprecated
-
-    /**
-     * @brief Constructor. Creates the plugin for a specific System.
-     *
-     * The plugin is typically created as shown below:
-     *
-     *     ```cpp
-     *     auto mission_raw_server = MissionRawServer(system);
-     *     ```
-     *
-     * @param system The specific system associated with this plugin.
-     */
-    explicit MissionRawServer(std::shared_ptr<System> system); // new
+    explicit MissionRawServer(Mavsdk& mavsdk);
 
     /**
      * @brief Destructor (internal use only).

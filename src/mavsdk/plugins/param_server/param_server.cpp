@@ -13,14 +13,9 @@ using IntParam = ParamServer::IntParam;
 using FloatParam = ParamServer::FloatParam;
 using AllParams = ParamServer::AllParams;
 
-ParamServer::ParamServer(System& system) :
-    PluginBase(),
-    _impl{std::make_unique<ParamServerImpl>(system)}
-{}
-
-ParamServer::ParamServer(std::shared_ptr<System> system) :
-    PluginBase(),
-    _impl{std::make_unique<ParamServerImpl>(system)}
+ParamServer::ParamServer(Mavsdk& mavsdk) :
+    ServerPluginBase(),
+    _impl{std::make_unique<ParamServerImpl>(mavsdk)}
 {}
 
 ParamServer::~ParamServer() {}

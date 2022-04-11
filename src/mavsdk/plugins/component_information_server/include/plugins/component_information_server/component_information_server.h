@@ -14,43 +14,30 @@
 #include <utility>
 #include <vector>
 
-#include "mavsdk/plugin_base.h"
+#include "mavsdk/server_plugin_base.h"
 
 namespace mavsdk {
 
-class System;
+class Mavsdk;
 class ComponentInformationServerImpl;
 
 /**
  * @brief Provide component information such as parameters.
  */
-class ComponentInformationServer : public PluginBase {
+class ComponentInformationServer : public ServerPluginBase {
 public:
     /**
-     * @brief Constructor. Creates the plugin for a specific System.
+     * @brief Constructor. Creates the plugin for a Mavsdk instance.
      *
      * The plugin is typically created as shown below:
      *
      *     ```cpp
-     *     auto component_information_server = ComponentInformationServer(system);
+     *     auto component_information_server = ComponentInformationServer(mavsdk);
      *     ```
      *
-     * @param system The specific system associated with this plugin.
+     * @param system The Mavsdk instance associated with this server plugin.
      */
-    explicit ComponentInformationServer(System& system); // deprecated
-
-    /**
-     * @brief Constructor. Creates the plugin for a specific System.
-     *
-     * The plugin is typically created as shown below:
-     *
-     *     ```cpp
-     *     auto component_information_server = ComponentInformationServer(system);
-     *     ```
-     *
-     * @param system The specific system associated with this plugin.
-     */
-    explicit ComponentInformationServer(std::shared_ptr<System> system); // new
+    explicit ComponentInformationServer(Mavsdk& mavsdk);
 
     /**
      * @brief Destructor (internal use only).

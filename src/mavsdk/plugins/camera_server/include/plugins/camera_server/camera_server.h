@@ -26,7 +26,7 @@ class CameraServerImpl;
 class CameraServer : public ServerPluginBase {
 public:
     /**
-     * @brief Constructor. Creates a server plugin.
+     * @brief Constructor. Creates the plugin for a Mavsdk instance.
      *
      * The plugin is typically created as shown below:
      *
@@ -34,7 +34,7 @@ public:
      *     auto camera_server = CameraServer(mavsdk);
      *     ```
      *
-     * @param mavsdk The MAVSDK instance associated with this server plugin.
+     * @param system The Mavsdk instance associated with this server plugin.
      */
     explicit CameraServer(Mavsdk& mavsdk);
 
@@ -43,6 +43,9 @@ public:
      */
     ~CameraServer();
 
+    /**
+     * @brief
+     */
     enum class TakePhotoResult {
         Unknown, /**< @brief. */
         Ok, /**< @brief. */
@@ -248,9 +251,9 @@ public:
     Result respond_take_photo(TakePhotoResult take_photo_result, CaptureInfo capture_info) const;
 
     /**
-     * @brief Copy constructor (object is not copyable).
+     * @brief Copy constructor.
      */
-    CameraServer(const CameraServer& other) = delete;
+    CameraServer(const CameraServer& other);
 
     /**
      * @brief Equality operator (object is not copyable).

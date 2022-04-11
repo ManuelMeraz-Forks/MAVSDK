@@ -13,14 +13,9 @@ namespace mavsdk {
 using FloatParam = ComponentInformationServer::FloatParam;
 using FloatParamUpdate = ComponentInformationServer::FloatParamUpdate;
 
-ComponentInformationServer::ComponentInformationServer(System& system) :
-    PluginBase(),
-    _impl{std::make_unique<ComponentInformationServerImpl>(system)}
-{}
-
-ComponentInformationServer::ComponentInformationServer(std::shared_ptr<System> system) :
-    PluginBase(),
-    _impl{std::make_unique<ComponentInformationServerImpl>(system)}
+ComponentInformationServer::ComponentInformationServer(Mavsdk& mavsdk) :
+    ServerPluginBase(),
+    _impl{std::make_unique<ComponentInformationServerImpl>(mavsdk)}
 {}
 
 ComponentInformationServer::~ComponentInformationServer() {}

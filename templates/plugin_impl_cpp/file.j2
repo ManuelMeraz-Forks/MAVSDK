@@ -2,6 +2,12 @@
 
 namespace mavsdk {
 
+{% if is_server %}
+{{ plugin_name.upper_camel_case }}Impl::{{ plugin_name.upper_camel_case }}Impl(Mavsdk& mavsdk) : ServerPluginImplBase(mavsdk)
+{
+    _parent->register_plugin(this);
+}
+{% else %}
 {{ plugin_name.upper_camel_case }}Impl::{{ plugin_name.upper_camel_case }}Impl(System& system) : PluginImplBase(system)
 {
     _parent->register_plugin(this);
@@ -11,6 +17,7 @@ namespace mavsdk {
 {
     _parent->register_plugin(this);
 }
+{% endif %}
 
 {{ plugin_name.upper_camel_case }}Impl::~{{ plugin_name.upper_camel_case }}Impl()
 {
@@ -21,9 +28,11 @@ void {{ plugin_name.upper_camel_case }}Impl::init() {}
 
 void {{ plugin_name.upper_camel_case }}Impl::deinit() {}
 
+{% if not is_server %}
 void {{ plugin_name.upper_camel_case }}Impl::enable() {}
 
 void {{ plugin_name.upper_camel_case }}Impl::disable() {}
+{% endif %}
 
 {% for method in methods %}
 {{ method }}
