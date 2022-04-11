@@ -18,7 +18,8 @@ public:
 
     void subscribe_take_photo(CameraServer::TakePhotoCallback callback);
 
-    CameraServer::Result respond_take_photo(CameraServer::CaptureInfo capture_info);
+    CameraServer::Result respond_take_photo(
+        CameraServer::TakePhotoResult take_photo_result, CameraServer::CaptureInfo capture_info);
 
 private:
     enum StatusFlags {
@@ -44,6 +45,8 @@ private:
     int32_t _image_capture_count{};
 
     CameraServer::TakePhotoCallback _take_photo_callback{};
+
+    MavlinkCommandReceiver::CommandLong _last_take_photo_command;
 
     bool parse_version_string(const std::string& version_str);
     bool parse_version_string(const std::string& version_str, uint32_t& version);

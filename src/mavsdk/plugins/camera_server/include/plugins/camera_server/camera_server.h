@@ -43,6 +43,21 @@ public:
      */
     ~CameraServer();
 
+    enum class TakePhotoResult {
+        Unknown, /**< @brief. */
+        Ok, /**< @brief. */
+        Busy, /**< @brief. */
+        Failed, /**< @brief. */
+    };
+
+    /**
+     * @brief Stream operator to print information about a `CameraServer::TakePhotoResult`.
+     *
+     * @return A reference to the stream.
+     */
+    friend std::ostream&
+    operator<<(std::ostream& str, CameraServer::TakePhotoResult const& take_photo_result);
+
     /**
      * @brief Type to represent a camera information.
      */
@@ -50,7 +65,7 @@ public:
         std::string vendor_name{}; /**< @brief Name of the camera vendor */
         std::string model_name{}; /**< @brief Name of the camera model */
         std::string firmware_version{}; /**< @brief Camera firmware version in
-                                           '<major>.<minor>.<patch>.<build>' format */
+                                           <major>[.<minor>[.<patch>[.<dev>]]] format */
         float focal_length_mm{}; /**< @brief Focal length */
         float horizontal_sensor_size_mm{}; /**< @brief Horizontal sensor size */
         float vertical_sensor_size_mm{}; /**< @brief Vertical sensor size */
@@ -215,7 +230,7 @@ public:
      * @brief Callback type for subscribe_take_photo.
      */
 
-    using TakePhotoCallback = std::function<void(Result, int32_t)>;
+    using TakePhotoCallback = std::function<void(int32_t)>;
 
     /**
      * @brief Subscribe to image capture requests. Each request received should respond to using
@@ -230,7 +245,7 @@ public:
      *
      * @return Result of request.
      */
-    Result respond_take_photo(CaptureInfo capture_info) const;
+    Result respond_take_photo(TakePhotoResult take_photo_result, CaptureInfo capture_info) const;
 
     /**
      * @brief Copy constructor (object is not copyable).

@@ -22,14 +22,14 @@ TEST(CameraTest, TakePhotoSingle)
     ASSERT_EQ(mavsdk_camera.add_any_connection("udp://127.0.0.1:17000"), ConnectionResult::Success);
 
     auto camera_server = CameraServer{mavsdk_camera};
-    camera_server.subscribe_take_photo([&camera_server](CameraServer::Result, int32_t) {
-        LogInfo() << "Let's take a photo now!";
+    camera_server.subscribe_take_photo([&camera_server](int32_t index) {
+        LogInfo() << "Let's take photo " << index;
 
         CameraServer::CaptureInfo info;
-        info.index = 99;
+        info.index = index;
         info.is_success = true;
 
-        camera_server.respond_take_photo(info);
+        camera_server.respond_take_photo(CameraServer::TakePhotoResult::Ok, info);
     });
 
     // Wait for system to connect via heartbeat.
@@ -41,19 +41,17 @@ TEST(CameraTest, TakePhotoSingle)
 
     auto camera = Camera{system};
 
-    std::this_thread::sleep_for(std::chrono::seconds(1));
-
     // We want to take the picture in photo mode.
     // EXPECT_EQ(camera.set_mode(Camera::Mode::Photo), Camera::Result::Success);
 
-    // bool received_capture_info = false;
-    // camera->subscribe_capture_info([&received_capture_info](Camera::CaptureInfo capture_info) {
-    //    receive_capture_info(capture_info, received_capture_info);
-    //});
+    bool received_capture_info = false;
+    camera.subscribe_capture_info([&received_capture_info](Camera::CaptureInfo capture_info) {
+        receive_capture_info(capture_info, received_capture_info);
+    });
 
     EXPECT_EQ(camera.take_photo(), Camera::Result::Success);
-    // std::this_thread::sleep_for(std::chrono::seconds(5));
-    // EXPECT_TRUE(received_capture_info);
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    EXPECT_TRUE(received_capture_info);
 }
 
 TEST(CameraTest, TakePhotosMultiple)

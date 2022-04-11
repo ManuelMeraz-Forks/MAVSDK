@@ -37,9 +37,10 @@ void CameraServer::subscribe_take_photo(TakePhotoCallback callback)
     _impl->subscribe_take_photo(callback);
 }
 
-CameraServer::Result CameraServer::respond_take_photo(CaptureInfo capture_info) const
+CameraServer::Result
+CameraServer::respond_take_photo(TakePhotoResult take_photo_result, CaptureInfo capture_info) const
 {
-    return _impl->respond_take_photo(capture_info);
+    return _impl->respond_take_photo(take_photo_result, capture_info);
 }
 
 bool operator==(const CameraServer::Information& lhs, const CameraServer::Information& rhs)
@@ -165,6 +166,22 @@ std::ostream& operator<<(std::ostream& str, CameraServer::Result const& result)
             return str << "Wrong Argument";
         case CameraServer::Result::NoSystem:
             return str << "No System";
+        default:
+            return str << "Unknown";
+    }
+}
+
+std::ostream& operator<<(std::ostream& str, CameraServer::TakePhotoResult const& take_photo_result)
+{
+    switch (take_photo_result) {
+        case CameraServer::TakePhotoResult::Unknown:
+            return str << "Unknown";
+        case CameraServer::TakePhotoResult::Ok:
+            return str << "Ok";
+        case CameraServer::TakePhotoResult::Busy:
+            return str << "Busy";
+        case CameraServer::TakePhotoResult::Failed:
+            return str << "Failed";
         default:
             return str << "Unknown";
     }

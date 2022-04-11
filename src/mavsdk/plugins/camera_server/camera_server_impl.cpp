@@ -194,20 +194,48 @@ void CameraServerImpl::subscribe_take_photo(CameraServer::TakePhotoCallback call
     _take_photo_callback = callback;
 }
 
-CameraServer::Result CameraServerImpl::respond_take_photo(CameraServer::CaptureInfo capture_info)
+CameraServer::Result CameraServerImpl::respond_take_photo(
+    CameraServer::TakePhotoResult take_photo_result, CameraServer::CaptureInfo capture_info)
 {
     // If capture_info.index == INT32_MIN, it means this was an interval
     // capture rather than a single image capture.
     if (capture_info.index != INT32_MIN) {
         // We expect each capture to be the next sequential number.
         // If _image_capture_count == 0, we ignore since it means that this is
-        // the first photo since the plugin was intialized.
+        // the first photo since the plugin was initialized.
         if (_image_capture_count != 0 && capture_info.index != _image_capture_count + 1) {
             LogErr() << "unexpected image index, expecting " << +(_image_capture_count + 1)
                      << " but was " << +capture_info.index;
         }
 
         _image_capture_count = capture_info.index;
+    }
+
+    switch (take_photo_result) {
+        default:
+            // Fallthrough
+        case CameraServer::TakePhotoResult::Unknown:
+            return CameraServer::Result::Error;
+        case CameraServer::TakePhotoResult::Ok: {
+            // Check for error above
+            auto ack_msg = _server_component_impl->make_command_ack_message(
+                _last_take_photo_command, MAV_RESULT_ACCEPTED);
+            _server_component_impl->send_message(ack_msg);
+            // Only break and send the captured below.
+            break;
+        }
+        case CameraServer::TakePhotoResult::Busy: {
+            auto ack_msg = _server_component_impl->make_command_ack_message(
+                _last_take_photo_command, MAV_RESULT_TEMPORARILY_REJECTED);
+            _server_component_impl->send_message(ack_msg);
+            return CameraServer::Result::Success;
+        }
+        case CameraServer::TakePhotoResult::Failed: {
+            auto ack_msg = _server_component_impl->make_command_ack_message(
+                _last_take_photo_command, MAV_RESULT_TEMPORARILY_REJECTED);
+            _server_component_impl->send_message(ack_msg);
+            return CameraServer::Result::Success;
+        }
     }
 
     // REVISIT: Should we cache all CaptureInfo in memory for single image
@@ -264,7 +292,7 @@ void CameraServerImpl::start_image_capture_interval(float interval_s, int32_t co
             LogDebug() << "capture image timer triggered";
 
             if (_take_photo_callback) {
-                _take_photo_callback(CameraServer::Result::Success, index);
+                _take_photo_callback(index);
                 (*remaining)--;
             }
 
@@ -626,13 +654,15 @@ CameraServerImpl::process_image_start_capture(const MavlinkCommandReceiver::Comm
 
         // MAV_RESULT_ACCEPTED must be sent before CAMERA_IMAGE_CAPTURED
         auto ack_msg = _server_component_impl->make_command_ack_message(
-            command, MAV_RESULT::MAV_RESULT_ACCEPTED);
+            command, MAV_RESULT::MAV_RESULT_IN_PROGRESS);
         _server_component_impl->send_message(ack_msg);
 
-        // FIXME: why is this needed to prevent dropping messages?
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        _last_take_photo_command = command;
 
-        _take_photo_callback(CameraServer::Result::Success, seq_number);
+        // FIXME: why is this needed to prevent dropping messages?
+        // std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+        _take_photo_callback(seq_number);
 
         return std::nullopt;
     }
@@ -648,7 +678,7 @@ CameraServerImpl::process_image_stop_capture(const MavlinkCommandReceiver::Comma
 {
     LogDebug() << "received image stop capture request";
 
-    // REVISIT: should we returns something other that MAV_RESULT_ACCEPTED if
+    // REVISIT: should we return something other that MAV_RESULT_ACCEPTED if
     // there is not currently a capture interval active?
     stop_image_capture_interval();
 

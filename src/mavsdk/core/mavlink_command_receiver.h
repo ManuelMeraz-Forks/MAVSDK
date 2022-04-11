@@ -40,7 +40,7 @@ public:
             float z = NAN;
         } params{};
 
-        explicit CommandInt(const mavlink_message_t& message)
+        CommandInt(const mavlink_message_t& message)
         {
             mavlink_command_int_t command_int;
             mavlink_msg_command_int_decode(&message, &command_int);
@@ -80,7 +80,9 @@ public:
             float param7 = NAN;
         } params{};
 
-        explicit CommandLong(const mavlink_message_t& message)
+        CommandLong() = default;
+
+        CommandLong(const mavlink_message_t& message)
         {
             mavlink_command_long_t command_long;
             mavlink_msg_command_long_decode(&message, &command_long);

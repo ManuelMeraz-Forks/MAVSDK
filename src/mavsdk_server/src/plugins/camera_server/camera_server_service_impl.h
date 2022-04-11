@@ -39,6 +39,44 @@ public:
         response->set_allocated_camera_server_result(rpc_camera_server_result);
     }
 
+    static rpc::camera_server::TakePhotoResult
+    translateToRpcTakePhotoResult(const mavsdk::CameraServer::TakePhotoResult& take_photo_result)
+    {
+        switch (take_photo_result) {
+            default:
+                LogErr() << "Unknown take_photo_result enum value: "
+                         << static_cast<int>(take_photo_result);
+            // FALLTHROUGH
+            case mavsdk::CameraServer::TakePhotoResult::Unknown:
+                return rpc::camera_server::TAKE_PHOTO_RESULT_UNKNOWN;
+            case mavsdk::CameraServer::TakePhotoResult::Ok:
+                return rpc::camera_server::TAKE_PHOTO_RESULT_OK;
+            case mavsdk::CameraServer::TakePhotoResult::Busy:
+                return rpc::camera_server::TAKE_PHOTO_RESULT_BUSY;
+            case mavsdk::CameraServer::TakePhotoResult::Failed:
+                return rpc::camera_server::TAKE_PHOTO_RESULT_FAILED;
+        }
+    }
+
+    static mavsdk::CameraServer::TakePhotoResult
+    translateFromRpcTakePhotoResult(const rpc::camera_server::TakePhotoResult take_photo_result)
+    {
+        switch (take_photo_result) {
+            default:
+                LogErr() << "Unknown take_photo_result enum value: "
+                         << static_cast<int>(take_photo_result);
+            // FALLTHROUGH
+            case rpc::camera_server::TAKE_PHOTO_RESULT_UNKNOWN:
+                return mavsdk::CameraServer::TakePhotoResult::Unknown;
+            case rpc::camera_server::TAKE_PHOTO_RESULT_OK:
+                return mavsdk::CameraServer::TakePhotoResult::Ok;
+            case rpc::camera_server::TAKE_PHOTO_RESULT_BUSY:
+                return mavsdk::CameraServer::TakePhotoResult::Busy;
+            case rpc::camera_server::TAKE_PHOTO_RESULT_FAILED:
+                return mavsdk::CameraServer::TakePhotoResult::Failed;
+        }
+    }
+
     static std::unique_ptr<rpc::camera_server::Information>
     translateToRpcInformation(const mavsdk::CameraServer::Information& information)
     {
@@ -323,11 +361,6 @@ public:
         grpc::ServerWriter<rpc::camera_server::TakePhotoResponse>* writer) override
     {
         if (_lazy_plugin.maybe_plugin() == nullptr) {
-            rpc::camera_server::TakePhotoResponse rpc_response;
-            auto result = mavsdk::CameraServer::Result::NoSystem;
-            fillResponseWithResult(&rpc_response, result);
-            writer->Write(rpc_response);
-
             return grpc::Status::OK;
         }
 
@@ -340,18 +373,10 @@ public:
 
         _lazy_plugin.maybe_plugin()->subscribe_take_photo(
             [this, &writer, &stream_closed_promise, is_finished, subscribe_mutex](
-                mavsdk::CameraServer::Result result, const int32_t take_photo) {
+                const int32_t take_photo) {
                 rpc::camera_server::TakePhotoResponse rpc_response;
 
                 rpc_response.set_index(take_photo);
-
-                auto rpc_result = translateToRpcResult(result);
-                auto* rpc_camera_server_result = new rpc::camera_server::CameraServerResult();
-                rpc_camera_server_result->set_result(rpc_result);
-                std::stringstream ss;
-                ss << result;
-                rpc_camera_server_result->set_result_str(ss.str());
-                rpc_response.set_allocated_camera_server_result(rpc_camera_server_result);
 
                 std::unique_lock<std::mutex> lock(*subscribe_mutex);
                 if (!*is_finished && !writer->Write(rpc_response)) {
@@ -390,6 +415,7 @@ public:
         }
 
         auto result = _lazy_plugin.maybe_plugin()->respond_take_photo(
+            translateFromRpcTakePhotoResult(request->take_photo_result()),
             translateFromRpcCaptureInfo(request->capture_info()));
 
         if (response != nullptr) {
