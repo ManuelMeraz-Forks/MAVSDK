@@ -136,4 +136,56 @@ mavlink_message_t ServerComponentImpl::make_command_ack_message(
     return msg;
 }
 
+void ServerComponentImpl::send_heartbeat()
+{
+    mavlink_message_t message;
+    mavlink_msg_heartbeat_pack(
+        get_own_system_id(),
+        get_own_component_id(),
+        &message,
+        _mavsdk_impl.get_mav_type(),
+        get_own_component_id() == MAV_COMP_ID_AUTOPILOT1 ? MAV_AUTOPILOT_GENERIC :
+                                                           MAV_AUTOPILOT_INVALID,
+        get_own_component_id() == MAV_COMP_ID_AUTOPILOT1 ? _base_mode.load() : 0,
+        get_own_component_id() == MAV_COMP_ID_AUTOPILOT1 ? _custom_mode.load() : 0,
+        get_system_status());
+    send_message(message);
+}
+
+void ServerComponentImpl::set_system_status(uint8_t system_status)
+{
+    _system_status = system_status;
+}
+
+uint8_t ServerComponentImpl::get_system_status() const
+{
+    return _system_status;
+}
+
+void ServerComponentImpl::set_base_mode(uint8_t base_mode)
+{
+    _base_mode = base_mode;
+}
+
+uint8_t ServerComponentImpl::get_base_mode() const
+{
+    return _base_mode;
+}
+
+void ServerComponentImpl::set_custom_mode(uint32_t custom_mode)
+{
+    _custom_mode = custom_mode;
+}
+
+uint32_t ServerComponentImpl::get_custom_mode() const
+{
+    return _custom_mode;
+}
+
+void ServerComponentImpl::call_user_callback_located(
+    const std::string& filename, const int linenumber, const std::function<void()>& func)
+{
+    _mavsdk_impl.call_user_callback_located(filename, linenumber, func);
+}
+
 } // namespace mavsdk

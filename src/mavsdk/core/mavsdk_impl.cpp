@@ -464,6 +464,7 @@ uint8_t MavsdkImpl::get_own_component_id() const
     return _configuration.get_component_id();
 }
 
+// FIXME: this should be per component
 uint8_t MavsdkImpl::get_mav_type() const
 {
     switch (_configuration.get_usage_type()) {
@@ -633,18 +634,9 @@ void MavsdkImpl::stop_sending_heartbeats()
 
 void MavsdkImpl::send_heartbeat()
 {
-    mavlink_message_t message;
-    mavlink_msg_heartbeat_pack(
-        get_own_system_id(),
-        get_own_component_id(),
-        &message,
-        get_mav_type(),
-        get_own_component_id() == MAV_COMP_ID_AUTOPILOT1 ? MAV_AUTOPILOT_GENERIC :
-                                                           MAV_AUTOPILOT_INVALID,
-        get_own_component_id() == MAV_COMP_ID_AUTOPILOT1 ? _base_mode.load() : 0,
-        get_own_component_id() == MAV_COMP_ID_AUTOPILOT1 ? _custom_mode.load() : 0,
-        get_system_status());
-    send_message(message);
+    for (auto& it : _server_components) {
+        it.second->send_heartbeat();
+    }
 }
 
 uint8_t MavsdkImpl::get_target_system_id(const mavlink_message_t& message)
@@ -681,36 +673,6 @@ uint8_t MavsdkImpl::get_target_component_id(const mavlink_message_t& message)
     }
 
     return (_MAV_PAYLOAD(&message))[meta->target_system_ofs];
-}
-
-void MavsdkImpl::set_base_mode(uint8_t base_mode)
-{
-    _base_mode = base_mode;
-}
-
-uint8_t MavsdkImpl::get_base_mode() const
-{
-    return _base_mode;
-}
-
-void MavsdkImpl::set_custom_mode(uint32_t custom_mode)
-{
-    _custom_mode = custom_mode;
-}
-
-uint32_t MavsdkImpl::get_custom_mode() const
-{
-    return _custom_mode;
-}
-
-void MavsdkImpl::set_system_status(uint8_t system_status)
-{
-    _system_status = system_status;
-}
-
-uint8_t MavsdkImpl::get_system_status()
-{
-    return _system_status;
 }
 
 } // namespace mavsdk

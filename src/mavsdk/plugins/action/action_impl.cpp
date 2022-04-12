@@ -1,6 +1,7 @@
 #include "action_impl.h"
 #include "mavsdk_impl.h"
 #include "mavsdk_math.h"
+#include "flight_mode.h"
 #include "px4_custom_mode.h"
 #include <cmath>
 #include <future>
@@ -236,10 +237,10 @@ void ActionImpl::arm_async(const Action::ResultCallback& callback) const
             });
     };
 
-    if (_parent->get_flight_mode() == SystemImpl::FlightMode::Mission ||
-        _parent->get_flight_mode() == SystemImpl::FlightMode::ReturnToLaunch) {
+    if (_parent->get_flight_mode() == FlightMode::Mission ||
+        _parent->get_flight_mode() == FlightMode::ReturnToLaunch) {
         _parent->set_flight_mode_async(
-            SystemImpl::FlightMode::Hold,
+            FlightMode::Hold,
             [callback, send_arm_command](MavlinkCommandSender::Result result, float) {
                 Action::Result action_result = action_result_from_command_result(result);
                 if (action_result != Action::Result::Success) {
@@ -374,8 +375,7 @@ void ActionImpl::land_async(const Action::ResultCallback& callback) const
 void ActionImpl::return_to_launch_async(const Action::ResultCallback& callback) const
 {
     _parent->set_flight_mode_async(
-        SystemImpl::FlightMode::ReturnToLaunch,
-        [this, callback](MavlinkCommandSender::Result result, float) {
+        FlightMode::ReturnToLaunch, [this, callback](MavlinkCommandSender::Result result, float) {
             command_result_callback(result, callback);
         });
 }
@@ -405,9 +405,9 @@ void ActionImpl::goto_location_async(
         };
 
     // Change to Hold mode first
-    if (_parent->get_flight_mode() != SystemImpl::FlightMode::Hold) {
+    if (_parent->get_flight_mode() != FlightMode::Hold) {
         _parent->set_flight_mode_async(
-            SystemImpl::FlightMode::Hold,
+            FlightMode::Hold,
             [this, callback, send_do_reposition](MavlinkCommandSender::Result result, float) {
                 Action::Result action_result = action_result_from_command_result(result);
                 if (action_result != Action::Result::Success) {
@@ -451,7 +451,7 @@ void ActionImpl::do_orbit_async(
 void ActionImpl::hold_async(const Action::ResultCallback& callback) const
 {
     _parent->set_flight_mode_async(
-        SystemImpl::FlightMode::Hold, [this, callback](MavlinkCommandSender::Result result, float) {
+        FlightMode::Hold, [this, callback](MavlinkCommandSender::Result result, float) {
             command_result_callback(result, callback);
         });
 }

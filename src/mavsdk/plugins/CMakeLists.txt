@@ -1,5 +1,5 @@
 add_subdirectory(action)
-#add_subdirectory(action_server)
+add_subdirectory(action_server)
 add_subdirectory(calibration)
 add_subdirectory(camera)
 add_subdirectory(camera_server)

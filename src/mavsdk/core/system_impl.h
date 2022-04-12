@@ -1,5 +1,6 @@
 #pragma once
 
+#include "flight_mode.h"
 #include "mavlink_address.h"
 #include "mavlink_include.h"
 #include "mavlink_parameters.h"
@@ -35,31 +36,12 @@ class PluginImplBase;
 // and functionality from the public library API.
 class SystemImpl : public Sender {
 public:
-    enum class FlightMode {
-        Unknown,
-        Ready,
-        Takeoff,
-        Hold,
-        Mission,
-        ReturnToLaunch,
-        Land,
-        Offboard,
-        FollowMe,
-        Manual,
-        Altctl,
-        Posctl,
-        Acro,
-        Rattitude,
-        Stabilized,
-    };
-
     explicit SystemImpl(MavsdkImpl& parent);
     ~SystemImpl() override;
 
     void init(uint8_t system_id, uint8_t comp_id, bool connected);
 
     void enable_timesync();
-    void enable_sending_autopilot_version();
 
     void subscribe_is_connected(System::IsConnectedCallback callback);
 
@@ -97,11 +79,6 @@ public:
     bool send_message(mavlink_message_t& message) override;
 
     Autopilot autopilot() const override { return _autopilot; };
-
-    FlightMode to_flight_mode_from_custom_mode(uint32_t custom_mode);
-    static FlightMode to_flight_mode_from_px4_mode(uint32_t custom_mode);
-    static FlightMode to_flight_mode_from_ardupilot_rover_mode(uint32_t custom_mode);
-    static FlightMode to_flight_mode_from_ardupilot_copter_mode(uint32_t custom_mode);
 
     using CommandResultCallback = MavlinkCommandSender::CommandResultCallback;
 
@@ -303,7 +280,6 @@ public:
         const std::string& filename, int linenumber, const std::function<void()>& func);
 
     void send_autopilot_version_request();
-    void send_autopilot_version();
     void send_flight_information_request();
 
     MavlinkMissionTransfer& mission_transfer() { return _mission_transfer; };
@@ -320,23 +296,6 @@ public:
     const SystemImpl& operator=(const SystemImpl&) = delete;
 
     double timeout_s() const;
-
-    // Autopilot version data
-    void add_capabilities(uint64_t capabilities);
-    void set_flight_sw_version(uint32_t flight_sw_version);
-    void set_middleware_sw_version(uint32_t middleware_sw_version);
-    void set_os_sw_version(uint32_t os_sw_version);
-    void set_board_version(uint32_t board_version);
-    void set_vendor_id(uint16_t vendor_id);
-    void set_product_id(uint16_t product_id);
-    bool set_uid2(std::string uid2);
-    System::AutopilotVersion get_autopilot_version_data();
-
-    // Used when acting as autopilot!
-    void set_server_armed(bool armed);
-    bool is_server_armed() const;
-    void set_custom_mode(uint32_t custom_mode);
-    uint32_t get_custom_mode() const;
 
 private:
     static bool is_autopilot(uint8_t comp_id);
@@ -449,12 +408,6 @@ private:
     MAV_TYPE _vehicle_type{MAV_TYPE::MAV_TYPE_GENERIC};
 
     std::atomic<FlightMode> _flight_mode{FlightMode::Unknown};
-
-    std::mutex _autopilot_version_mutex{};
-    System::AutopilotVersion _autopilot_version{
-        MAV_PROTOCOL_CAPABILITY_COMMAND_INT, 0, 0, 0, 0, 0, 0, {0}};
-
-    std::atomic<bool> _should_send_autopilot_version{false};
 
     std::mutex _mavlink_ftp_files_mutex{};
     std::unordered_map<std::string, std::string> _mavlink_ftp_files{};

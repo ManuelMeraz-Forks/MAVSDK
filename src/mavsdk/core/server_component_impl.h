@@ -1,9 +1,12 @@
 #pragma once
 
-#include <cstdint>
 #include "mavlink_include.h"
 #include "mavlink_command_receiver.h"
 #include "mavsdk_time.h"
+#include "flight_mode.h"
+
+#include <atomic>
+#include <cstdint>
 
 namespace mavsdk {
 
@@ -29,10 +32,10 @@ public:
     void unregister_mavlink_command_handler(uint16_t cmd_id, const void* cookie);
     void unregister_all_mavlink_command_handlers(const void* cookie);
 
-    uint8_t get_own_system_id() const;
+    [[nodiscard]] uint8_t get_own_system_id() const;
 
     void set_own_component_id(uint8_t own_component_id);
-    uint8_t get_own_component_id() const;
+    [[nodiscard]] uint8_t get_own_component_id() const;
 
     Time& get_time();
 
@@ -48,10 +51,26 @@ public:
     mavlink_message_t
     make_command_ack_message(const MavlinkCommandReceiver::CommandInt& command, MAV_RESULT result);
 
+    void send_heartbeat();
+
+    void set_system_status(uint8_t system_status);
+    [[nodiscard]] uint8_t get_system_status() const;
+    void set_base_mode(uint8_t base_mode);
+    [[nodiscard]] uint8_t get_base_mode() const;
+    void set_custom_mode(uint32_t custom_mode);
+    [[nodiscard]] uint32_t get_custom_mode() const;
+
+    void call_user_callback_located(
+        const std::string& filename, const int linenumber, const std::function<void()>& func);
+
 private:
     MavsdkImpl& _mavsdk_impl;
     MavlinkCommandReceiver _mavlink_command_receiver;
     uint8_t _own_component_id{MAV_COMP_ID_AUTOPILOT1};
+
+    std::atomic<uint8_t> _system_status {0};
+    std::atomic<uint8_t> _base_mode {0};
+    std::atomic<uint32_t> _custom_mode {0};
 };
 
 } // namespace mavsdk

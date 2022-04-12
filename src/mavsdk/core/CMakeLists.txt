@@ -13,6 +13,7 @@ target_sources(mavsdk
     crc32.cpp
     system.cpp
     system_impl.cpp
+    flight_mode.cpp
     fs.cpp
     mavsdk.cpp
     mavsdk_impl.cpp
