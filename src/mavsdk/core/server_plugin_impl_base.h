@@ -1,9 +1,10 @@
 #pragma once
 
+#include <memory>
 #include "unused.h"
 #include "log.h"
 #include "mavlink_include.h"
-#include "server_component_impl.h"
+#include "mavsdk_impl.h"
 
 namespace mavsdk {
 
@@ -31,7 +32,7 @@ public:
     const ServerPluginImplBase& operator=(const ServerPluginImplBase&) = delete;
 
 protected:
-    std::shared_ptr<ServerComponentImpl> _server_component_impl;
+    MavsdkImpl& _mavsdk_impl;
 };
 
 } // namespace mavsdk

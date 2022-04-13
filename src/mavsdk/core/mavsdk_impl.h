@@ -14,6 +14,7 @@
 #include "mavlink_message_handler.h"
 #include "mavlink_command_receiver.h"
 #include "safe_queue.h"
+#include "server_component.h"
 #include "system.h"
 #include "timeout_handler.h"
 

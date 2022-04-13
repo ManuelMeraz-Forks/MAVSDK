@@ -13,10 +13,10 @@ namespace mavsdk {
 class MavsdkImpl;
 class ServerPluginImplBase;
 
-class ServerComponentImpl {
+class ServerComponent {
 public:
-    ServerComponentImpl(MavsdkImpl& mavsdk_impl, uint8_t component_id);
-    ~ServerComponentImpl();
+    ServerComponent(MavsdkImpl& mavsdk_impl, uint8_t component_id);
+    ~ServerComponent();
 
     void register_plugin(ServerPluginImplBase* server_plugin_impl);
     void unregister_plugin(ServerPluginImplBase* server_plugin_impl);

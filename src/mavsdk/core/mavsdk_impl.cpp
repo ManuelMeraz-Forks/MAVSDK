@@ -451,6 +451,10 @@ void MavsdkImpl::set_configuration(Mavsdk::Configuration new_configuration)
         _configuration.get_always_send_heartbeats() && !is_any_system_connected()) {
         stop_sending_heartbeats();
     }
+
+    // Create default component
+    (void)server_component(new_configuration.get_component_id());
+
     _configuration = new_configuration;
 }
 

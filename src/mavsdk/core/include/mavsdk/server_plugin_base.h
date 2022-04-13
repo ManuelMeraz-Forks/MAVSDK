@@ -1,11 +1,6 @@
 #pragma once
-#include "server_component_impl.h"
-#include <memory>
 
 namespace mavsdk {
-
-class ServerComponent;
-class ServerComponentImpl;
 
 class ServerPluginBase {
 public:
