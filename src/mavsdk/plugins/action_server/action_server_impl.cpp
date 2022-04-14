@@ -301,12 +301,12 @@ uint32_t ActionServerImpl::get_custom_mode() const
     return _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->get_custom_mode();
 }
 
-//void ActionServerImpl::enable_sending_autopilot_version()
-//{
-//    _should_send_autopilot_version = true;
-//}
+void ActionServerImpl::enable_sending_autopilot_version()
+{
+    // FIXME: enable this again
+}
 
-//ActionServerImpl::AutopilotVersion ActionServerImpl::get_autopilot_version_data()
+// ActionServerImpl::AutopilotVersion ActionServerImpl::get_autopilot_version_data()
 //{
 //    std::lock_guard<std::mutex> lock(_autopilot_version_mutex);
 //    return _autopilot_version;
@@ -338,7 +338,7 @@ bool ActionServerImpl::is_server_armed() const
     return (get_base_mode() & MAV_MODE_FLAG_SAFETY_ARMED) == MAV_MODE_FLAG_SAFETY_ARMED;
 }
 
-//void ActionServerImpl::add_capabilities(uint64_t add_capabilities)
+// void ActionServerImpl::add_capabilities(uint64_t add_capabilities)
 //{
 //    _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->add_capabilities(add_capabilities);
 //}

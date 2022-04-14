@@ -19,7 +19,8 @@ public:
     void subscribe_take_photo(CameraServer::TakePhotoCallback callback);
 
     CameraServer::Result respond_take_photo(
-        CameraServer::TakePhotoResult take_photo_result, CameraServer::CaptureInfo capture_info);
+        CameraServer::TakePhotoFeedback take_photo_feedback,
+        CameraServer::CaptureInfo capture_info);
 
 private:
     enum StatusFlags {

@@ -26,7 +26,7 @@ TEST(SystemTest, TakePhoto)
         info.index = index;
         info.is_success = true;
 
-        camera_server.respond_take_photo(CameraServer::TakePhotoResult::Ok, info);
+        camera_server.respond_take_photo(CameraServer::TakePhotoFeedback::Ok, info);
     });
 
     // Wait for systems to connect via heartbeat.

@@ -215,7 +215,7 @@ void CameraServerImpl::subscribe_take_photo(CameraServer::TakePhotoCallback call
 }
 
 CameraServer::Result CameraServerImpl::respond_take_photo(
-    CameraServer::TakePhotoResult take_photo_result, CameraServer::CaptureInfo capture_info)
+    CameraServer::TakePhotoFeedback take_photo_feedback, CameraServer::CaptureInfo capture_info)
 {
     // If capture_info.index == INT32_MIN, it means this was an interval
     // capture rather than a single image capture.
@@ -231,12 +231,12 @@ CameraServer::Result CameraServerImpl::respond_take_photo(
         _image_capture_count = capture_info.index;
     }
 
-    switch (take_photo_result) {
+    switch (take_photo_feedback) {
         default:
             // Fallthrough
-        case CameraServer::TakePhotoResult::Unknown:
+        case CameraServer::TakePhotoFeedback::Unknown:
             return CameraServer::Result::Error;
-        case CameraServer::TakePhotoResult::Ok: {
+        case CameraServer::TakePhotoFeedback::Ok: {
             // Check for error above
             auto ack_msg =
                 _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
@@ -245,14 +245,14 @@ CameraServer::Result CameraServerImpl::respond_take_photo(
             // Only break and send the captured below.
             break;
         }
-        case CameraServer::TakePhotoResult::Busy: {
+        case CameraServer::TakePhotoFeedback::Busy: {
             auto ack_msg = _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
                                ->make_command_ack_message(
                                    _last_take_photo_command, MAV_RESULT_TEMPORARILY_REJECTED);
             _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->send_message(ack_msg);
             return CameraServer::Result::Success;
         }
-        case CameraServer::TakePhotoResult::Failed: {
+        case CameraServer::TakePhotoFeedback::Failed: {
             auto ack_msg = _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
                                ->make_command_ack_message(
                                    _last_take_photo_command, MAV_RESULT_TEMPORARILY_REJECTED);

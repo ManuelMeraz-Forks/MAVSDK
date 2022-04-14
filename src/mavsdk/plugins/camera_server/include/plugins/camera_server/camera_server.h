@@ -46,7 +46,7 @@ public:
     /**
      * @brief
      */
-    enum class TakePhotoResult {
+    enum class TakePhotoFeedback {
         Unknown, /**< @brief. */
         Ok, /**< @brief. */
         Busy, /**< @brief. */
@@ -54,12 +54,12 @@ public:
     };
 
     /**
-     * @brief Stream operator to print information about a `CameraServer::TakePhotoResult`.
+     * @brief Stream operator to print information about a `CameraServer::TakePhotoFeedback`.
      *
      * @return A reference to the stream.
      */
     friend std::ostream&
-    operator<<(std::ostream& str, CameraServer::TakePhotoResult const& take_photo_result);
+    operator<<(std::ostream& str, CameraServer::TakePhotoFeedback const& take_photo_feedback);
 
     /**
      * @brief Type to represent a camera information.
@@ -248,7 +248,8 @@ public:
      *
      * @return Result of request.
      */
-    Result respond_take_photo(TakePhotoResult take_photo_result, CaptureInfo capture_info) const;
+    Result
+    respond_take_photo(TakePhotoFeedback take_photo_feedback, CaptureInfo capture_info) const;
 
     /**
      * @brief Copy constructor.

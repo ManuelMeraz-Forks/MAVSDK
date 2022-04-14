@@ -151,32 +151,32 @@ inline bool CameraServerResult_Result_Parse(
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<CameraServerResult_Result>(
     CameraServerResult_Result_descriptor(), name, value);
 }
-enum TakePhotoResult : int {
-  TAKE_PHOTO_RESULT_UNKNOWN = 0,
-  TAKE_PHOTO_RESULT_OK = 1,
-  TAKE_PHOTO_RESULT_BUSY = 2,
-  TAKE_PHOTO_RESULT_FAILED = 3,
-  TakePhotoResult_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
-  TakePhotoResult_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
+enum TakePhotoFeedback : int {
+  TAKE_PHOTO_FEEDBACK_UNKNOWN = 0,
+  TAKE_PHOTO_FEEDBACK_OK = 1,
+  TAKE_PHOTO_FEEDBACK_BUSY = 2,
+  TAKE_PHOTO_FEEDBACK_FAILED = 3,
+  TakePhotoFeedback_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::min(),
+  TakePhotoFeedback_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<::PROTOBUF_NAMESPACE_ID::int32>::max()
 };
-bool TakePhotoResult_IsValid(int value);
-constexpr TakePhotoResult TakePhotoResult_MIN = TAKE_PHOTO_RESULT_UNKNOWN;
-constexpr TakePhotoResult TakePhotoResult_MAX = TAKE_PHOTO_RESULT_FAILED;
-constexpr int TakePhotoResult_ARRAYSIZE = TakePhotoResult_MAX + 1;
+bool TakePhotoFeedback_IsValid(int value);
+constexpr TakePhotoFeedback TakePhotoFeedback_MIN = TAKE_PHOTO_FEEDBACK_UNKNOWN;
+constexpr TakePhotoFeedback TakePhotoFeedback_MAX = TAKE_PHOTO_FEEDBACK_FAILED;
+constexpr int TakePhotoFeedback_ARRAYSIZE = TakePhotoFeedback_MAX + 1;
 
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* TakePhotoResult_descriptor();
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* TakePhotoFeedback_descriptor();
 template<typename T>
-inline const std::string& TakePhotoResult_Name(T enum_t_value) {
-  static_assert(::std::is_same<T, TakePhotoResult>::value ||
+inline const std::string& TakePhotoFeedback_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, TakePhotoFeedback>::value ||
     ::std::is_integral<T>::value,
-    "Incorrect type passed to function TakePhotoResult_Name.");
+    "Incorrect type passed to function TakePhotoFeedback_Name.");
   return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
-    TakePhotoResult_descriptor(), enum_t_value);
+    TakePhotoFeedback_descriptor(), enum_t_value);
 }
-inline bool TakePhotoResult_Parse(
-    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, TakePhotoResult* value) {
-  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<TakePhotoResult>(
-    TakePhotoResult_descriptor(), name, value);
+inline bool TakePhotoFeedback_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, TakePhotoFeedback* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<TakePhotoFeedback>(
+    TakePhotoFeedback_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -1144,7 +1144,7 @@ class RespondTakePhotoRequest final :
 
   enum : int {
     kCaptureInfoFieldNumber = 2,
-    kTakePhotoResultFieldNumber = 1,
+    kTakePhotoFeedbackFieldNumber = 1,
   };
   // .mavsdk.rpc.camera_server.CaptureInfo capture_info = 2;
   bool has_capture_info() const;
@@ -1164,13 +1164,13 @@ class RespondTakePhotoRequest final :
       ::mavsdk::rpc::camera_server::CaptureInfo* capture_info);
   ::mavsdk::rpc::camera_server::CaptureInfo* unsafe_arena_release_capture_info();
 
-  // .mavsdk.rpc.camera_server.TakePhotoResult take_photo_result = 1;
-  void clear_take_photo_result();
-  ::mavsdk::rpc::camera_server::TakePhotoResult take_photo_result() const;
-  void set_take_photo_result(::mavsdk::rpc::camera_server::TakePhotoResult value);
+  // .mavsdk.rpc.camera_server.TakePhotoFeedback take_photo_feedback = 1;
+  void clear_take_photo_feedback();
+  ::mavsdk::rpc::camera_server::TakePhotoFeedback take_photo_feedback() const;
+  void set_take_photo_feedback(::mavsdk::rpc::camera_server::TakePhotoFeedback value);
   private:
-  ::mavsdk::rpc::camera_server::TakePhotoResult _internal_take_photo_result() const;
-  void _internal_set_take_photo_result(::mavsdk::rpc::camera_server::TakePhotoResult value);
+  ::mavsdk::rpc::camera_server::TakePhotoFeedback _internal_take_photo_feedback() const;
+  void _internal_set_take_photo_feedback(::mavsdk::rpc::camera_server::TakePhotoFeedback value);
   public:
 
   // @@protoc_insertion_point(class_scope:mavsdk.rpc.camera_server.RespondTakePhotoRequest)
@@ -1181,7 +1181,7 @@ class RespondTakePhotoRequest final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   ::mavsdk::rpc::camera_server::CaptureInfo* capture_info_;
-  int take_photo_result_;
+  int take_photo_feedback_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_camera_5fserver_2fcamera_5fserver_2eproto;
 };
@@ -2707,24 +2707,24 @@ inline void TakePhotoResponse::set_index(::PROTOBUF_NAMESPACE_ID::int32 value) {
 
 // RespondTakePhotoRequest
 
-// .mavsdk.rpc.camera_server.TakePhotoResult take_photo_result = 1;
-inline void RespondTakePhotoRequest::clear_take_photo_result() {
-  take_photo_result_ = 0;
+// .mavsdk.rpc.camera_server.TakePhotoFeedback take_photo_feedback = 1;
+inline void RespondTakePhotoRequest::clear_take_photo_feedback() {
+  take_photo_feedback_ = 0;
 }
-inline ::mavsdk::rpc::camera_server::TakePhotoResult RespondTakePhotoRequest::_internal_take_photo_result() const {
-  return static_cast< ::mavsdk::rpc::camera_server::TakePhotoResult >(take_photo_result_);
+inline ::mavsdk::rpc::camera_server::TakePhotoFeedback RespondTakePhotoRequest::_internal_take_photo_feedback() const {
+  return static_cast< ::mavsdk::rpc::camera_server::TakePhotoFeedback >(take_photo_feedback_);
 }
-inline ::mavsdk::rpc::camera_server::TakePhotoResult RespondTakePhotoRequest::take_photo_result() const {
-  // @@protoc_insertion_point(field_get:mavsdk.rpc.camera_server.RespondTakePhotoRequest.take_photo_result)
-  return _internal_take_photo_result();
+inline ::mavsdk::rpc::camera_server::TakePhotoFeedback RespondTakePhotoRequest::take_photo_feedback() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.camera_server.RespondTakePhotoRequest.take_photo_feedback)
+  return _internal_take_photo_feedback();
 }
-inline void RespondTakePhotoRequest::_internal_set_take_photo_result(::mavsdk::rpc::camera_server::TakePhotoResult value) {
+inline void RespondTakePhotoRequest::_internal_set_take_photo_feedback(::mavsdk::rpc::camera_server::TakePhotoFeedback value) {
   
-  take_photo_result_ = value;
+  take_photo_feedback_ = value;
 }
-inline void RespondTakePhotoRequest::set_take_photo_result(::mavsdk::rpc::camera_server::TakePhotoResult value) {
-  _internal_set_take_photo_result(value);
-  // @@protoc_insertion_point(field_set:mavsdk.rpc.camera_server.RespondTakePhotoRequest.take_photo_result)
+inline void RespondTakePhotoRequest::set_take_photo_feedback(::mavsdk::rpc::camera_server::TakePhotoFeedback value) {
+  _internal_set_take_photo_feedback(value);
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.camera_server.RespondTakePhotoRequest.take_photo_feedback)
 }
 
 // .mavsdk.rpc.camera_server.CaptureInfo capture_info = 2;
@@ -3808,10 +3808,10 @@ template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::mavsdk::rpc::camera_server::CameraServerResult_Result>() {
   return ::mavsdk::rpc::camera_server::CameraServerResult_Result_descriptor();
 }
-template <> struct is_proto_enum< ::mavsdk::rpc::camera_server::TakePhotoResult> : ::std::true_type {};
+template <> struct is_proto_enum< ::mavsdk::rpc::camera_server::TakePhotoFeedback> : ::std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::mavsdk::rpc::camera_server::TakePhotoResult>() {
-  return ::mavsdk::rpc::camera_server::TakePhotoResult_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::mavsdk::rpc::camera_server::TakePhotoFeedback>() {
+  return ::mavsdk::rpc::camera_server::TakePhotoFeedback_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

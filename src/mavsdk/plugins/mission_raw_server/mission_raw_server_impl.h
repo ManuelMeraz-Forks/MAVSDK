@@ -36,7 +36,8 @@ private:
         [[nodiscard]] uint8_t get_system_id() const override;
         [[nodiscard]] Autopilot autopilot() const override;
 
-        uint8_t current_target_system_id {0};
+        uint8_t current_target_system_id{0};
+
     private:
         MavsdkImpl& _mavsdk_impl;
     };

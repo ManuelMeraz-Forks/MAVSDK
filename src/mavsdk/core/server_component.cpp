@@ -269,7 +269,6 @@ bool ServerComponent::set_uid2(std::string uid2)
     return true;
 }
 
-
 void ServerComponent::send_autopilot_version()
 {
     std::lock_guard<std::mutex> lock(_autopilot_version_mutex);
@@ -295,6 +294,5 @@ void ServerComponent::send_autopilot_version()
 
     _mavsdk_impl.send_message(msg);
 }
-
 
 } // namespace mavsdk

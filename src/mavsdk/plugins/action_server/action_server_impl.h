@@ -79,12 +79,13 @@ private:
     std::mutex _flight_mode_mutex;
     ActionServer::AllowableFlightModes _allowed_flight_modes{};
 
-    //std::atomic<bool> _should_send_autopilot_version{false};
+    // std::atomic<bool> _should_send_autopilot_version{false};
 
     std::atomic<FlightMode> _flight_mode{FlightMode::Unknown};
 
-    //std::mutex _autopilot_version_mutex{};
-    //AutopilotVersion _autopilot_version{MAV_PROTOCOL_CAPABILITY_COMMAND_INT, 0, 0, 0, 0, 0, 0, {0}};
+    // std::mutex _autopilot_version_mutex{};
+    // AutopilotVersion _autopilot_version{MAV_PROTOCOL_CAPABILITY_COMMAND_INT, 0, 0, 0, 0, 0, 0,
+    // {0}};
 };
 
 } // namespace mavsdk
