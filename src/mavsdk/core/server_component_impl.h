@@ -2,8 +2,10 @@
 
 #include "mavlink_include.h"
 #include "mavlink_command_receiver.h"
+#include "mavlink_mission_transfer.h"
 #include "mavsdk_time.h"
 #include "flight_mode.h"
+#include "log.h"
 
 #include <atomic>
 #include <mutex>
@@ -14,13 +16,35 @@ namespace mavsdk {
 class MavsdkImpl;
 class ServerPluginImplBase;
 
-class ServerComponent {
+class ServerComponentImpl {
 public:
-    ServerComponent(MavsdkImpl& mavsdk_impl, uint8_t component_id);
-    ~ServerComponent();
+    ServerComponentImpl(MavsdkImpl& mavsdk_impl, uint8_t component_id);
+    ~ServerComponentImpl() = default;
 
     void register_plugin(ServerPluginImplBase* server_plugin_impl);
     void unregister_plugin(ServerPluginImplBase* server_plugin_impl);
+
+    class OurSender : public Sender {
+    public:
+        OurSender(MavsdkImpl& mavsdk_impl, ServerComponentImpl& server_component_impl);
+        virtual ~OurSender() = default;
+        bool send_message(mavlink_message_t& message) override;
+        [[nodiscard]] uint8_t get_own_system_id() const override;
+        [[nodiscard]] uint8_t get_own_component_id() const override;
+        [[nodiscard]] uint8_t get_system_id() const override;
+        [[nodiscard]] Autopilot autopilot() const override;
+
+        uint8_t current_target_system_id{0};
+
+    private:
+        MavsdkImpl& _mavsdk_impl;
+        ServerComponentImpl& _server_component_impl;
+    };
+
+    // FIXME: remove this hack again by writing the proper mission transfer server part
+    void set_our_current_target_system_id(uint8_t id) {
+        _our_sender.current_target_system_id = id;
+    }
 
     struct AutopilotVersion {
         /** @brief MAVLink autopilot_version capabilities. */
@@ -104,11 +128,12 @@ public:
     bool set_uid2(std::string uid2);
     AutopilotVersion get_autopilot_version_data();
 
+    MavlinkMissionTransfer& mission_transfer() { return _mission_transfer; }
+
 private:
     void send_autopilot_version();
 
     MavsdkImpl& _mavsdk_impl;
-    MavlinkCommandReceiver _mavlink_command_receiver;
     uint8_t _own_component_id{MAV_COMP_ID_AUTOPILOT1};
 
     std::atomic<uint8_t> _system_status{0};
@@ -119,6 +144,10 @@ private:
     AutopilotVersion _autopilot_version{};
 
     std::atomic<bool> _should_send_autopilot_version{false};
+
+    OurSender _our_sender;
+    MavlinkCommandReceiver _mavlink_command_receiver;
+    MavlinkMissionTransfer _mission_transfer;
 };
 
 } // namespace mavsdk

@@ -8,7 +8,7 @@ namespace mavsdk {
 
 class TrackingServerImpl : public ServerPluginImplBase {
 public:
-    explicit TrackingServerImpl(Mavsdk& mavsdk);
+    explicit TrackingServerImpl(std::shared_ptr<ServerComponent> server_component);
     ~TrackingServerImpl() override;
 
     void init() override;

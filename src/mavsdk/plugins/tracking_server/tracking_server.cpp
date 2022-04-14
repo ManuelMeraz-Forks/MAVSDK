@@ -13,9 +13,9 @@ namespace mavsdk {
 using TrackPoint = TrackingServer::TrackPoint;
 using TrackRectangle = TrackingServer::TrackRectangle;
 
-TrackingServer::TrackingServer(Mavsdk& mavsdk) :
+TrackingServer::TrackingServer(std::shared_ptr<ServerComponent> server_component) :
     ServerPluginBase(),
-    _impl{std::make_unique<TrackingServerImpl>(mavsdk)}
+    _impl{std::make_unique<TrackingServerImpl>(server_component)}
 {}
 
 TrackingServer::~TrackingServer() {}

@@ -18,7 +18,7 @@
 
 namespace mavsdk {
 
-class Mavsdk;
+class ServerComponent;
 class TrackingServerImpl;
 
 /**
@@ -27,22 +27,22 @@ class TrackingServerImpl;
 class TrackingServer : public ServerPluginBase {
 public:
     /**
-     * @brief Constructor. Creates the plugin for a Mavsdk instance.
+     * @brief Constructor. Creates the plugin for a ServerComponent instance.
      *
      * The plugin is typically created as shown below:
      *
      *     ```cpp
-     *     auto tracking_server = TrackingServer(mavsdk);
+     *     auto tracking_server = TrackingServer(server_component);
      *     ```
      *
-     * @param system The Mavsdk instance associated with this server plugin.
+     * @param server_component The ServerComponent instance associated with this server plugin.
      */
-    explicit TrackingServer(Mavsdk& mavsdk);
+    explicit TrackingServer(std::shared_ptr<ServerComponent> server_component);
 
     /**
      * @brief Destructor (internal use only).
      */
-    ~TrackingServer();
+    ~TrackingServer() override;
 
     /**
      * @brief Answer to respond to an incoming command

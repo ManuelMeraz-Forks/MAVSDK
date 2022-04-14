@@ -7,7 +7,7 @@ namespace mavsdk {
 
 class ComponentInformationServerImpl : public ServerPluginImplBase {
 public:
-    explicit ComponentInformationServerImpl(Mavsdk& mavsdk);
+    explicit ComponentInformationServerImpl(std::shared_ptr<ServerComponent> server_component);
     ~ComponentInformationServerImpl() override;
 
     void init() override;

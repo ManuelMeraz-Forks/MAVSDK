@@ -1,9 +1,10 @@
 #include "server_plugin_impl_base.h"
-#include "mavsdk.h"
-#include "mavsdk_impl.h"
+#include "server_component.h"
 
 namespace mavsdk {
 
-ServerPluginImplBase::ServerPluginImplBase(Mavsdk& mavsdk) : _mavsdk_impl(*mavsdk._impl) {}
+ServerPluginImplBase::ServerPluginImplBase(std::shared_ptr<ServerComponent> server_component) :
+    _server_component_impl(server_component->_impl)
+{}
 
 } // namespace mavsdk

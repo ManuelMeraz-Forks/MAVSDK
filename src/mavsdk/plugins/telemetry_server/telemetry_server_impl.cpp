@@ -3,76 +3,72 @@
 
 namespace mavsdk {
 
-TelemetryServerImpl::TelemetryServerImpl(Mavsdk& mavsdk) : ServerPluginImplBase(mavsdk)
+TelemetryServerImpl::TelemetryServerImpl(std::shared_ptr<ServerComponent> server_component) :
+    ServerPluginImplBase(server_component)
 {
-    _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->register_plugin(this);
+    _server_component_impl->register_plugin(this);
     _start_time = std::chrono::steady_clock::now();
 }
 
 TelemetryServerImpl::~TelemetryServerImpl()
 {
-    _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->unregister_plugin(this);
+    _server_component_impl->unregister_plugin(this);
     std::unique_lock<std::mutex> lock(_interval_mutex);
     for (const auto& request : _interval_requests) {
-        _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->remove_call_every(request.cookie);
+        _server_component_impl->remove_call_every(request.cookie);
     }
 }
 
 void TelemetryServerImpl::init()
 {
     // Handle SET_MESSAGE_INTERVAL
-    _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)
-        ->register_mavlink_command_handler(
-            MAV_CMD_SET_MESSAGE_INTERVAL,
-            [this](const MavlinkCommandReceiver::CommandLong& command) {
-                std::lock_guard<std::mutex> lock(_interval_mutex);
-                uint32_t msgid = static_cast<uint32_t>(command.params.param1);
-                // Set interval to 1hz if 0 (default rate)
-                uint32_t interval_ms =
-                    command.params.param2 == 0 ?
-                        1000 :
-                        static_cast<uint32_t>(static_cast<double>(command.params.param2) * 1E-3);
-                LogDebug() << "Setting interval for msg id: " << std::to_string(msgid)
-                           << " interval_ms:" << std::to_string(interval_ms);
-                auto found = std::find_if(
-                    _interval_requests.begin(),
-                    _interval_requests.end(),
-                    [msgid](const RequestMsgInterval& item) { return item.msg_id == msgid; });
+    _server_component_impl->register_mavlink_command_handler(
+        MAV_CMD_SET_MESSAGE_INTERVAL,
+        [this](const MavlinkCommandReceiver::CommandLong& command) {
+            std::lock_guard<std::mutex> lock(_interval_mutex);
+            uint32_t msgid = static_cast<uint32_t>(command.params.param1);
+            // Set interval to 1hz if 0 (default rate)
+            uint32_t interval_ms =
+                command.params.param2 == 0 ?
+                    1000 :
+                    static_cast<uint32_t>(static_cast<double>(command.params.param2) * 1E-3);
+            LogDebug() << "Setting interval for msg id: " << std::to_string(msgid)
+                       << " interval_ms:" << std::to_string(interval_ms);
+            auto found = std::find_if(
+                _interval_requests.begin(),
+                _interval_requests.end(),
+                [msgid](const RequestMsgInterval& item) { return item.msg_id == msgid; });
 
-                if (found == _interval_requests.end() && command.params.param2 != -1) {
-                    // If not found interval already, add a new one
-                    _interval_requests.push_back({msgid, interval_ms, nullptr});
-                    _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)
-                        ->add_call_every(
-                            [this, msgid]() {
-                                std::lock_guard<std::mutex> lock_interval(_interval_mutex);
-                                if (_msg_cache.find(msgid) != _msg_cache.end()) {
-                                    // Publish if callback exists :)
-                                    _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)
-                                        ->send_message(_msg_cache.at(msgid));
-                                }
-                            },
-                            static_cast<double>(interval_ms) * 1E-3,
-                            &_interval_requests.back().cookie);
+            if (found == _interval_requests.end() && command.params.param2 != -1) {
+                // If not found interval already, add a new one
+                _interval_requests.push_back({msgid, interval_ms, nullptr});
+                _server_component_impl->add_call_every(
+                    [this, msgid]() {
+                        std::lock_guard<std::mutex> lock_interval(_interval_mutex);
+                        if (_msg_cache.find(msgid) != _msg_cache.end()) {
+                            // Publish if callback exists :)
+                            _server_component_impl->send_message(_msg_cache.at(msgid));
+                        }
+                    },
+                    static_cast<double>(interval_ms) * 1E-3,
+                    &_interval_requests.back().cookie);
+            } else {
+                if (command.params.param2 == -1) {
+                    // Deregister with -1 interval
+                    _server_component_impl->remove_call_every(found->cookie);
+                    _interval_requests.erase(found);
                 } else {
-                    if (command.params.param2 == -1) {
-                        // Deregister with -1 interval
-                        _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)
-                            ->remove_call_every(found->cookie);
-                        _interval_requests.erase(found);
-                    } else {
-                        // Update Interval
-                        found->interval = interval_ms;
-                        _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)
-                            ->change_call_every(
-                                static_cast<double>(interval_ms) * 1E-3, found->cookie);
-                    }
+                    // Update Interval
+                    found->interval = interval_ms;
+                    _server_component_impl->change_call_every(
+                        static_cast<double>(interval_ms) * 1E-3, found->cookie);
                 }
+            }
 
-                return _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)
-                    ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_ACCEPTED);
-            },
-            this);
+            return _server_component_impl->make_command_ack_message(
+                command, MAV_RESULT::MAV_RESULT_ACCEPTED);
+        },
+        this);
 }
 
 void TelemetryServerImpl::deinit() {}
@@ -84,8 +80,8 @@ TelemetryServer::Result TelemetryServerImpl::publish_position(
 {
     mavlink_message_t msg;
     mavlink_msg_global_position_int_pack(
-        _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->get_own_system_id(),
-        _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->get_own_component_id(),
+        _server_component_impl->get_own_system_id(),
+        _server_component_impl->get_own_component_id(),
         &msg,
         get_boot_time_ms(),
         static_cast<int32_t>(position.latitude_deg * 1E7),
@@ -99,9 +95,8 @@ TelemetryServer::Result TelemetryServerImpl::publish_position(
 
     add_msg_cache(MAVLINK_MSG_ID_GLOBAL_POSITION_INT, msg);
 
-    return _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->send_message(msg) ?
-               TelemetryServer::Result::Success :
-               TelemetryServer::Result::Unsupported;
+    return _server_component_impl->send_message(msg) ? TelemetryServer::Result::Success :
+                                                       TelemetryServer::Result::Unsupported;
 }
 
 TelemetryServer::Result TelemetryServerImpl::publish_home(TelemetryServer::Position home)
@@ -109,8 +104,8 @@ TelemetryServer::Result TelemetryServerImpl::publish_home(TelemetryServer::Posit
     mavlink_message_t msg;
     const float q[4] = {};
     mavlink_msg_home_position_pack(
-        _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->get_own_system_id(),
-        _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->get_own_component_id(),
+        _server_component_impl->get_own_system_id(),
+        _server_component_impl->get_own_component_id(),
         &msg,
         static_cast<int32_t>(home.latitude_deg * 1E7),
         static_cast<int32_t>(home.longitude_deg * 1E7),
@@ -127,9 +122,8 @@ TelemetryServer::Result TelemetryServerImpl::publish_home(TelemetryServer::Posit
 
     add_msg_cache(MAVLINK_MSG_ID_HOME_POSITION, msg);
 
-    return _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->send_message(msg) ?
-               TelemetryServer::Result::Success :
-               TelemetryServer::Result::Unsupported;
+    return _server_component_impl->send_message(msg) ? TelemetryServer::Result::Success :
+                                                       TelemetryServer::Result::Unsupported;
 }
 
 TelemetryServer::Result TelemetryServerImpl::publish_raw_gps(
@@ -137,8 +131,8 @@ TelemetryServer::Result TelemetryServerImpl::publish_raw_gps(
 {
     mavlink_message_t msg;
     mavlink_msg_gps_raw_int_pack(
-        _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->get_own_system_id(),
-        _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->get_own_component_id(),
+        _server_component_impl->get_own_system_id(),
+        _server_component_impl->get_own_component_id(),
         &msg,
         raw_gps.timestamp_us,
         static_cast<uint8_t>(gps_info.fix_type),
@@ -159,9 +153,8 @@ TelemetryServer::Result TelemetryServerImpl::publish_raw_gps(
 
     add_msg_cache(MAVLINK_MSG_ID_GPS_RAW_INT, msg);
 
-    return _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->send_message(msg) ?
-               TelemetryServer::Result::Success :
-               TelemetryServer::Result::Unsupported;
+    return _server_component_impl->send_message(msg) ? TelemetryServer::Result::Success :
+                                                       TelemetryServer::Result::Unsupported;
 }
 
 TelemetryServer::Result TelemetryServerImpl::publish_battery(TelemetryServer::Battery battery)
@@ -173,8 +166,8 @@ TelemetryServer::Result TelemetryServerImpl::publish_battery(TelemetryServer::Ba
     voltages[0] = static_cast<uint16_t>(static_cast<double>(battery.voltage_v) * 1E3);
 
     mavlink_msg_battery_status_pack(
-        _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->get_own_system_id(),
-        _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->get_own_component_id(),
+        _server_component_impl->get_own_system_id(),
+        _server_component_impl->get_own_component_id(),
         &msg,
         0,
         MAV_BATTERY_FUNCTION_ALL,
@@ -193,9 +186,8 @@ TelemetryServer::Result TelemetryServerImpl::publish_battery(TelemetryServer::Ba
 
     add_msg_cache(MAVLINK_MSG_ID_BATTERY_STATUS, msg);
 
-    return _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->send_message(msg) ?
-               TelemetryServer::Result::Success :
-               TelemetryServer::Result::Unsupported;
+    return _server_component_impl->send_message(msg) ? TelemetryServer::Result::Success :
+                                                       TelemetryServer::Result::Unsupported;
 }
 
 TelemetryServer::Result
@@ -236,17 +228,16 @@ TelemetryServerImpl::publish_status_text(TelemetryServer::StatusText status_text
     }
 
     mavlink_msg_statustext_pack(
-        _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->get_own_system_id(),
-        _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->get_own_component_id(),
+        _server_component_impl->get_own_system_id(),
+        _server_component_impl->get_own_component_id(),
         &msg,
         type,
         status_text.text.data(),
         0,
         0);
 
-    return _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->send_message(msg) ?
-               TelemetryServer::Result::Success :
-               TelemetryServer::Result::Unsupported;
+    return _server_component_impl->send_message(msg) ? TelemetryServer::Result::Success :
+                                                       TelemetryServer::Result::Unsupported;
 }
 
 TelemetryServer::Result TelemetryServerImpl::publish_odometry(TelemetryServer::Odometry odometry)
@@ -262,8 +253,8 @@ TelemetryServer::Result TelemetryServerImpl::publish_position_velocity_ned(
 {
     mavlink_message_t msg;
     mavlink_msg_local_position_ned_pack(
-        _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->get_own_system_id(),
-        _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->get_own_component_id(),
+        _server_component_impl->get_own_system_id(),
+        _server_component_impl->get_own_component_id(),
         &msg,
         get_boot_time_ms(),
         position_velocity_ned.position.north_m,
@@ -275,9 +266,8 @@ TelemetryServer::Result TelemetryServerImpl::publish_position_velocity_ned(
 
     add_msg_cache(MAVLINK_MSG_ID_LOCAL_POSITION_NED, msg);
 
-    return _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->send_message(msg) ?
-               TelemetryServer::Result::Success :
-               TelemetryServer::Result::Unsupported;
+    return _server_component_impl->send_message(msg) ? TelemetryServer::Result::Success :
+                                                       TelemetryServer::Result::Unsupported;
 }
 
 TelemetryServer::Result
@@ -348,8 +338,8 @@ TelemetryServer::Result TelemetryServerImpl::publish_sys_status(
     }
     mavlink_message_t msg;
     mavlink_msg_sys_status_pack(
-        _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->get_own_system_id(),
-        _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->get_own_component_id(),
+        _server_component_impl->get_own_system_id(),
+        _server_component_impl->get_own_component_id(),
         &msg,
         sensors,
         sensors,
@@ -370,9 +360,8 @@ TelemetryServer::Result TelemetryServerImpl::publish_sys_status(
 
     add_msg_cache(MAVLINK_MSG_ID_SYS_STATUS, msg);
 
-    return _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->send_message(msg) ?
-               TelemetryServer::Result::Success :
-               TelemetryServer::Result::Unsupported;
+    return _server_component_impl->send_message(msg) ? TelemetryServer::Result::Success :
+                                                       TelemetryServer::Result::Unsupported;
 }
 
 uint8_t to_mav_vtol_state(TelemetryServer::VtolState vtol_state)
@@ -414,17 +403,16 @@ TelemetryServer::Result TelemetryServerImpl::publish_extended_sys_state(
 {
     mavlink_message_t msg;
     mavlink_msg_extended_sys_state_pack(
-        _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->get_own_system_id(),
-        _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->get_own_component_id(),
+        _server_component_impl->get_own_system_id(),
+        _server_component_impl->get_own_component_id(),
         &msg,
         to_mav_vtol_state(vtol_state),
         to_mav_landed_state(landed_state));
 
     add_msg_cache(MAVLINK_MSG_ID_EXTENDED_SYS_STATE, msg);
 
-    return _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->send_message(msg) ?
-               TelemetryServer::Result::Success :
-               TelemetryServer::Result::Unsupported;
+    return _server_component_impl->send_message(msg) ? TelemetryServer::Result::Success :
+                                                       TelemetryServer::Result::Unsupported;
 }
 
 void TelemetryServerImpl::add_msg_cache(uint64_t id, mavlink_message_t& msg)

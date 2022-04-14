@@ -12,6 +12,7 @@
 #include "cli_arg.h"
 #include "version.h"
 #include "unused.h"
+#include "server_component_impl.h"
 
 namespace mavsdk {
 
@@ -702,7 +703,7 @@ void MavsdkImpl::stop_sending_heartbeats()
 void MavsdkImpl::send_heartbeat()
 {
     for (auto& it : _server_components) {
-        it.second->send_heartbeat();
+        it.second->_impl->send_heartbeat();
     }
 }
 

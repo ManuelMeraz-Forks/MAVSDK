@@ -17,7 +17,7 @@
 
 namespace mavsdk {
 
-class Mavsdk;
+class ServerComponent;
 class ActionServerImpl;
 
 /**
@@ -26,22 +26,22 @@ class ActionServerImpl;
 class ActionServer : public ServerPluginBase {
 public:
     /**
-     * @brief Constructor. Creates the plugin for a Mavsdk instance.
+     * @brief Constructor. Creates the plugin for a ServerComponent instance.
      *
      * The plugin is typically created as shown below:
      *
      *     ```cpp
-     *     auto action_server = ActionServer(mavsdk);
+     *     auto action_server = ActionServer(server_component);
      *     ```
      *
-     * @param system The Mavsdk instance associated with this server plugin.
+     * @param server_component The ServerComponent instance associated with this server plugin.
      */
-    explicit ActionServer(Mavsdk& mavsdk);
+    explicit ActionServer(std::shared_ptr<ServerComponent> server_component);
 
     /**
      * @brief Destructor (internal use only).
      */
-    ~ActionServer();
+    ~ActionServer() override;
 
     /**
      * @brief Flight modes.

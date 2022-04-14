@@ -18,7 +18,7 @@
 
 namespace mavsdk {
 
-class Mavsdk;
+class ServerComponent;
 class MissionRawServerImpl;
 
 /**
@@ -28,22 +28,22 @@ class MissionRawServerImpl;
 class MissionRawServer : public ServerPluginBase {
 public:
     /**
-     * @brief Constructor. Creates the plugin for a Mavsdk instance.
+     * @brief Constructor. Creates the plugin for a ServerComponent instance.
      *
      * The plugin is typically created as shown below:
      *
      *     ```cpp
-     *     auto mission_raw_server = MissionRawServer(mavsdk);
+     *     auto mission_raw_server = MissionRawServer(server_component);
      *     ```
      *
-     * @param system The Mavsdk instance associated with this server plugin.
+     * @param server_component The ServerComponent instance associated with this server plugin.
      */
-    explicit MissionRawServer(Mavsdk& mavsdk);
+    explicit MissionRawServer(std::shared_ptr<ServerComponent> server_component);
 
     /**
      * @brief Destructor (internal use only).
      */
-    ~MissionRawServer();
+    ~MissionRawServer() override;
 
     /**
      * @brief Mission item exactly identical to MAVLink MISSION_ITEM_INT.

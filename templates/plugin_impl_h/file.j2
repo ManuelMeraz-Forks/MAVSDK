@@ -12,7 +12,7 @@ namespace mavsdk {
 {% if is_server %}
 class {{ plugin_name.upper_camel_case }}Impl : public ServerPluginImplBase {
 public:
-    explicit {{ plugin_name.upper_camel_case }}Impl(Mavsdk& mavsdk);
+    explicit {{ plugin_name.upper_camel_case }}Impl(std::shared_ptr<ServerComponent> server_component);
 {% else %}
 class {{ plugin_name.upper_camel_case }}Impl : public PluginImplBase {
 public:

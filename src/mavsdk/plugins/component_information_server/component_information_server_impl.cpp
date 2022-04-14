@@ -6,22 +6,23 @@
 
 namespace mavsdk {
 
-ComponentInformationServerImpl::ComponentInformationServerImpl(Mavsdk& mavsdk) :
-    ServerPluginImplBase(mavsdk)
+ComponentInformationServerImpl::ComponentInformationServerImpl(
+    std::shared_ptr<ServerComponent> server_component) :
+    ServerPluginImplBase(server_component)
 {
     // FIXME: allow other component IDs
-    _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->register_plugin(this);
+    _server_component_impl->register_plugin(this);
 }
 
 ComponentInformationServerImpl::~ComponentInformationServerImpl()
 {
-    _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->register_plugin(this);
+    _server_component_impl->register_plugin(this);
 }
 
 void ComponentInformationServerImpl::init()
 {
     // FIXME: needs refactoring
-    //_mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->register_mavlink_request_message_handler(
+    //_server_component_impl->register_mavlink_request_message_handler(
     //    MAVLINK_MSG_ID_COMPONENT_INFORMATION,
     //    [this](MavlinkRequestMessageHandler::Params) {
     //        return process_component_information_requested();
@@ -32,7 +33,7 @@ void ComponentInformationServerImpl::init()
 void ComponentInformationServerImpl::deinit()
 {
     // FIXME: needs refactoring
-    //_mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->unregister_all_mavlink_request_message_handlers(this);
+    //_server_component_impl->unregister_all_mavlink_request_message_handlers(this);
 }
 
 ComponentInformationServer::Result
@@ -97,15 +98,15 @@ std::optional<MAV_RESULT> ComponentInformationServerImpl::process_component_info
 {
     mavlink_message_t message;
     mavlink_msg_component_information_pack(
-        _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->get_own_system_id(),
-        _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->get_own_component_id(),
+        _server_component_impl->get_own_system_id(),
+        _server_component_impl->get_own_component_id(),
         &message,
-        _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->get_time().elapsed_ms(),
+        _server_component_impl->get_time().elapsed_ms(),
         0,
         "mftp://general.json",
         0,
         "");
-    _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->send_message(message);
+    _server_component_impl->send_message(message);
 
     // FIXME: REMOVE again
     update_json_files_with_lock();
@@ -122,9 +123,9 @@ void ComponentInformationServerImpl::update_json_files_with_lock()
     // std::cout << "meta: " << meta_file << '\n';
 
     // FIXME: needs refactoring
-    //_mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->mavlink_ftp().write_tmp_file("general.json",
+    //_server_component_impl->mavlink_ftp().write_tmp_file("general.json",
     // meta_file);
-    //_mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->mavlink_ftp().write_tmp_file("parameter.json",
+    //_server_component_impl->mavlink_ftp().write_tmp_file("parameter.json",
     // parameter_file);
 }
 

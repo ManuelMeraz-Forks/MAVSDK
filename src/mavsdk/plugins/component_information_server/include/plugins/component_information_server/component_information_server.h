@@ -18,7 +18,7 @@
 
 namespace mavsdk {
 
-class Mavsdk;
+class ServerComponent;
 class ComponentInformationServerImpl;
 
 /**
@@ -27,22 +27,22 @@ class ComponentInformationServerImpl;
 class ComponentInformationServer : public ServerPluginBase {
 public:
     /**
-     * @brief Constructor. Creates the plugin for a Mavsdk instance.
+     * @brief Constructor. Creates the plugin for a ServerComponent instance.
      *
      * The plugin is typically created as shown below:
      *
      *     ```cpp
-     *     auto component_information_server = ComponentInformationServer(mavsdk);
+     *     auto component_information_server = ComponentInformationServer(server_component);
      *     ```
      *
-     * @param system The Mavsdk instance associated with this server plugin.
+     * @param server_component The ServerComponent instance associated with this server plugin.
      */
-    explicit ComponentInformationServer(Mavsdk& mavsdk);
+    explicit ComponentInformationServer(std::shared_ptr<ServerComponent> server_component);
 
     /**
      * @brief Destructor (internal use only).
      */
-    ~ComponentInformationServer();
+    ~ComponentInformationServer() override;
 
     /**
      * @brief Meta information for parameter of type float.

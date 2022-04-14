@@ -38,9 +38,9 @@ using AngularVelocityFrd = TelemetryServer::AngularVelocityFrd;
 using MagneticFieldFrd = TelemetryServer::MagneticFieldFrd;
 using Imu = TelemetryServer::Imu;
 
-TelemetryServer::TelemetryServer(Mavsdk& mavsdk) :
+TelemetryServer::TelemetryServer(std::shared_ptr<ServerComponent> server_component) :
     ServerPluginBase(),
-    _impl{std::make_unique<TelemetryServerImpl>(mavsdk)}
+    _impl{std::make_unique<TelemetryServerImpl>(server_component)}
 {}
 
 TelemetryServer::~TelemetryServer() {}

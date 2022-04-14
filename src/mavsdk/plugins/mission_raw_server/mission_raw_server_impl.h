@@ -1,15 +1,16 @@
 #pragma once
 
 #include "plugins/mission_raw_server/mission_raw_server.h"
-
 #include "server_plugin_impl_base.h"
-#include "mavlink_mission_transfer.h"
+
+#include <thread>
+#include <condition_variable>
 
 namespace mavsdk {
 
 class MissionRawServerImpl : public ServerPluginImplBase {
 public:
-    explicit MissionRawServerImpl(Mavsdk& mavsdk);
+    explicit MissionRawServerImpl(std::shared_ptr<ServerComponent> server_component);
 
     ~MissionRawServerImpl() override;
 
@@ -26,22 +27,6 @@ public:
     uint32_t clear_all() const;
 
 private:
-    class OurSender : public Sender {
-    public:
-        OurSender(MavsdkImpl& mavsdk_impl);
-        virtual ~OurSender() = default;
-        bool send_message(mavlink_message_t& message) override;
-        [[nodiscard]] uint8_t get_own_system_id() const override;
-        [[nodiscard]] uint8_t get_own_component_id() const override;
-        [[nodiscard]] uint8_t get_system_id() const override;
-        [[nodiscard]] Autopilot autopilot() const override;
-
-        uint8_t current_target_system_id{0};
-
-    private:
-        MavsdkImpl& _mavsdk_impl;
-    };
-
     MissionRawServer::IncomingMissionCallback _incoming_mission_callback{nullptr};
     MissionRawServer::CurrentItemChangedCallback _current_item_changed_callback{nullptr};
     MissionRawServer::ClearAllCallback _clear_all_callback{nullptr};
@@ -67,9 +52,6 @@ private:
         _work_queue.push(task);
         _wait_for_new_task.notify_one();
     }
-
-    OurSender _our_sender;
-    MavlinkMissionTransfer _mission_transfer;
 };
 
 } // namespace mavsdk

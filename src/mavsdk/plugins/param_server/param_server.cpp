@@ -13,9 +13,9 @@ using IntParam = ParamServer::IntParam;
 using FloatParam = ParamServer::FloatParam;
 using AllParams = ParamServer::AllParams;
 
-ParamServer::ParamServer(Mavsdk& mavsdk) :
+ParamServer::ParamServer(std::shared_ptr<ServerComponent> server_component) :
     ServerPluginBase(),
-    _impl{std::make_unique<ParamServerImpl>(mavsdk)}
+    _impl{std::make_unique<ParamServerImpl>(server_component)}
 {}
 
 ParamServer::~ParamServer() {}

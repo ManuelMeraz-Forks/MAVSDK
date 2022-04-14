@@ -16,7 +16,7 @@ public:
         void* cookie{nullptr};
     };
 
-    explicit TelemetryServerImpl(Mavsdk& mavsdk);
+    explicit TelemetryServerImpl(std::shared_ptr<ServerComponent> server_component);
     ~TelemetryServerImpl() override;
 
     void init() override;

@@ -18,7 +18,7 @@
 
 namespace mavsdk {
 
-class Mavsdk;
+class ServerComponent;
 class TelemetryServerImpl;
 
 /**
@@ -28,22 +28,22 @@ class TelemetryServerImpl;
 class TelemetryServer : public ServerPluginBase {
 public:
     /**
-     * @brief Constructor. Creates the plugin for a Mavsdk instance.
+     * @brief Constructor. Creates the plugin for a ServerComponent instance.
      *
      * The plugin is typically created as shown below:
      *
      *     ```cpp
-     *     auto telemetry_server = TelemetryServer(mavsdk);
+     *     auto telemetry_server = TelemetryServer(server_component);
      *     ```
      *
-     * @param system The Mavsdk instance associated with this server plugin.
+     * @param server_component The ServerComponent instance associated with this server plugin.
      */
-    explicit TelemetryServer(Mavsdk& mavsdk);
+    explicit TelemetryServer(std::shared_ptr<ServerComponent> server_component);
 
     /**
      * @brief Destructor (internal use only).
      */
-    ~TelemetryServer();
+    ~TelemetryServer() override;
 
     /**
      * @brief GPS fix type.

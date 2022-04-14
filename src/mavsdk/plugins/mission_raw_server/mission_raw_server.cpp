@@ -14,9 +14,9 @@ using MissionItem = MissionRawServer::MissionItem;
 using MissionPlan = MissionRawServer::MissionPlan;
 using MissionProgress = MissionRawServer::MissionProgress;
 
-MissionRawServer::MissionRawServer(Mavsdk& mavsdk) :
+MissionRawServer::MissionRawServer(std::shared_ptr<ServerComponent> server_component) :
     ServerPluginBase(),
-    _impl{std::make_unique<MissionRawServerImpl>(mavsdk)}
+    _impl{std::make_unique<MissionRawServerImpl>(server_component)}
 {}
 
 MissionRawServer::~MissionRawServer() {}

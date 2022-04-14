@@ -8,7 +8,7 @@ namespace mavsdk {
 
 class ParamServerImpl : public ServerPluginImplBase {
 public:
-    explicit ParamServerImpl(Mavsdk& mavsdk);
+    explicit ParamServerImpl(std::shared_ptr<ServerComponent> server_component);
     ~ParamServerImpl() override;
 
     void init() override;

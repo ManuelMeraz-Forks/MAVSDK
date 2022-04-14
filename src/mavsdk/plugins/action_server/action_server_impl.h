@@ -9,7 +9,7 @@ namespace mavsdk {
 
 class ActionServerImpl : public ServerPluginImplBase {
 public:
-    explicit ActionServerImpl(Mavsdk& mavsdk);
+    explicit ActionServerImpl(std::shared_ptr<ServerComponent> server_component);
     ~ActionServerImpl() override;
 
     void init() override;
@@ -81,7 +81,7 @@ private:
 
     // std::atomic<bool> _should_send_autopilot_version{false};
 
-    std::atomic<FlightMode> _flight_mode{FlightMode::Unknown};
+    std::atomic<ActionServer::FlightMode> _flight_mode{ActionServer::FlightMode::Unknown};
 
     // std::mutex _autopilot_version_mutex{};
     // AutopilotVersion _autopilot_version{MAV_PROTOCOL_CAPABILITY_COMMAND_INT, 0, 0, 0, 0, 0, 0,

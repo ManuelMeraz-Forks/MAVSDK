@@ -11,7 +11,7 @@
 namespace mavsdk {
 
 class MavsdkImpl;
-class ServerComponent;
+class ServerComponentImpl;
 class MavlinkCommandReceiver;
 
 class MavlinkRequestMessageHandler {
@@ -19,7 +19,7 @@ public:
     MavlinkRequestMessageHandler() = delete;
     explicit MavlinkRequestMessageHandler(
         MavsdkImpl& mavsdk_impl,
-        ServerComponent& server_component,
+        ServerComponentImpl& server_component_impl,
         MavlinkCommandReceiver& mavlink_command_receiver);
     ~MavlinkRequestMessageHandler();
 
@@ -46,7 +46,7 @@ private:
     std::vector<Entry> _table{};
 
     MavsdkImpl& _mavsdk_impl;
-    ServerComponent& _server_component;
+    ServerComponentImpl& _server_component_impl;
     MavlinkCommandReceiver& _mavlink_command_receiver;
 };
 

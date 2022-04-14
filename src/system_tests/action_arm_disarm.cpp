@@ -20,7 +20,8 @@ TEST(ActionTest, ArmDisarm)
     ASSERT_EQ(
         mavsdk_autopilot.add_any_connection("udp://127.0.0.1:17000"), ConnectionResult::Success);
 
-    auto action_server = ActionServer{mavsdk_autopilot};
+    auto action_server = ActionServer{
+        mavsdk_autopilot.server_component_by_type(Mavsdk::ServerComponentType::Autopilot)};
 
     auto fut = wait_for_first_system_detected(mavsdk_groundstation);
     ASSERT_EQ(fut.wait_for(std::chrono::seconds(2)), std::future_status::ready);

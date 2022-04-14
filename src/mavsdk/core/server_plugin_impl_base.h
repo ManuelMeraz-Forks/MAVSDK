@@ -1,18 +1,16 @@
 #pragma once
 
-#include <memory>
+#include "server_component.h"
+#include "server_component_impl.h"
 #include "unused.h"
-#include "log.h"
-#include "mavlink_include.h"
-#include "mavsdk_impl.h"
+
+#include <memory>
 
 namespace mavsdk {
 
-class Mavsdk;
-
 class ServerPluginImplBase {
 public:
-    explicit ServerPluginImplBase(Mavsdk& mavsdk);
+    explicit ServerPluginImplBase(std::shared_ptr<ServerComponent> server_component);
     virtual ~ServerPluginImplBase() = default;
 
     /*
@@ -32,7 +30,7 @@ public:
     const ServerPluginImplBase& operator=(const ServerPluginImplBase&) = delete;
 
 protected:
-    MavsdkImpl& _mavsdk_impl;
+    std::shared_ptr<ServerComponentImpl> _server_component_impl;
 };
 
 } // namespace mavsdk

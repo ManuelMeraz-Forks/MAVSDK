@@ -15,9 +15,9 @@ using Position = CameraServer::Position;
 using Quaternion = CameraServer::Quaternion;
 using CaptureInfo = CameraServer::CaptureInfo;
 
-CameraServer::CameraServer(Mavsdk& mavsdk) :
+CameraServer::CameraServer(std::shared_ptr<ServerComponent> server_component) :
     ServerPluginBase(),
-    _impl{std::make_unique<CameraServerImpl>(mavsdk)}
+    _impl{std::make_unique<CameraServerImpl>(server_component)}
 {}
 
 CameraServer::~CameraServer() {}

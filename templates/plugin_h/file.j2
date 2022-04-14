@@ -22,7 +22,7 @@
 namespace mavsdk {
 
 {% if is_server %}
-class Mavsdk;
+class ServerComponent;
 {% else %}
 class System;
 {%- endif -%}
@@ -35,17 +35,17 @@ class {{ plugin_name.upper_camel_case }} : public {% if is_server %}ServerPlugin
 public:
 {% if is_server %}
     /**
-     * @brief Constructor. Creates the plugin for a Mavsdk instance.
+     * @brief Constructor. Creates the plugin for a ServerComponent instance.
      *
      * The plugin is typically created as shown below:
      *
      *     ```cpp
-     *     auto {{ plugin_name.lower_snake_case }} = {{ plugin_name.upper_camel_case }}(mavsdk);
+     *     auto {{ plugin_name.lower_snake_case }} = {{ plugin_name.upper_camel_case }}(server_component);
      *     ```
      *
-     * @param system The Mavsdk instance associated with this server plugin.
+     * @param server_component The ServerComponent instance associated with this server plugin.
      */
-    explicit {{ plugin_name.upper_camel_case }}(Mavsdk& mavsdk);
+    explicit {{ plugin_name.upper_camel_case }}(std::shared_ptr<ServerComponent> server_component);
 {% else %}
     /**
      * @brief Constructor. Creates the plugin for a specific System.
@@ -77,7 +77,7 @@ public:
     /**
      * @brief Destructor (internal use only).
      */
-    ~{{ plugin_name.upper_camel_case }}();
+    ~{{ plugin_name.upper_camel_case }}() override;
 
 {% for enum in enums %}
 {{ indent(enum, 1) }}

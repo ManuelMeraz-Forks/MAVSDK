@@ -16,7 +16,7 @@ using {{ struct.name.upper_camel_case }} = {{ plugin_name.upper_camel_case }}::{
 {% endfor %}
 
 {% if is_server %}
-{{ plugin_name.upper_camel_case }}::{{ plugin_name.upper_camel_case }}(Mavsdk& mavsdk) : ServerPluginBase(), _impl{std::make_unique<{{ plugin_name.upper_camel_case }}Impl>(mavsdk)} {}
+{{ plugin_name.upper_camel_case }}::{{ plugin_name.upper_camel_case }}(std::shared_ptr<ServerComponent> server_component) : ServerPluginBase(), _impl{std::make_unique<{{ plugin_name.upper_camel_case }}Impl>(server_component)} {}
 {% else %}
 {{ plugin_name.upper_camel_case }}::{{ plugin_name.upper_camel_case }}(System& system) : PluginBase(), _impl{std::make_unique<{{ plugin_name.upper_camel_case }}Impl>(system)} {}
 

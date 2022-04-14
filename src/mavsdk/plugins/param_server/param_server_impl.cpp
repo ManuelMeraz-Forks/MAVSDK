@@ -2,15 +2,16 @@
 
 namespace mavsdk {
 
-ParamServerImpl::ParamServerImpl(Mavsdk& mavsdk) : ServerPluginImplBase(mavsdk)
+ParamServerImpl::ParamServerImpl(std::shared_ptr<ServerComponent> server_component) :
+    ServerPluginImplBase(server_component)
 {
     // FIXME: this plugin should support various component IDs
-    _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->register_plugin(this);
+    _server_component_impl->register_plugin(this);
 }
 
 ParamServerImpl::~ParamServerImpl()
 {
-    _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->unregister_plugin(this);
+    _server_component_impl->unregister_plugin(this);
 }
 
 void ParamServerImpl::init() {}
