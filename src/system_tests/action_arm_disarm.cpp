@@ -17,7 +17,8 @@ TEST(ActionTest, ArmDisarm)
         Mavsdk::Configuration{Mavsdk::Configuration::UsageType::Autopilot});
 
     ASSERT_EQ(mavsdk_groundstation.add_any_connection("udp://:17000"), ConnectionResult::Success);
-    ASSERT_EQ(mavsdk_autopilot.add_any_connection("udp://127.0.0.1:17000"), ConnectionResult::Success);
+    ASSERT_EQ(
+        mavsdk_autopilot.add_any_connection("udp://127.0.0.1:17000"), ConnectionResult::Success);
 
     auto action_server = ActionServer{mavsdk_autopilot};
 

@@ -47,14 +47,14 @@ public:
 
     // void process_mavlink_message(mavlink_message_t& message);
 
-    typedef std::function<void(const mavlink_message_t&)> mavlink_message_handler_t;
+    using MavlinkMessageHandler = std::function<void(const mavlink_message_t&)>;
 
     void register_mavlink_message_handler(
-        uint16_t msg_id, const mavlink_message_handler_t& callback, const void* cookie);
+        uint16_t msg_id, const MavlinkMessageHandler& callback, const void* cookie);
     void register_mavlink_message_handler(
         uint16_t msg_id,
         uint8_t cmp_id,
-        const mavlink_message_handler_t& callback,
+        const MavlinkMessageHandler& callback,
         const void* cookie);
 
     void unregister_mavlink_message_handler(uint16_t msg_id, const void* cookie);
@@ -115,7 +115,7 @@ public:
     bool has_camera(int camera_id = -1) const;
     bool has_gimbal() const;
 
-    uint8_t get_system_id() const override;
+    uint8_t get_system_id() const; // override;
     std::vector<uint8_t> component_ids() const;
 
     void set_system_id(uint8_t system_id);

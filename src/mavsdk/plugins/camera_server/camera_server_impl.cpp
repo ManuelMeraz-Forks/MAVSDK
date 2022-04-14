@@ -15,126 +15,146 @@ CameraServerImpl::~CameraServerImpl()
 
 void CameraServerImpl::init()
 {
-    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->register_mavlink_command_handler(
-        MAV_CMD_REQUEST_CAMERA_INFORMATION,
-        [this](const MavlinkCommandReceiver::CommandLong& command) {
-            return process_camera_information_request(command);
-        },
-        this);
-    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->register_mavlink_command_handler(
-        MAV_CMD_REQUEST_CAMERA_SETTINGS,
-        [this](const MavlinkCommandReceiver::CommandLong& command) {
-            return process_camera_settings_request(command);
-        },
-        this);
-    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->register_mavlink_command_handler(
-        MAV_CMD_REQUEST_STORAGE_INFORMATION,
-        [this](const MavlinkCommandReceiver::CommandLong& command) {
-            return process_storage_information_request(command);
-        },
-        this);
-    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->register_mavlink_command_handler(
-        MAV_CMD_STORAGE_FORMAT,
-        [this](const MavlinkCommandReceiver::CommandLong& command) {
-            return process_storage_format(command);
-        },
-        this);
-    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->register_mavlink_command_handler(
-        MAV_CMD_REQUEST_CAMERA_CAPTURE_STATUS,
-        [this](const MavlinkCommandReceiver::CommandLong& command) {
-            return process_camera_capture_status_request(command);
-        },
-        this);
-    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->register_mavlink_command_handler(
-        MAV_CMD_RESET_CAMERA_SETTINGS,
-        [this](const MavlinkCommandReceiver::CommandLong& command) {
-            return process_reset_camera_settings(command);
-        },
-        this);
-    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->register_mavlink_command_handler(
-        MAV_CMD_SET_CAMERA_MODE,
-        [this](const MavlinkCommandReceiver::CommandLong& command) {
-            return process_set_camera_mode(command);
-        },
-        this);
-    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->register_mavlink_command_handler(
-        MAV_CMD_SET_CAMERA_ZOOM,
-        [this](const MavlinkCommandReceiver::CommandLong& command) {
-            return process_set_camera_zoom(command);
-        },
-        this);
-    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->register_mavlink_command_handler(
-        MAV_CMD_SET_CAMERA_FOCUS,
-        [this](const MavlinkCommandReceiver::CommandLong& command) {
-            return process_set_camera_focus(command);
-        },
-        this);
-    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->register_mavlink_command_handler(
-        MAV_CMD_SET_STORAGE_USAGE,
-        [this](const MavlinkCommandReceiver::CommandLong& command) {
-            return process_set_storage_usage(command);
-        },
-        this);
-    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->register_mavlink_command_handler(
-        MAV_CMD_IMAGE_START_CAPTURE,
-        [this](const MavlinkCommandReceiver::CommandLong& command) {
-            return process_image_start_capture(command);
-        },
-        this);
-    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->register_mavlink_command_handler(
-        MAV_CMD_IMAGE_STOP_CAPTURE,
-        [this](const MavlinkCommandReceiver::CommandLong& command) {
-            return process_image_stop_capture(command);
-        },
-        this);
-    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->register_mavlink_command_handler(
-        MAV_CMD_REQUEST_CAMERA_IMAGE_CAPTURE,
-        [this](const MavlinkCommandReceiver::CommandLong& command) {
-            return process_camera_image_capture_request(command);
-        },
-        this);
-    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->register_mavlink_command_handler(
-        MAV_CMD_VIDEO_START_CAPTURE,
-        [this](const MavlinkCommandReceiver::CommandLong& command) {
-            return process_video_start_capture(command);
-        },
-        this);
-    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->register_mavlink_command_handler(
-        MAV_CMD_VIDEO_STOP_CAPTURE,
-        [this](const MavlinkCommandReceiver::CommandLong& command) {
-            return process_video_stop_capture(command);
-        },
-        this);
-    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->register_mavlink_command_handler(
-        MAV_CMD_VIDEO_START_STREAMING,
-        [this](const MavlinkCommandReceiver::CommandLong& command) {
-            return process_video_start_streaming(command);
-        },
-        this);
-    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->register_mavlink_command_handler(
-        MAV_CMD_VIDEO_STOP_STREAMING,
-        [this](const MavlinkCommandReceiver::CommandLong& command) {
-            return process_video_stop_streaming(command);
-        },
-        this);
-    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->register_mavlink_command_handler(
-        MAV_CMD_REQUEST_VIDEO_STREAM_INFORMATION,
-        [this](const MavlinkCommandReceiver::CommandLong& command) {
-            return process_video_stream_information_request(command);
-        },
-        this);
-    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->register_mavlink_command_handler(
-        MAV_CMD_REQUEST_VIDEO_STREAM_STATUS,
-        [this](const MavlinkCommandReceiver::CommandLong& command) {
-            return process_video_stream_status_request(command);
-        },
-        this);
+    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->register_mavlink_command_handler(
+            MAV_CMD_REQUEST_CAMERA_INFORMATION,
+            [this](const MavlinkCommandReceiver::CommandLong& command) {
+                return process_camera_information_request(command);
+            },
+            this);
+    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->register_mavlink_command_handler(
+            MAV_CMD_REQUEST_CAMERA_SETTINGS,
+            [this](const MavlinkCommandReceiver::CommandLong& command) {
+                return process_camera_settings_request(command);
+            },
+            this);
+    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->register_mavlink_command_handler(
+            MAV_CMD_REQUEST_STORAGE_INFORMATION,
+            [this](const MavlinkCommandReceiver::CommandLong& command) {
+                return process_storage_information_request(command);
+            },
+            this);
+    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->register_mavlink_command_handler(
+            MAV_CMD_STORAGE_FORMAT,
+            [this](const MavlinkCommandReceiver::CommandLong& command) {
+                return process_storage_format(command);
+            },
+            this);
+    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->register_mavlink_command_handler(
+            MAV_CMD_REQUEST_CAMERA_CAPTURE_STATUS,
+            [this](const MavlinkCommandReceiver::CommandLong& command) {
+                return process_camera_capture_status_request(command);
+            },
+            this);
+    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->register_mavlink_command_handler(
+            MAV_CMD_RESET_CAMERA_SETTINGS,
+            [this](const MavlinkCommandReceiver::CommandLong& command) {
+                return process_reset_camera_settings(command);
+            },
+            this);
+    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->register_mavlink_command_handler(
+            MAV_CMD_SET_CAMERA_MODE,
+            [this](const MavlinkCommandReceiver::CommandLong& command) {
+                return process_set_camera_mode(command);
+            },
+            this);
+    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->register_mavlink_command_handler(
+            MAV_CMD_SET_CAMERA_ZOOM,
+            [this](const MavlinkCommandReceiver::CommandLong& command) {
+                return process_set_camera_zoom(command);
+            },
+            this);
+    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->register_mavlink_command_handler(
+            MAV_CMD_SET_CAMERA_FOCUS,
+            [this](const MavlinkCommandReceiver::CommandLong& command) {
+                return process_set_camera_focus(command);
+            },
+            this);
+    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->register_mavlink_command_handler(
+            MAV_CMD_SET_STORAGE_USAGE,
+            [this](const MavlinkCommandReceiver::CommandLong& command) {
+                return process_set_storage_usage(command);
+            },
+            this);
+    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->register_mavlink_command_handler(
+            MAV_CMD_IMAGE_START_CAPTURE,
+            [this](const MavlinkCommandReceiver::CommandLong& command) {
+                return process_image_start_capture(command);
+            },
+            this);
+    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->register_mavlink_command_handler(
+            MAV_CMD_IMAGE_STOP_CAPTURE,
+            [this](const MavlinkCommandReceiver::CommandLong& command) {
+                return process_image_stop_capture(command);
+            },
+            this);
+    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->register_mavlink_command_handler(
+            MAV_CMD_REQUEST_CAMERA_IMAGE_CAPTURE,
+            [this](const MavlinkCommandReceiver::CommandLong& command) {
+                return process_camera_image_capture_request(command);
+            },
+            this);
+    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->register_mavlink_command_handler(
+            MAV_CMD_VIDEO_START_CAPTURE,
+            [this](const MavlinkCommandReceiver::CommandLong& command) {
+                return process_video_start_capture(command);
+            },
+            this);
+    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->register_mavlink_command_handler(
+            MAV_CMD_VIDEO_STOP_CAPTURE,
+            [this](const MavlinkCommandReceiver::CommandLong& command) {
+                return process_video_stop_capture(command);
+            },
+            this);
+    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->register_mavlink_command_handler(
+            MAV_CMD_VIDEO_START_STREAMING,
+            [this](const MavlinkCommandReceiver::CommandLong& command) {
+                return process_video_start_streaming(command);
+            },
+            this);
+    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->register_mavlink_command_handler(
+            MAV_CMD_VIDEO_STOP_STREAMING,
+            [this](const MavlinkCommandReceiver::CommandLong& command) {
+                return process_video_stop_streaming(command);
+            },
+            this);
+    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->register_mavlink_command_handler(
+            MAV_CMD_REQUEST_VIDEO_STREAM_INFORMATION,
+            [this](const MavlinkCommandReceiver::CommandLong& command) {
+                return process_video_stream_information_request(command);
+            },
+            this);
+    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->register_mavlink_command_handler(
+            MAV_CMD_REQUEST_VIDEO_STREAM_STATUS,
+            [this](const MavlinkCommandReceiver::CommandLong& command) {
+                return process_video_stream_status_request(command);
+            },
+            this);
 }
 
 void CameraServerImpl::deinit()
 {
     stop_image_capture_interval();
-    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->unregister_all_mavlink_command_handlers(this);
+    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->unregister_all_mavlink_command_handlers(this);
 }
 
 bool CameraServerImpl::parse_version_string(const std::string& version_str)
@@ -218,21 +238,24 @@ CameraServer::Result CameraServerImpl::respond_take_photo(
             return CameraServer::Result::Error;
         case CameraServer::TakePhotoResult::Ok: {
             // Check for error above
-            auto ack_msg = _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(
-                _last_take_photo_command, MAV_RESULT_ACCEPTED);
+            auto ack_msg =
+                _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+                    ->make_command_ack_message(_last_take_photo_command, MAV_RESULT_ACCEPTED);
             _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->send_message(ack_msg);
             // Only break and send the captured below.
             break;
         }
         case CameraServer::TakePhotoResult::Busy: {
-            auto ack_msg = _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(
-                _last_take_photo_command, MAV_RESULT_TEMPORARILY_REJECTED);
+            auto ack_msg = _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+                               ->make_command_ack_message(
+                                   _last_take_photo_command, MAV_RESULT_TEMPORARILY_REJECTED);
             _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->send_message(ack_msg);
             return CameraServer::Result::Success;
         }
         case CameraServer::TakePhotoResult::Failed: {
-            auto ack_msg = _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(
-                _last_take_photo_command, MAV_RESULT_TEMPORARILY_REJECTED);
+            auto ack_msg = _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+                               ->make_command_ack_message(
+                                   _last_take_photo_command, MAV_RESULT_TEMPORARILY_REJECTED);
             _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->send_message(ack_msg);
             return CameraServer::Result::Success;
         }
@@ -256,7 +279,8 @@ CameraServer::Result CameraServerImpl::respond_take_photo(
         _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->get_own_system_id(),
         _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->get_own_component_id(),
         &msg,
-        static_cast<uint32_t>(_mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->get_time().elapsed_s() * 1e3),
+        static_cast<uint32_t>(
+            _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->get_time().elapsed_s() * 1e3),
         capture_info.time_utc_us,
         camera_id,
         capture_info.position.latitude_deg * 1e7,
@@ -287,21 +311,22 @@ void CameraServerImpl::start_image_capture_interval(float interval_s, int32_t co
     // If count == 0, it means capture "forever" until a stop command is received.
     auto remaining = std::make_shared<int32_t>(count == 0 ? INT32_MAX : count);
 
-    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->add_call_every(
-        [this, remaining, index]() {
-            LogDebug() << "capture image timer triggered";
+    _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->add_call_every(
+            [this, remaining, index]() {
+                LogDebug() << "capture image timer triggered";
 
-            if (_take_photo_callback) {
-                _take_photo_callback(index);
-                (*remaining)--;
-            }
+                if (_take_photo_callback) {
+                    _take_photo_callback(index);
+                    (*remaining)--;
+                }
 
-            if (*remaining == 0) {
-                stop_image_capture_interval();
-            }
-        },
-        interval_s,
-        &_image_capture_timer_cookie);
+                if (*remaining == 0) {
+                    stop_image_capture_interval();
+                }
+            },
+            interval_s,
+            &_image_capture_timer_cookie);
 
     _is_image_capture_interval_set = true;
     _image_capture_timer_interval_s = interval_s;
@@ -313,7 +338,8 @@ void CameraServerImpl::start_image_capture_interval(float interval_s, int32_t co
 void CameraServerImpl::stop_image_capture_interval()
 {
     if (_image_capture_timer_cookie) {
-        _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->remove_call_every(_image_capture_timer_cookie);
+        _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+            ->remove_call_every(_image_capture_timer_cookie);
     }
 
     _image_capture_timer_cookie = nullptr;
@@ -328,18 +354,18 @@ std::optional<mavlink_message_t> CameraServerImpl::process_camera_information_re
 
     if (!capabilities) {
         LogDebug() << "early info return";
-        return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(
-            command, MAV_RESULT::MAV_RESULT_ACCEPTED);
+        return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+            ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_ACCEPTED);
     }
 
     if (!_is_information_set) {
-        return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(
-            command, MAV_RESULT::MAV_RESULT_TEMPORARILY_REJECTED);
+        return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+            ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_TEMPORARILY_REJECTED);
     }
 
     // ack needs to be sent before camera information message
-    auto ack_msg =
-        _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_ACCEPTED);
+    auto ack_msg = _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+                       ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_ACCEPTED);
     _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->send_message(ack_msg);
     LogDebug() << "sent info ack";
 
@@ -363,7 +389,8 @@ std::optional<mavlink_message_t> CameraServerImpl::process_camera_information_re
         _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->get_own_system_id(),
         _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->get_own_component_id(),
         &msg,
-        static_cast<uint32_t>(_mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->get_time().elapsed_s() * 1e3),
+        static_cast<uint32_t>(
+            _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->get_time().elapsed_s() * 1e3),
         reinterpret_cast<const uint8_t*>(_information.vendor_name.c_str()),
         reinterpret_cast<const uint8_t*>(_information.model_name.c_str()),
         firmware_version,
@@ -391,13 +418,13 @@ std::optional<mavlink_message_t> CameraServerImpl::process_camera_settings_reque
 
     if (!settings) {
         LogDebug() << "early settings return";
-        return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(
-            command, MAV_RESULT::MAV_RESULT_ACCEPTED);
+        return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+            ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_ACCEPTED);
     }
 
     // ack needs to be sent before camera information message
-    auto ack_msg =
-        _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_ACCEPTED);
+    auto ack_msg = _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+                       ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_ACCEPTED);
     _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->send_message(ack_msg);
     LogDebug() << "sent settings ack";
 
@@ -414,7 +441,8 @@ std::optional<mavlink_message_t> CameraServerImpl::process_camera_settings_reque
         _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->get_own_system_id(),
         _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->get_own_component_id(),
         &msg,
-        static_cast<uint32_t>(_mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->get_time().elapsed_s() * 1e3),
+        static_cast<uint32_t>(
+            _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->get_time().elapsed_s() * 1e3),
         mode_id,
         zoom_level,
         focus_level);
@@ -434,13 +462,13 @@ std::optional<mavlink_message_t> CameraServerImpl::process_storage_information_r
 
     if (!information) {
         LogDebug() << "early storage return";
-        return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(
-            command, MAV_RESULT::MAV_RESULT_ACCEPTED);
+        return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+            ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_ACCEPTED);
     }
 
     // ack needs to be sent before camera information message
-    auto ack_msg =
-        _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_ACCEPTED);
+    auto ack_msg = _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+                       ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_ACCEPTED);
     _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->send_message(ack_msg);
     LogDebug() << "sent storage ack";
 
@@ -464,7 +492,8 @@ std::optional<mavlink_message_t> CameraServerImpl::process_storage_information_r
         _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->get_own_system_id(),
         _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->get_own_component_id(),
         &msg,
-        static_cast<uint32_t>(_mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->get_time().elapsed_s() * 1e3),
+        static_cast<uint32_t>(
+            _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->get_time().elapsed_s() * 1e3),
         storage_id,
         storage_count,
         status,
@@ -497,8 +526,8 @@ CameraServerImpl::process_storage_format(const MavlinkCommandReceiver::CommandLo
 
     LogDebug() << "unsupported storage format request";
 
-    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(
-        command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
+    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
 }
 
 std::optional<mavlink_message_t> CameraServerImpl::process_camera_capture_status_request(
@@ -507,13 +536,13 @@ std::optional<mavlink_message_t> CameraServerImpl::process_camera_capture_status
     auto capture_status = static_cast<bool>(command.params.param1);
 
     if (!capture_status) {
-        return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(
-            command, MAV_RESULT::MAV_RESULT_ACCEPTED);
+        return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+            ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_ACCEPTED);
     }
 
     // ack needs to be sent before camera information message
-    auto ack_msg =
-        _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_ACCEPTED);
+    auto ack_msg = _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+                       ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_ACCEPTED);
     _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->send_message(ack_msg);
 
     // FIXME: why is this needed to prevent dropping messages?
@@ -539,7 +568,8 @@ std::optional<mavlink_message_t> CameraServerImpl::process_camera_capture_status
         _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->get_own_system_id(),
         _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->get_own_component_id(),
         &msg,
-        static_cast<uint32_t>(_mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->get_time().elapsed_s() * 1e3),
+        static_cast<uint32_t>(
+            _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->get_time().elapsed_s() * 1e3),
         image_status,
         video_status,
         _image_capture_timer_interval_s,
@@ -562,8 +592,8 @@ CameraServerImpl::process_reset_camera_settings(const MavlinkCommandReceiver::Co
 
     LogDebug() << "unsupported reset camera settings request";
 
-    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(
-        command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
+    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
 }
 
 std::optional<mavlink_message_t>
@@ -575,8 +605,8 @@ CameraServerImpl::process_set_camera_mode(const MavlinkCommandReceiver::CommandL
 
     LogDebug() << "unsupported set camera mode request";
 
-    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(
-        command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
+    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
 }
 
 std::optional<mavlink_message_t>
@@ -590,8 +620,8 @@ CameraServerImpl::process_set_camera_zoom(const MavlinkCommandReceiver::CommandL
 
     LogDebug() << "unsupported set camera zoom request";
 
-    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(
-        command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
+    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
 }
 
 std::optional<mavlink_message_t>
@@ -605,8 +635,8 @@ CameraServerImpl::process_set_camera_focus(const MavlinkCommandReceiver::Command
 
     LogDebug() << "unsupported set camera focus request";
 
-    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(
-        command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
+    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
 }
 
 std::optional<mavlink_message_t>
@@ -620,8 +650,8 @@ CameraServerImpl::process_set_storage_usage(const MavlinkCommandReceiver::Comman
 
     LogDebug() << "unsupported set storage usage request";
 
-    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(
-        command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
+    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
 }
 
 std::optional<mavlink_message_t>
@@ -640,21 +670,21 @@ CameraServerImpl::process_image_start_capture(const MavlinkCommandReceiver::Comm
 
     if (!_take_photo_callback) {
         LogDebug() << "image capture requested with no take photo subscriber";
-        return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(
-            command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
+        return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+            ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
     }
 
     // single image capture
     if (total_images == 1) {
         if (seq_number <= _image_capture_count) {
             LogDebug() << "received duplicate single image capture request";
-            return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(
-                command, MAV_RESULT::MAV_RESULT_DENIED);
+            return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+                ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_DENIED);
         }
 
         // MAV_RESULT_ACCEPTED must be sent before CAMERA_IMAGE_CAPTURED
-        auto ack_msg = _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(
-            command, MAV_RESULT::MAV_RESULT_IN_PROGRESS);
+        auto ack_msg = _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+                           ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_IN_PROGRESS);
         _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->send_message(ack_msg);
 
         _last_take_photo_command = command;
@@ -669,8 +699,8 @@ CameraServerImpl::process_image_start_capture(const MavlinkCommandReceiver::Comm
 
     start_image_capture_interval(interval_s, total_images, seq_number);
 
-    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(
-        command, MAV_RESULT::MAV_RESULT_ACCEPTED);
+    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_ACCEPTED);
 }
 
 std::optional<mavlink_message_t>
@@ -682,8 +712,8 @@ CameraServerImpl::process_image_stop_capture(const MavlinkCommandReceiver::Comma
     // there is not currently a capture interval active?
     stop_image_capture_interval();
 
-    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(
-        command, MAV_RESULT::MAV_RESULT_ACCEPTED);
+    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_ACCEPTED);
 }
 
 std::optional<mavlink_message_t> CameraServerImpl::process_camera_image_capture_request(
@@ -695,8 +725,8 @@ std::optional<mavlink_message_t> CameraServerImpl::process_camera_image_capture_
 
     LogDebug() << "unsupported image capture request";
 
-    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(
-        command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
+    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
 }
 
 std::optional<mavlink_message_t>
@@ -710,8 +740,8 @@ CameraServerImpl::process_video_start_capture(const MavlinkCommandReceiver::Comm
 
     LogDebug() << "unsupported video start capture request";
 
-    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(
-        command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
+    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
 }
 
 std::optional<mavlink_message_t>
@@ -723,8 +753,8 @@ CameraServerImpl::process_video_stop_capture(const MavlinkCommandReceiver::Comma
 
     LogDebug() << "unsupported video stop capture request";
 
-    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(
-        command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
+    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
 }
 
 std::optional<mavlink_message_t>
@@ -736,8 +766,8 @@ CameraServerImpl::process_video_start_streaming(const MavlinkCommandReceiver::Co
 
     LogDebug() << "unsupported video start streaming request";
 
-    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(
-        command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
+    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
 }
 
 std::optional<mavlink_message_t>
@@ -749,8 +779,8 @@ CameraServerImpl::process_video_stop_streaming(const MavlinkCommandReceiver::Com
 
     LogDebug() << "unsupported video stop streaming request";
 
-    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(
-        command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
+    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
 }
 
 std::optional<mavlink_message_t> CameraServerImpl::process_video_stream_information_request(
@@ -762,8 +792,8 @@ std::optional<mavlink_message_t> CameraServerImpl::process_video_stream_informat
 
     LogDebug() << "unsupported video stream information request";
 
-    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(
-        command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
+    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
 }
 
 std::optional<mavlink_message_t> CameraServerImpl::process_video_stream_status_request(
@@ -775,8 +805,8 @@ std::optional<mavlink_message_t> CameraServerImpl::process_video_stream_status_r
 
     LogDebug() << "unsupported video stream status request";
 
-    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)->make_command_ack_message(
-        command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
+    return _mavsdk_impl.server_component(MAV_COMP_ID_CAMERA)
+        ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
 }
 
 } // namespace mavsdk

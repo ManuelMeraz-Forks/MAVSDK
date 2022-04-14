@@ -4,8 +4,6 @@
 
 namespace mavsdk {
 
-ServerPluginImplBase::ServerPluginImplBase(Mavsdk& mavsdk) :
-    _mavsdk_impl(*mavsdk._impl)
-{}
+ServerPluginImplBase::ServerPluginImplBase(Mavsdk& mavsdk) : _mavsdk_impl(*mavsdk._impl) {}
 
 } // namespace mavsdk

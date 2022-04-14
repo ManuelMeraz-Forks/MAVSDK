@@ -103,13 +103,13 @@ bool SystemImpl::is_connected() const
 }
 
 void SystemImpl::register_mavlink_message_handler(
-    uint16_t msg_id, const mavlink_message_handler_t& callback, const void* cookie)
+    uint16_t msg_id, const MavlinkMessageHandler& callback, const void* cookie)
 {
     _parent.mavlink_message_handler.register_one(msg_id, callback, cookie);
 }
 
 void SystemImpl::register_mavlink_message_handler(
-    uint16_t msg_id, uint8_t cmp_id, const mavlink_message_handler_t& callback, const void* cookie)
+    uint16_t msg_id, uint8_t cmp_id, const MavlinkMessageHandler& callback, const void* cookie)
 {
     _parent.mavlink_message_handler.register_one(msg_id, cmp_id, callback, cookie);
 }

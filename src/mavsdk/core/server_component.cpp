@@ -50,6 +50,28 @@ void ServerComponent::unregister_all_mavlink_command_handlers(const void* cookie
     _mavlink_command_receiver.unregister_all_mavlink_command_handlers(cookie);
 }
 
+void ServerComponent::register_mavlink_message_handler(
+    uint16_t msg_id, const MavlinkMessageHandler& callback, const void* cookie)
+{
+    _mavsdk_impl.mavlink_message_handler.register_one(msg_id, callback, cookie);
+}
+
+void ServerComponent::register_mavlink_message_handler(
+    uint16_t msg_id, uint8_t cmp_id, const MavlinkMessageHandler& callback, const void* cookie)
+{
+    _mavsdk_impl.mavlink_message_handler.register_one(msg_id, cmp_id, callback, cookie);
+}
+
+void ServerComponent::unregister_mavlink_message_handler(uint16_t msg_id, const void* cookie)
+{
+    _mavsdk_impl.mavlink_message_handler.unregister_one(msg_id, cookie);
+}
+
+void ServerComponent::unregister_all_mavlink_message_handlers(const void* cookie)
+{
+    _mavsdk_impl.mavlink_message_handler.unregister_all(cookie);
+}
+
 uint8_t ServerComponent::get_own_system_id() const
 {
     return _mavsdk_impl.get_own_system_id();
@@ -187,5 +209,92 @@ void ServerComponent::call_user_callback_located(
 {
     _mavsdk_impl.call_user_callback_located(filename, linenumber, func);
 }
+
+void ServerComponent::add_capabilities(uint64_t add_capabilities)
+{
+    std::unique_lock<std::mutex> lock(_autopilot_version_mutex);
+    _autopilot_version.capabilities |= add_capabilities;
+
+    // We need to resend capabilities...
+    lock.unlock();
+    if (_should_send_autopilot_version) {
+        send_autopilot_version();
+    }
+}
+
+void ServerComponent::set_flight_sw_version(uint32_t flight_sw_version)
+{
+    std::lock_guard<std::mutex> lock(_autopilot_version_mutex);
+    _autopilot_version.flight_sw_version = flight_sw_version;
+}
+
+void ServerComponent::set_middleware_sw_version(uint32_t middleware_sw_version)
+{
+    std::lock_guard<std::mutex> lock(_autopilot_version_mutex);
+    _autopilot_version.middleware_sw_version = middleware_sw_version;
+}
+
+void ServerComponent::set_os_sw_version(uint32_t os_sw_version)
+{
+    std::lock_guard<std::mutex> lock(_autopilot_version_mutex);
+    _autopilot_version.os_sw_version = os_sw_version;
+}
+
+void ServerComponent::set_board_version(uint32_t board_version)
+{
+    std::lock_guard<std::mutex> lock(_autopilot_version_mutex);
+    _autopilot_version.board_version = board_version;
+}
+
+void ServerComponent::set_vendor_id(uint16_t vendor_id)
+{
+    std::lock_guard<std::mutex> lock(_autopilot_version_mutex);
+    _autopilot_version.vendor_id = vendor_id;
+}
+
+void ServerComponent::set_product_id(uint16_t product_id)
+{
+    std::lock_guard<std::mutex> lock(_autopilot_version_mutex);
+    _autopilot_version.product_id = product_id;
+}
+
+bool ServerComponent::set_uid2(std::string uid2)
+{
+    std::lock_guard<std::mutex> lock(_autopilot_version_mutex);
+    if (uid2.size() > _autopilot_version.uid2.size()) {
+        return false;
+    }
+    _autopilot_version.uid2 = {0};
+    std::copy(uid2.begin(), uid2.end(), _autopilot_version.uid2.data());
+    return true;
+}
+
+
+void ServerComponent::send_autopilot_version()
+{
+    std::lock_guard<std::mutex> lock(_autopilot_version_mutex);
+    const uint8_t custom_values[8] = {0}; // TO-DO: maybe?
+
+    mavlink_message_t msg;
+    mavlink_msg_autopilot_version_pack(
+        _mavsdk_impl.get_own_system_id(),
+        get_own_component_id(),
+        &msg,
+        _autopilot_version.capabilities,
+        _autopilot_version.flight_sw_version,
+        _autopilot_version.middleware_sw_version,
+        _autopilot_version.os_sw_version,
+        _autopilot_version.board_version,
+        custom_values,
+        custom_values,
+        custom_values,
+        _autopilot_version.vendor_id,
+        _autopilot_version.product_id,
+        0,
+        _autopilot_version.uid2.data());
+
+    _mavsdk_impl.send_message(msg);
+}
+
 
 } // namespace mavsdk

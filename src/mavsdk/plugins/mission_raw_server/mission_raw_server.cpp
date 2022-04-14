@@ -16,9 +16,10 @@ using MissionProgress = MissionRawServer::MissionProgress;
 
 MissionRawServer::MissionRawServer(Mavsdk& mavsdk) :
     ServerPluginBase(),
-
-    MissionRawServer::~MissionRawServer()
+    _impl{std::make_unique<MissionRawServerImpl>(mavsdk)}
 {}
+
+MissionRawServer::~MissionRawServer() {}
 
 void MissionRawServer::subscribe_incoming_mission(IncomingMissionCallback callback)
 {

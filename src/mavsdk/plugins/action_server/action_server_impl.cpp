@@ -53,143 +53,156 @@ void ActionServerImpl::init()
     enable_sending_autopilot_version();
 
     // Arming / Disarm / Kill
-    _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->register_mavlink_command_handler(
-        MAV_CMD_COMPONENT_ARM_DISARM,
-        [this](const MavlinkCommandReceiver::CommandLong& command) {
-            ActionServer::ArmDisarm armDisarm{
-                command.params.param1 == 1, command.params.param2 == 21196};
+    _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)
+        ->register_mavlink_command_handler(
+            MAV_CMD_COMPONENT_ARM_DISARM,
+            [this](const MavlinkCommandReceiver::CommandLong& command) {
+                ActionServer::ArmDisarm armDisarm{
+                    command.params.param1 == 1, command.params.param2 == 21196};
 
-            // Check arm states - Ugly.
-            auto request_ack = MAV_RESULT_UNSUPPORTED;
-            bool force = armDisarm.force;
-            if (armDisarm.arm) {
-                request_ack = (_armable || (force && _force_armable)) ?
-                                  MAV_RESULT::MAV_RESULT_ACCEPTED :
-                                  MAV_RESULT_TEMPORARILY_REJECTED;
-            } else {
-                request_ack = (_disarmable || (force && _force_disarmable)) ?
-                                  MAV_RESULT::MAV_RESULT_ACCEPTED :
-                                  MAV_RESULT_TEMPORARILY_REJECTED;
-            }
-
-            if (request_ack == MAV_RESULT::MAV_RESULT_ACCEPTED) {
-                set_server_armed(armDisarm.arm);
-            }
-
-            auto result = (request_ack == MAV_RESULT::MAV_RESULT_ACCEPTED) ?
-                              ActionServer::Result::Success :
-                              ActionServer::Result::CommandDenied;
-
-            _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->call_user_callback([this, armDisarm, result]() {
-                if (_arm_disarm_callback) {
-                    _arm_disarm_callback(result, armDisarm);
-                }
-            });
-
-            return _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->make_command_ack_message(command, request_ack);
-        },
-        this);
-
-    _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->register_mavlink_command_handler(
-        MAV_CMD_NAV_TAKEOFF,
-        [this](const MavlinkCommandReceiver::CommandLong& command) {
-            if (_allow_takeoff) {
-                if (_takeoff_callback) {
-                    _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->call_user_callback(
-                        [this]() { _takeoff_callback(ActionServer::Result::Success, true); });
+                // Check arm states - Ugly.
+                auto request_ack = MAV_RESULT_UNSUPPORTED;
+                bool force = armDisarm.force;
+                if (armDisarm.arm) {
+                    request_ack = (_armable || (force && _force_armable)) ?
+                                      MAV_RESULT::MAV_RESULT_ACCEPTED :
+                                      MAV_RESULT_TEMPORARILY_REJECTED;
+                } else {
+                    request_ack = (_disarmable || (force && _force_disarmable)) ?
+                                      MAV_RESULT::MAV_RESULT_ACCEPTED :
+                                      MAV_RESULT_TEMPORARILY_REJECTED;
                 }
 
-                return _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->make_command_ack_message(
-                    command, MAV_RESULT::MAV_RESULT_ACCEPTED);
-            } else {
-                if (_takeoff_callback) {
-                    _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->call_user_callback([this]() {
-                        _takeoff_callback(ActionServer::Result::CommandDenied, false);
+                if (request_ack == MAV_RESULT::MAV_RESULT_ACCEPTED) {
+                    set_server_armed(armDisarm.arm);
+                }
+
+                auto result = (request_ack == MAV_RESULT::MAV_RESULT_ACCEPTED) ?
+                                  ActionServer::Result::Success :
+                                  ActionServer::Result::CommandDenied;
+
+                _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)
+                    ->call_user_callback([this, armDisarm, result]() {
+                        if (_arm_disarm_callback) {
+                            _arm_disarm_callback(result, armDisarm);
+                        }
                     });
-                }
 
-                return _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->make_command_ack_message(
-                    command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
-            }
-        },
-        this);
+                return _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)
+                    ->make_command_ack_message(command, request_ack);
+            },
+            this);
+
+    _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)
+        ->register_mavlink_command_handler(
+            MAV_CMD_NAV_TAKEOFF,
+            [this](const MavlinkCommandReceiver::CommandLong& command) {
+                if (_allow_takeoff) {
+                    if (_takeoff_callback) {
+                        _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)
+                            ->call_user_callback([this]() {
+                                _takeoff_callback(ActionServer::Result::Success, true);
+                            });
+                    }
+
+                    return _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)
+                        ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_ACCEPTED);
+                } else {
+                    if (_takeoff_callback) {
+                        _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)
+                            ->call_user_callback([this]() {
+                                _takeoff_callback(ActionServer::Result::CommandDenied, false);
+                            });
+                    }
+
+                    return _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)
+                        ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
+                }
+            },
+            this);
 
     // Flight mode
-    _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->register_mavlink_command_handler(
-        MAV_CMD_DO_SET_MODE,
-        [this](const MavlinkCommandReceiver::CommandLong& command) {
-            auto base_mode = static_cast<uint8_t>(command.params.param1);
-            auto is_custom = (base_mode & MAV_MODE_FLAG_CUSTOM_MODE_ENABLED) ==
-                             MAV_MODE_FLAG_CUSTOM_MODE_ENABLED;
-            ActionServer::FlightMode request_flight_mode = ActionServer::FlightMode::Unknown;
+    _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)
+        ->register_mavlink_command_handler(
+            MAV_CMD_DO_SET_MODE,
+            [this](const MavlinkCommandReceiver::CommandLong& command) {
+                auto base_mode = static_cast<uint8_t>(command.params.param1);
+                auto is_custom = (base_mode & MAV_MODE_FLAG_CUSTOM_MODE_ENABLED) ==
+                                 MAV_MODE_FLAG_CUSTOM_MODE_ENABLED;
+                ActionServer::FlightMode request_flight_mode = ActionServer::FlightMode::Unknown;
 
-            auto custom_mode = static_cast<uint8_t>(command.params.param2);
-            auto sub_custom_mode = static_cast<uint8_t>(command.params.param3);
+                auto custom_mode = static_cast<uint8_t>(command.params.param2);
+                auto sub_custom_mode = static_cast<uint8_t>(command.params.param3);
 
-            if (is_custom) {
-                // PX4 uses custom modes
-                px4_custom_mode px4_mode{};
-                px4_mode.main_mode = custom_mode;
-                px4_mode.sub_mode = sub_custom_mode;
-                auto system_flight_mode = to_flight_mode_from_px4_mode(px4_mode.data);
-                request_flight_mode = telemetry_flight_mode_from_flight_mode(system_flight_mode);
-            } else {
-                // TO DO: non PX4 flight modes...
-                // Just bug out now if not using PX4 modes
-                _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->call_user_callback([this, request_flight_mode]() {
-                    if (_flight_mode_change_callback) {
-                        _flight_mode_change_callback(
-                            ActionServer::Result::ParameterError, request_flight_mode);
-                    }
-                });
+                if (is_custom) {
+                    // PX4 uses custom modes
+                    px4_custom_mode px4_mode{};
+                    px4_mode.main_mode = custom_mode;
+                    px4_mode.sub_mode = sub_custom_mode;
+                    auto system_flight_mode = to_flight_mode_from_px4_mode(px4_mode.data);
+                    request_flight_mode =
+                        telemetry_flight_mode_from_flight_mode(system_flight_mode);
+                } else {
+                    // TO DO: non PX4 flight modes...
+                    // Just bug out now if not using PX4 modes
+                    _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)
+                        ->call_user_callback([this, request_flight_mode]() {
+                            if (_flight_mode_change_callback) {
+                                _flight_mode_change_callback(
+                                    ActionServer::Result::ParameterError, request_flight_mode);
+                            }
+                        });
 
-                return _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->make_command_ack_message(
-                    command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
-            }
-
-            bool allow_mode = false;
-            switch (request_flight_mode) {
-                case ActionServer::FlightMode::Manual:
-                    allow_mode = true;
-                    break;
-                case ActionServer::FlightMode::Mission:
-                    allow_mode = _allowed_flight_modes.can_auto_mode;
-                    break;
-                case ActionServer::FlightMode::Stabilized:
-                    allow_mode = _allowed_flight_modes.can_stabilize_mode;
-                    break;
-                case ActionServer::FlightMode::Offboard:
-                    allow_mode = _allowed_flight_modes.can_guided_mode;
-                    break;
-                default:
-                    allow_mode = false;
-                    break;
-            }
-
-            // PX4...
-            px4_custom_mode px4_mode{};
-            px4_mode.data = get_custom_mode();
-
-            if (allow_mode) {
-                px4_mode.main_mode = custom_mode;
-                px4_mode.sub_mode = sub_custom_mode;
-                set_custom_mode(px4_mode.data);
-            }
-
-            _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->call_user_callback([this, allow_mode, request_flight_mode]() {
-                if (_flight_mode_change_callback) {
-                    _flight_mode_change_callback(
-                        allow_mode ? ActionServer::Result::Success :
-                                     ActionServer::Result::CommandDenied,
-                        request_flight_mode);
+                    return _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)
+                        ->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
                 }
-            });
 
-            return _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->make_command_ack_message(
-                command,
-                allow_mode ? MAV_RESULT::MAV_RESULT_ACCEPTED : MAV_RESULT_TEMPORARILY_REJECTED);
-        },
-        this);
+                bool allow_mode = false;
+                switch (request_flight_mode) {
+                    case ActionServer::FlightMode::Manual:
+                        allow_mode = true;
+                        break;
+                    case ActionServer::FlightMode::Mission:
+                        allow_mode = _allowed_flight_modes.can_auto_mode;
+                        break;
+                    case ActionServer::FlightMode::Stabilized:
+                        allow_mode = _allowed_flight_modes.can_stabilize_mode;
+                        break;
+                    case ActionServer::FlightMode::Offboard:
+                        allow_mode = _allowed_flight_modes.can_guided_mode;
+                        break;
+                    default:
+                        allow_mode = false;
+                        break;
+                }
+
+                // PX4...
+                px4_custom_mode px4_mode{};
+                px4_mode.data = get_custom_mode();
+
+                if (allow_mode) {
+                    px4_mode.main_mode = custom_mode;
+                    px4_mode.sub_mode = sub_custom_mode;
+                    set_custom_mode(px4_mode.data);
+                }
+
+                _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)
+                    ->call_user_callback([this, allow_mode, request_flight_mode]() {
+                        if (_flight_mode_change_callback) {
+                            _flight_mode_change_callback(
+                                allow_mode ? ActionServer::Result::Success :
+                                             ActionServer::Result::CommandDenied,
+                                request_flight_mode);
+                        }
+                    });
+
+                return _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)
+                    ->make_command_ack_message(
+                        command,
+                        allow_mode ? MAV_RESULT::MAV_RESULT_ACCEPTED :
+                                     MAV_RESULT_TEMPORARILY_REJECTED);
+            },
+            this);
 }
 
 void ActionServerImpl::deinit() {}
@@ -288,89 +301,16 @@ uint32_t ActionServerImpl::get_custom_mode() const
     return _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->get_custom_mode();
 }
 
-void ActionServerImpl::enable_sending_autopilot_version()
-{
-    _should_send_autopilot_version = true;
-}
+//void ActionServerImpl::enable_sending_autopilot_version()
+//{
+//    _should_send_autopilot_version = true;
+//}
 
-void ActionServerImpl::set_flight_sw_version(uint32_t flight_sw_version)
-{
-    std::lock_guard<std::mutex> lock(_autopilot_version_mutex);
-    _autopilot_version.flight_sw_version = flight_sw_version;
-}
-
-void ActionServerImpl::set_middleware_sw_version(uint32_t middleware_sw_version)
-{
-    std::lock_guard<std::mutex> lock(_autopilot_version_mutex);
-    _autopilot_version.middleware_sw_version = middleware_sw_version;
-}
-
-void ActionServerImpl::set_os_sw_version(uint32_t os_sw_version)
-{
-    std::lock_guard<std::mutex> lock(_autopilot_version_mutex);
-    _autopilot_version.os_sw_version = os_sw_version;
-}
-
-void ActionServerImpl::set_board_version(uint32_t board_version)
-{
-    std::lock_guard<std::mutex> lock(_autopilot_version_mutex);
-    _autopilot_version.board_version = board_version;
-}
-
-void ActionServerImpl::set_vendor_id(uint16_t vendor_id)
-{
-    std::lock_guard<std::mutex> lock(_autopilot_version_mutex);
-    _autopilot_version.vendor_id = vendor_id;
-}
-
-void ActionServerImpl::set_product_id(uint16_t product_id)
-{
-    std::lock_guard<std::mutex> lock(_autopilot_version_mutex);
-    _autopilot_version.product_id = product_id;
-}
-
-bool ActionServerImpl::set_uid2(std::string uid2)
-{
-    std::lock_guard<std::mutex> lock(_autopilot_version_mutex);
-    if (uid2.size() > _autopilot_version.uid2.size()) {
-        return false;
-    }
-    _autopilot_version.uid2 = {0};
-    std::copy(uid2.begin(), uid2.end(), _autopilot_version.uid2.data());
-    return true;
-}
-
-void ActionServerImpl::send_autopilot_version()
-{
-    std::lock_guard<std::mutex> lock(_autopilot_version_mutex);
-    const uint8_t custom_values[8] = {0}; // TO-DO: maybe?
-
-    mavlink_message_t msg;
-    mavlink_msg_autopilot_version_pack(
-        _mavsdk_impl.get_own_system_id(),
-        _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->get_own_component_id(),
-        &msg,
-        _autopilot_version.capabilities,
-        _autopilot_version.flight_sw_version,
-        _autopilot_version.middleware_sw_version,
-        _autopilot_version.os_sw_version,
-        _autopilot_version.board_version,
-        custom_values,
-        custom_values,
-        custom_values,
-        _autopilot_version.vendor_id,
-        _autopilot_version.product_id,
-        0,
-        _autopilot_version.uid2.data());
-
-    _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->send_message(msg);
-}
-
-ActionServerImpl::AutopilotVersion ActionServerImpl::get_autopilot_version_data()
-{
-    std::lock_guard<std::mutex> lock(_autopilot_version_mutex);
-    return _autopilot_version;
-}
+//ActionServerImpl::AutopilotVersion ActionServerImpl::get_autopilot_version_data()
+//{
+//    std::lock_guard<std::mutex> lock(_autopilot_version_mutex);
+//    return _autopilot_version;
+//}
 
 // uint8_t ActionServerImpl::get_autopilot_id() const
 //{
@@ -398,16 +338,9 @@ bool ActionServerImpl::is_server_armed() const
     return (get_base_mode() & MAV_MODE_FLAG_SAFETY_ARMED) == MAV_MODE_FLAG_SAFETY_ARMED;
 }
 
-void ActionServerImpl::add_capabilities(uint64_t add_capabilities)
-{
-    std::unique_lock<std::mutex> lock(_autopilot_version_mutex);
-    _autopilot_version.capabilities |= add_capabilities;
-
-    // We need to resend capabilities...
-    lock.unlock();
-    if (_should_send_autopilot_version) {
-        send_autopilot_version();
-    }
-}
+//void ActionServerImpl::add_capabilities(uint64_t add_capabilities)
+//{
+//    _mavsdk_impl.server_component(MAV_COMP_ID_AUTOPILOT1)->add_capabilities(add_capabilities);
+//}
 
 } // namespace mavsdk

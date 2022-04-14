@@ -44,14 +44,16 @@ TEST(SystemTest, TakePhoto)
     auto received_captured_info_prom = std::promise<void>{};
     auto received_captured_info_fut = received_captured_info_prom.get_future();
 
-    camera.subscribe_capture_info([&camera, &received_captured_info_prom](Camera::CaptureInfo capture_info) {
-        LogInfo() << "Received captured info for image: " << capture_info.index;
-        // Unsubscribe again to prevent double setting promise.
-        camera.subscribe_capture_info(nullptr);
-        received_captured_info_prom.set_value();
-    });
+    camera.subscribe_capture_info(
+        [&camera, &received_captured_info_prom](Camera::CaptureInfo capture_info) {
+            LogInfo() << "Received captured info for image: " << capture_info.index;
+            // Unsubscribe again to prevent double setting promise.
+            camera.subscribe_capture_info(nullptr);
+            received_captured_info_prom.set_value();
+        });
 
     EXPECT_EQ(camera.take_photo(), Camera::Result::Success);
-    ASSERT_EQ(received_captured_info_fut.wait_for(std::chrono::seconds(1)), std::future_status::ready);
+    ASSERT_EQ(
+        received_captured_info_fut.wait_for(std::chrono::seconds(1)), std::future_status::ready);
     received_captured_info_fut.get();
 }
