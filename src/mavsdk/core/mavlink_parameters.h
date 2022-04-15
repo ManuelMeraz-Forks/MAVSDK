@@ -181,6 +181,8 @@ public:
 
     std::pair<Result, ParamValue>
     retrieve_server_param(const std::string& name, ParamValue value_type);
+    std::pair<Result, float> retrieve_server_param_float(const std::string& name);
+    std::pair<Result, int> retrieve_server_param_int(const std::string& name);
 
     using GetParamAnyCallback = std::function<void(Result, ParamValue)>;
 
@@ -314,6 +316,8 @@ private:
     void process_param_request_read(const mavlink_message_t& message);
     void process_param_ext_request_read(const mavlink_message_t& message);
     void process_param_request_list(const mavlink_message_t& message);
+
+    bool _parameter_debugging{false};
 };
 
 } // namespace mavsdk
