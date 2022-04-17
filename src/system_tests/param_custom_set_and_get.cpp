@@ -30,10 +30,6 @@ TEST(SystemTest, ParamCustomSetAndGet)
     mavsdk_groundstation.set_configuration(
         Mavsdk::Configuration{Mavsdk::Configuration::UsageType::GroundStation});
 
-    // We reduce the timeout for this test because some tests just trigger a timeout
-    // and we don't want to wait forever.
-    mavsdk_groundstation.set_timeout_s(0.1);
-
     Mavsdk mavsdk_autopilot;
     mavsdk_autopilot.set_configuration(
         Mavsdk::Configuration{Mavsdk::Configuration::UsageType::Autopilot});
@@ -69,7 +65,7 @@ TEST(SystemTest, ParamCustomSetAndGet)
     auto result = param.set_param_custom(param_name, data_shorter);
     EXPECT_EQ(result, Param::Result::Success);
 
-    //// Check if it has been changed correctly
+    // Check if it has been changed correctly
     result_pair = param.get_param_custom(param_name);
     EXPECT_EQ(result_pair.first, Param::Result::Success);
     EXPECT_EQ(result_pair.second, data_shorter);
