@@ -117,11 +117,10 @@ private:
 
     mutable std::recursive_mutex _systems_mutex{};
     std::vector<std::pair<uint8_t, std::shared_ptr<System>>> _systems{};
+    Mavsdk::NewSystemCallback _new_system_callback{nullptr};
 
     mutable std::mutex _server_components_mutex{};
     std::vector<std::pair<uint8_t, std::shared_ptr<ServerComponent>>> _server_components{};
-
-    Mavsdk::NewSystemCallback _new_system_callback{nullptr};
 
     Time _time{};
 
