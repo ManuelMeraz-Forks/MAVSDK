@@ -2,6 +2,7 @@ set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
 configure_file(version.h.in version.h)
+configure_file(mavlink_include.h.in mavlink_include.h)
 
 target_sources(mavsdk
     PRIVATE

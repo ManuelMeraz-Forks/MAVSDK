@@ -1,0 +1,3 @@
+#pragma once
+
+#include "@MAVLINK_DIALECT@/mavlink.h"
