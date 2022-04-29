@@ -29,7 +29,7 @@ void InfoServerImpl::init()
     _parent->register_mavlink_command_handler(
         MAV_CMD_REQUEST_AUTOPILOT_CAPABILITIES,
         [this](const MavlinkCommandReceiver::CommandLong& command) {
-            return process_command_request_autopilot_capabilities(command);
+            return process_command_request_autopilot_version(command);
         },
         this);
 
@@ -76,16 +76,17 @@ InfoServerImpl::process_command_request_message(const MavlinkCommandReceiver::Co
     return _parent->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_DENIED);
 }
 
-mavlink_message_t InfoServerImpl::process_command_request_autopilot_capabilities(
+mavlink_message_t InfoServerImpl::process_command_request_autopilot_version(
     const MavlinkCommandReceiver::CommandLong& command)
 {
-    _parent->send_flight_information_request();
+    send_autopilot_version();
     return _parent->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_ACCEPTED);
 }
 
 mavlink_message_t InfoServerImpl::process_command_request_protocol_version(
     const MavlinkCommandReceiver::CommandLong& command)
 {
+    send_protocol_version();
     return _parent->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_ACCEPTED);
 }
 

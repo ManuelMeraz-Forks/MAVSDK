@@ -27,7 +27,8 @@ public:
 private:
     mavlink_message_t
     process_command_request_message(const MavlinkCommandReceiver::CommandLong& command);
-    mavlink_message_t process_command_request_autopilot_capabilities(
+    mavlink_message_t
+    process_command_request_autopilot_version(
         const MavlinkCommandReceiver::CommandLong& command);
     mavlink_message_t
     process_command_request_protocol_version(const MavlinkCommandReceiver::CommandLong& command);
