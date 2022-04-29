@@ -20,12 +20,12 @@ InfoServerImpl::~InfoServerImpl()
 void InfoServerImpl::init()
 
 {
-//    _parent->register_mavlink_command_handler(
-//        MAV_CMD_REQUEST_MESSAGE,
-//        [this](const MavlinkCommandReceiver::CommandLong& command) {
-//            return handle_command_long(command);
-//        },
-//        this);
+    //    _parent->register_mavlink_command_handler(
+    //        MAV_CMD_REQUEST_MESSAGE,
+    //        [this](const MavlinkCommandReceiver::CommandLong& command) {
+    //            return handle_command_long(command);
+    //        },
+    //        this);
     //    _parent->register_mavlink_command_handler(
     //        mavlink::minimal,
     //        [this](const mavlink_message_t& message) { process_autopilot_version(message); },

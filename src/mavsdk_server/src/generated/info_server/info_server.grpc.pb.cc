@@ -24,11 +24,8 @@ namespace rpc {
 namespace info_server {
 
 static const char* InfoServerService_method_names[] = {
-  "/mavsdk.rpc.info_server.InfoServerService/ProvideFlightInformation",
-  "/mavsdk.rpc.info_server.InfoServerService/ProvideIdentification",
-  "/mavsdk.rpc.info_server.InfoServerService/ProvideProduct",
-  "/mavsdk.rpc.info_server.InfoServerService/ProvideVersion",
-  "/mavsdk.rpc.info_server.InfoServerService/ProvideSpeedFactor",
+  "/mavsdk.rpc.info_server.InfoServerService/ProvideAutopilotVersion",
+  "/mavsdk.rpc.info_server.InfoServerService/ProvideProtocolVersion",
 };
 
 std::unique_ptr< InfoServerService::Stub> InfoServerService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -38,124 +35,52 @@ std::unique_ptr< InfoServerService::Stub> InfoServerService::NewStub(const std::
 }
 
 InfoServerService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
-  : channel_(channel), rpcmethod_ProvideFlightInformation_(InfoServerService_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ProvideIdentification_(InfoServerService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ProvideProduct_(InfoServerService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ProvideVersion_(InfoServerService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_ProvideSpeedFactor_(InfoServerService_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  : channel_(channel), rpcmethod_ProvideAutopilotVersion_(InfoServerService_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ProvideProtocolVersion_(InfoServerService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
-::grpc::Status InfoServerService::Stub::ProvideFlightInformation(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest& request, ::mavsdk::rpc::info_server::ProvideFlightInformationResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::mavsdk::rpc::info_server::ProvideFlightInformationRequest, ::mavsdk::rpc::info_server::ProvideFlightInformationResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_ProvideFlightInformation_, context, request, response);
+::grpc::Status InfoServerService::Stub::ProvideAutopilotVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest& request, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_ProvideAutopilotVersion_, context, request, response);
 }
 
-void InfoServerService::Stub::async::ProvideFlightInformation(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest* request, ::mavsdk::rpc::info_server::ProvideFlightInformationResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::mavsdk::rpc::info_server::ProvideFlightInformationRequest, ::mavsdk::rpc::info_server::ProvideFlightInformationResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ProvideFlightInformation_, context, request, response, std::move(f));
+void InfoServerService::Stub::async::ProvideAutopilotVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest* request, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ProvideAutopilotVersion_, context, request, response, std::move(f));
 }
 
-void InfoServerService::Stub::async::ProvideFlightInformation(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest* request, ::mavsdk::rpc::info_server::ProvideFlightInformationResponse* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ProvideFlightInformation_, context, request, response, reactor);
+void InfoServerService::Stub::async::ProvideAutopilotVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest* request, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ProvideAutopilotVersion_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideFlightInformationResponse>* InfoServerService::Stub::PrepareAsyncProvideFlightInformationRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::mavsdk::rpc::info_server::ProvideFlightInformationResponse, ::mavsdk::rpc::info_server::ProvideFlightInformationRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_ProvideFlightInformation_, context, request);
+::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse>* InfoServerService::Stub::PrepareAsyncProvideAutopilotVersionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse, ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_ProvideAutopilotVersion_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideFlightInformationResponse>* InfoServerService::Stub::AsyncProvideFlightInformationRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse>* InfoServerService::Stub::AsyncProvideAutopilotVersionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
-    this->PrepareAsyncProvideFlightInformationRaw(context, request, cq);
+    this->PrepareAsyncProvideAutopilotVersionRaw(context, request, cq);
   result->StartCall();
   return result;
 }
 
-::grpc::Status InfoServerService::Stub::ProvideIdentification(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest& request, ::mavsdk::rpc::info_server::ProvideIdentificationResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::mavsdk::rpc::info_server::ProvideIdentificationRequest, ::mavsdk::rpc::info_server::ProvideIdentificationResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_ProvideIdentification_, context, request, response);
+::grpc::Status InfoServerService::Stub::ProvideProtocolVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest& request, ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest, ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_ProvideProtocolVersion_, context, request, response);
 }
 
-void InfoServerService::Stub::async::ProvideIdentification(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest* request, ::mavsdk::rpc::info_server::ProvideIdentificationResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::mavsdk::rpc::info_server::ProvideIdentificationRequest, ::mavsdk::rpc::info_server::ProvideIdentificationResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ProvideIdentification_, context, request, response, std::move(f));
+void InfoServerService::Stub::async::ProvideProtocolVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest* request, ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest, ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ProvideProtocolVersion_, context, request, response, std::move(f));
 }
 
-void InfoServerService::Stub::async::ProvideIdentification(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest* request, ::mavsdk::rpc::info_server::ProvideIdentificationResponse* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ProvideIdentification_, context, request, response, reactor);
+void InfoServerService::Stub::async::ProvideProtocolVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest* request, ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ProvideProtocolVersion_, context, request, response, reactor);
 }
 
-::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideIdentificationResponse>* InfoServerService::Stub::PrepareAsyncProvideIdentificationRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::mavsdk::rpc::info_server::ProvideIdentificationResponse, ::mavsdk::rpc::info_server::ProvideIdentificationRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_ProvideIdentification_, context, request);
+::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse>* InfoServerService::Stub::PrepareAsyncProvideProtocolVersionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse, ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_ProvideProtocolVersion_, context, request);
 }
 
-::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideIdentificationResponse>* InfoServerService::Stub::AsyncProvideIdentificationRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest& request, ::grpc::CompletionQueue* cq) {
+::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse>* InfoServerService::Stub::AsyncProvideProtocolVersionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
-    this->PrepareAsyncProvideIdentificationRaw(context, request, cq);
-  result->StartCall();
-  return result;
-}
-
-::grpc::Status InfoServerService::Stub::ProvideProduct(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProductRequest& request, ::mavsdk::rpc::info_server::ProvideProductResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::mavsdk::rpc::info_server::ProvideProductRequest, ::mavsdk::rpc::info_server::ProvideProductResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_ProvideProduct_, context, request, response);
-}
-
-void InfoServerService::Stub::async::ProvideProduct(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProductRequest* request, ::mavsdk::rpc::info_server::ProvideProductResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::mavsdk::rpc::info_server::ProvideProductRequest, ::mavsdk::rpc::info_server::ProvideProductResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ProvideProduct_, context, request, response, std::move(f));
-}
-
-void InfoServerService::Stub::async::ProvideProduct(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProductRequest* request, ::mavsdk::rpc::info_server::ProvideProductResponse* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ProvideProduct_, context, request, response, reactor);
-}
-
-::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideProductResponse>* InfoServerService::Stub::PrepareAsyncProvideProductRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProductRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::mavsdk::rpc::info_server::ProvideProductResponse, ::mavsdk::rpc::info_server::ProvideProductRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_ProvideProduct_, context, request);
-}
-
-::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideProductResponse>* InfoServerService::Stub::AsyncProvideProductRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProductRequest& request, ::grpc::CompletionQueue* cq) {
-  auto* result =
-    this->PrepareAsyncProvideProductRaw(context, request, cq);
-  result->StartCall();
-  return result;
-}
-
-::grpc::Status InfoServerService::Stub::ProvideVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideVersionRequest& request, ::mavsdk::rpc::info_server::ProvideVersionResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::mavsdk::rpc::info_server::ProvideVersionRequest, ::mavsdk::rpc::info_server::ProvideVersionResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_ProvideVersion_, context, request, response);
-}
-
-void InfoServerService::Stub::async::ProvideVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideVersionRequest* request, ::mavsdk::rpc::info_server::ProvideVersionResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::mavsdk::rpc::info_server::ProvideVersionRequest, ::mavsdk::rpc::info_server::ProvideVersionResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ProvideVersion_, context, request, response, std::move(f));
-}
-
-void InfoServerService::Stub::async::ProvideVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideVersionRequest* request, ::mavsdk::rpc::info_server::ProvideVersionResponse* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ProvideVersion_, context, request, response, reactor);
-}
-
-::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideVersionResponse>* InfoServerService::Stub::PrepareAsyncProvideVersionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideVersionRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::mavsdk::rpc::info_server::ProvideVersionResponse, ::mavsdk::rpc::info_server::ProvideVersionRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_ProvideVersion_, context, request);
-}
-
-::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideVersionResponse>* InfoServerService::Stub::AsyncProvideVersionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideVersionRequest& request, ::grpc::CompletionQueue* cq) {
-  auto* result =
-    this->PrepareAsyncProvideVersionRaw(context, request, cq);
-  result->StartCall();
-  return result;
-}
-
-::grpc::Status InfoServerService::Stub::ProvideSpeedFactor(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest& request, ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse* response) {
-  return ::grpc::internal::BlockingUnaryCall< ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest, ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_ProvideSpeedFactor_, context, request, response);
-}
-
-void InfoServerService::Stub::async::ProvideSpeedFactor(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest* request, ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse* response, std::function<void(::grpc::Status)> f) {
-  ::grpc::internal::CallbackUnaryCall< ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest, ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ProvideSpeedFactor_, context, request, response, std::move(f));
-}
-
-void InfoServerService::Stub::async::ProvideSpeedFactor(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest* request, ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse* response, ::grpc::ClientUnaryReactor* reactor) {
-  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ProvideSpeedFactor_, context, request, response, reactor);
-}
-
-::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse>* InfoServerService::Stub::PrepareAsyncProvideSpeedFactorRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest& request, ::grpc::CompletionQueue* cq) {
-  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse, ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_ProvideSpeedFactor_, context, request);
-}
-
-::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse>* InfoServerService::Stub::AsyncProvideSpeedFactorRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest& request, ::grpc::CompletionQueue* cq) {
-  auto* result =
-    this->PrepareAsyncProvideSpeedFactorRaw(context, request, cq);
+    this->PrepareAsyncProvideProtocolVersionRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -164,87 +89,36 @@ InfoServerService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       InfoServerService_method_names[0],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< InfoServerService::Service, ::mavsdk::rpc::info_server::ProvideFlightInformationRequest, ::mavsdk::rpc::info_server::ProvideFlightInformationResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< InfoServerService::Service, ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InfoServerService::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest* req,
-             ::mavsdk::rpc::info_server::ProvideFlightInformationResponse* resp) {
-               return service->ProvideFlightInformation(ctx, req, resp);
+             const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest* req,
+             ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse* resp) {
+               return service->ProvideAutopilotVersion(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       InfoServerService_method_names[1],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< InfoServerService::Service, ::mavsdk::rpc::info_server::ProvideIdentificationRequest, ::mavsdk::rpc::info_server::ProvideIdentificationResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+      new ::grpc::internal::RpcMethodHandler< InfoServerService::Service, ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest, ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InfoServerService::Service* service,
              ::grpc::ServerContext* ctx,
-             const ::mavsdk::rpc::info_server::ProvideIdentificationRequest* req,
-             ::mavsdk::rpc::info_server::ProvideIdentificationResponse* resp) {
-               return service->ProvideIdentification(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InfoServerService_method_names[2],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< InfoServerService::Service, ::mavsdk::rpc::info_server::ProvideProductRequest, ::mavsdk::rpc::info_server::ProvideProductResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](InfoServerService::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::mavsdk::rpc::info_server::ProvideProductRequest* req,
-             ::mavsdk::rpc::info_server::ProvideProductResponse* resp) {
-               return service->ProvideProduct(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InfoServerService_method_names[3],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< InfoServerService::Service, ::mavsdk::rpc::info_server::ProvideVersionRequest, ::mavsdk::rpc::info_server::ProvideVersionResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](InfoServerService::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::mavsdk::rpc::info_server::ProvideVersionRequest* req,
-             ::mavsdk::rpc::info_server::ProvideVersionResponse* resp) {
-               return service->ProvideVersion(ctx, req, resp);
-             }, this)));
-  AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InfoServerService_method_names[4],
-      ::grpc::internal::RpcMethod::NORMAL_RPC,
-      new ::grpc::internal::RpcMethodHandler< InfoServerService::Service, ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest, ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
-          [](InfoServerService::Service* service,
-             ::grpc::ServerContext* ctx,
-             const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest* req,
-             ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse* resp) {
-               return service->ProvideSpeedFactor(ctx, req, resp);
+             const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest* req,
+             ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse* resp) {
+               return service->ProvideProtocolVersion(ctx, req, resp);
              }, this)));
 }
 
 InfoServerService::Service::~Service() {
 }
 
-::grpc::Status InfoServerService::Service::ProvideFlightInformation(::grpc::ServerContext* context, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest* request, ::mavsdk::rpc::info_server::ProvideFlightInformationResponse* response) {
+::grpc::Status InfoServerService::Service::ProvideAutopilotVersion(::grpc::ServerContext* context, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest* request, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse* response) {
   (void) context;
   (void) request;
   (void) response;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
-::grpc::Status InfoServerService::Service::ProvideIdentification(::grpc::ServerContext* context, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest* request, ::mavsdk::rpc::info_server::ProvideIdentificationResponse* response) {
-  (void) context;
-  (void) request;
-  (void) response;
-  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-}
-
-::grpc::Status InfoServerService::Service::ProvideProduct(::grpc::ServerContext* context, const ::mavsdk::rpc::info_server::ProvideProductRequest* request, ::mavsdk::rpc::info_server::ProvideProductResponse* response) {
-  (void) context;
-  (void) request;
-  (void) response;
-  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-}
-
-::grpc::Status InfoServerService::Service::ProvideVersion(::grpc::ServerContext* context, const ::mavsdk::rpc::info_server::ProvideVersionRequest* request, ::mavsdk::rpc::info_server::ProvideVersionResponse* response) {
-  (void) context;
-  (void) request;
-  (void) response;
-  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-}
-
-::grpc::Status InfoServerService::Service::ProvideSpeedFactor(::grpc::ServerContext* context, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest* request, ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse* response) {
+::grpc::Status InfoServerService::Service::ProvideProtocolVersion(::grpc::ServerContext* context, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest* request, ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse* response) {
   (void) context;
   (void) request;
   (void) response;

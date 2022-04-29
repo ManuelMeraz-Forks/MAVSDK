@@ -9,10 +9,8 @@
 
 namespace mavsdk {
 
-using FlightInfo = InfoServer::FlightInfo;
-using Identification = InfoServer::Identification;
-using Product = InfoServer::Product;
-using Version = InfoServer::Version;
+using ProtocolVersion = InfoServer::ProtocolVersion;
+using AutopilotVersion = InfoServer::AutopilotVersion;
 
 InfoServer::InfoServer(System& system) :
     PluginBase(),
@@ -26,80 +24,40 @@ InfoServer::InfoServer(std::shared_ptr<System> system) :
 
 InfoServer::~InfoServer() {}
 
-std::pair<InfoServer::Result, InfoServer::FlightInfo> InfoServer::provide_flight_information() const
+std::pair<InfoServer::Result, InfoServer::AutopilotVersion>
+InfoServer::provide_autopilot_version() const
 {
-    return _impl->provide_flight_information();
+    return _impl->provide_autopilot_version();
 }
 
-std::pair<InfoServer::Result, InfoServer::Identification> InfoServer::provide_identification() const
+std::pair<InfoServer::Result, InfoServer::ProtocolVersion>
+InfoServer::provide_protocol_version() const
 {
-    return _impl->provide_identification();
+    return _impl->provide_protocol_version();
 }
 
-std::pair<InfoServer::Result, InfoServer::Product> InfoServer::provide_product() const
+bool operator==(const InfoServer::ProtocolVersion& lhs, const InfoServer::ProtocolVersion& rhs)
 {
-    return _impl->provide_product();
+    return (rhs.version == lhs.version) && (rhs.min_version == lhs.min_version) &&
+           (rhs.max_version == lhs.max_version) &&
+           (rhs.spec_version_hash == lhs.spec_version_hash) &&
+           (rhs.library_version_hash == lhs.library_version_hash);
 }
 
-std::pair<InfoServer::Result, InfoServer::Version> InfoServer::provide_version() const
-{
-    return _impl->provide_version();
-}
-
-std::pair<InfoServer::Result, double> InfoServer::provide_speed_factor() const
-{
-    return _impl->provide_speed_factor();
-}
-
-bool operator==(const InfoServer::FlightInfo& lhs, const InfoServer::FlightInfo& rhs)
-{
-    return (rhs.time_boot_ms == lhs.time_boot_ms) && (rhs.flight_uid == lhs.flight_uid);
-}
-
-std::ostream& operator<<(std::ostream& str, InfoServer::FlightInfo const& flight_info)
+std::ostream& operator<<(std::ostream& str, InfoServer::ProtocolVersion const& protocol_version)
 {
     str << std::setprecision(15);
-    str << "flight_info:" << '\n' << "{\n";
-    str << "    time_boot_ms: " << flight_info.time_boot_ms << '\n';
-    str << "    flight_uid: " << flight_info.flight_uid << '\n';
+    str << "protocol_version:" << '\n' << "{\n";
+    str << "    version: " << protocol_version.version << '\n';
+    str << "    min_version: " << protocol_version.min_version << '\n';
+    str << "    max_version: " << protocol_version.max_version << '\n';
+    str << "    spec_version_hash: " << protocol_version.spec_version_hash << '\n';
+    str << "    library_version_hash: " << protocol_version.library_version_hash << '\n';
     str << '}';
     return str;
 }
 
-bool operator==(const InfoServer::Identification& lhs, const InfoServer::Identification& rhs)
-{
-    return (rhs.hardware_uid == lhs.hardware_uid) && (rhs.legacy_uid == lhs.legacy_uid);
-}
-
-std::ostream& operator<<(std::ostream& str, InfoServer::Identification const& identification)
-{
-    str << std::setprecision(15);
-    str << "identification:" << '\n' << "{\n";
-    str << "    hardware_uid: " << identification.hardware_uid << '\n';
-    str << "    legacy_uid: " << identification.legacy_uid << '\n';
-    str << '}';
-    return str;
-}
-
-bool operator==(const InfoServer::Product& lhs, const InfoServer::Product& rhs)
-{
-    return (rhs.vendor_id == lhs.vendor_id) && (rhs.vendor_name == lhs.vendor_name) &&
-           (rhs.product_id == lhs.product_id) && (rhs.product_name == lhs.product_name);
-}
-
-std::ostream& operator<<(std::ostream& str, InfoServer::Product const& product)
-{
-    str << std::setprecision(15);
-    str << "product:" << '\n' << "{\n";
-    str << "    vendor_id: " << product.vendor_id << '\n';
-    str << "    vendor_name: " << product.vendor_name << '\n';
-    str << "    product_id: " << product.product_id << '\n';
-    str << "    product_name: " << product.product_name << '\n';
-    str << '}';
-    return str;
-}
-
-bool operator==(const InfoServer::Version& lhs, const InfoServer::Version& rhs)
+bool operator==(const InfoServer::AutopilotVersion& lhs, const InfoServer::AutopilotVersion& rhs)
 {
     return (rhs.flight_sw_major == lhs.flight_sw_major) &&
            (rhs.flight_sw_minor == lhs.flight_sw_minor) &&
@@ -113,21 +71,21 @@ bool operator==(const InfoServer::Version& lhs, const InfoServer::Version& rhs)
            (rhs.os_sw_git_hash == lhs.os_sw_git_hash);
 }
 
-std::ostream& operator<<(std::ostream& str, InfoServer::Version const& version)
+std::ostream& operator<<(std::ostream& str, InfoServer::AutopilotVersion const& autopilot_version)
 {
     str << std::setprecision(15);
-    str << "version:" << '\n' << "{\n";
-    str << "    flight_sw_major: " << version.flight_sw_major << '\n';
-    str << "    flight_sw_minor: " << version.flight_sw_minor << '\n';
-    str << "    flight_sw_patch: " << version.flight_sw_patch << '\n';
-    str << "    flight_sw_vendor_major: " << version.flight_sw_vendor_major << '\n';
-    str << "    flight_sw_vendor_minor: " << version.flight_sw_vendor_minor << '\n';
-    str << "    flight_sw_vendor_patch: " << version.flight_sw_vendor_patch << '\n';
-    str << "    os_sw_major: " << version.os_sw_major << '\n';
-    str << "    os_sw_minor: " << version.os_sw_minor << '\n';
-    str << "    os_sw_patch: " << version.os_sw_patch << '\n';
-    str << "    flight_sw_git_hash: " << version.flight_sw_git_hash << '\n';
-    str << "    os_sw_git_hash: " << version.os_sw_git_hash << '\n';
+    str << "autopilot_version:" << '\n' << "{\n";
+    str << "    flight_sw_major: " << autopilot_version.flight_sw_major << '\n';
+    str << "    flight_sw_minor: " << autopilot_version.flight_sw_minor << '\n';
+    str << "    flight_sw_patch: " << autopilot_version.flight_sw_patch << '\n';
+    str << "    flight_sw_vendor_major: " << autopilot_version.flight_sw_vendor_major << '\n';
+    str << "    flight_sw_vendor_minor: " << autopilot_version.flight_sw_vendor_minor << '\n';
+    str << "    flight_sw_vendor_patch: " << autopilot_version.flight_sw_vendor_patch << '\n';
+    str << "    os_sw_major: " << autopilot_version.os_sw_major << '\n';
+    str << "    os_sw_minor: " << autopilot_version.os_sw_minor << '\n';
+    str << "    os_sw_patch: " << autopilot_version.os_sw_patch << '\n';
+    str << "    flight_sw_git_hash: " << autopilot_version.flight_sw_git_hash << '\n';
+    str << "    os_sw_git_hash: " << autopilot_version.os_sw_git_hash << '\n';
     str << '}';
     return str;
 }

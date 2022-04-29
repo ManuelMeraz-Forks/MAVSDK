@@ -57,83 +57,40 @@ public:
     ~InfoServer();
 
     /**
-     * @brief System flight information.
+     * @brief Mavlink version information.
      */
-    struct FlightInfo {
-        uint32_t time_boot_ms{}; /**< @brief Time since system boot */
-        uint64_t flight_uid{}; /**< @brief Flight counter. Starts from zero, is incremented at every
-                                  disarm and is never reset (even after reboot) */
+    struct ProtocolVersion {
+        int32_t version{}; /**< @brief Currently active MAVLink version number * 100: v1.0 is 100,
+                              v2.0 is 200, etc. */
+        int32_t min_version{}; /**< @brief Minimum MAVLink version supported */
+        int32_t max_version{}; /**< @brief Maximum MAVLink version supported (set to the same value
+                                  as version by default) */
+        std::string spec_version_hash{}; /**< @brief The first 8 bytes (not characters printed in
+                                            hex!) of the git hash. */
+        std::string library_version_hash{}; /**< @brief The first 8 bytes (not characters printed in
+                                               hex!) of the git hash. */
     };
 
     /**
-     * @brief Equal operator to compare two `InfoServer::FlightInfo` objects.
-     *
-     * @return `true` if items are equal.
-     */
-    friend bool operator==(const InfoServer::FlightInfo& lhs, const InfoServer::FlightInfo& rhs);
-
-    /**
-     * @brief Stream operator to print information about a `InfoServer::FlightInfo`.
-     *
-     * @return A reference to the stream.
-     */
-    friend std::ostream& operator<<(std::ostream& str, InfoServer::FlightInfo const& flight_info);
-
-    /**
-     * @brief System identification.
-     */
-    struct Identification {
-        std::string
-            hardware_uid{}; /**< @brief UID of the hardware. This refers to uid2 of MAVLink. If the
-                               system does not support uid2 yet, this is all zeros. */
-        uint64_t legacy_uid{}; /**< @brief Legacy UID of the hardware, referred to as uid in MAVLink
-                                  (formerly exposed during system discovery as UUID). */
-    };
-
-    /**
-     * @brief Equal operator to compare two `InfoServer::Identification` objects.
+     * @brief Equal operator to compare two `InfoServer::ProtocolVersion` objects.
      *
      * @return `true` if items are equal.
      */
     friend bool
-    operator==(const InfoServer::Identification& lhs, const InfoServer::Identification& rhs);
+    operator==(const InfoServer::ProtocolVersion& lhs, const InfoServer::ProtocolVersion& rhs);
 
     /**
-     * @brief Stream operator to print information about a `InfoServer::Identification`.
+     * @brief Stream operator to print information about a `InfoServer::ProtocolVersion`.
      *
      * @return A reference to the stream.
      */
     friend std::ostream&
-    operator<<(std::ostream& str, InfoServer::Identification const& identification);
+    operator<<(std::ostream& str, InfoServer::ProtocolVersion const& protocol_version);
 
     /**
-     * @brief System product information.
+     * @brief Autopilot version information.
      */
-    struct Product {
-        int32_t vendor_id{}; /**< @brief ID of the board vendor */
-        std::string vendor_name{}; /**< @brief Name of the vendor */
-        int32_t product_id{}; /**< @brief ID of the product */
-        std::string product_name{}; /**< @brief Name of the product */
-    };
-
-    /**
-     * @brief Equal operator to compare two `InfoServer::Product` objects.
-     *
-     * @return `true` if items are equal.
-     */
-    friend bool operator==(const InfoServer::Product& lhs, const InfoServer::Product& rhs);
-
-    /**
-     * @brief Stream operator to print information about a `InfoServer::Product`.
-     *
-     * @return A reference to the stream.
-     */
-    friend std::ostream& operator<<(std::ostream& str, InfoServer::Product const& product);
-
-    /**
-     * @brief System version information.
-     */
-    struct Version {
+    struct AutopilotVersion {
         int32_t flight_sw_major{}; /**< @brief Flight software major version */
         int32_t flight_sw_minor{}; /**< @brief Flight software minor version */
         int32_t flight_sw_patch{}; /**< @brief Flight software patch version */
@@ -148,18 +105,20 @@ public:
     };
 
     /**
-     * @brief Equal operator to compare two `InfoServer::Version` objects.
+     * @brief Equal operator to compare two `InfoServer::AutopilotVersion` objects.
      *
      * @return `true` if items are equal.
      */
-    friend bool operator==(const InfoServer::Version& lhs, const InfoServer::Version& rhs);
+    friend bool
+    operator==(const InfoServer::AutopilotVersion& lhs, const InfoServer::AutopilotVersion& rhs);
 
     /**
-     * @brief Stream operator to print information about a `InfoServer::Version`.
+     * @brief Stream operator to print information about a `InfoServer::AutopilotVersion`.
      *
      * @return A reference to the stream.
      */
-    friend std::ostream& operator<<(std::ostream& str, InfoServer::Version const& version);
+    friend std::ostream&
+    operator<<(std::ostream& str, InfoServer::AutopilotVersion const& autopilot_version);
 
     /**
      * @brief Possible results returned for info requests.
@@ -184,50 +143,22 @@ public:
     using ResultCallback = std::function<void(Result)>;
 
     /**
-     * @brief Provide flight information of the system.
+     * @brief Provide autopilot version of the system.
      *
      * This function is blocking.
      *
      * @return Result of request.
      */
-    std::pair<Result, InfoServer::FlightInfo> provide_flight_information() const;
+    std::pair<Result, InfoServer::AutopilotVersion> provide_autopilot_version() const;
 
     /**
-     * @brief Provide the identification of the system.
+     * @brief Provide protocol version of the system.
      *
      * This function is blocking.
      *
      * @return Result of request.
      */
-    std::pair<Result, InfoServer::Identification> provide_identification() const;
-
-    /**
-     * @brief Provide product information of the system.
-     *
-     * This function is blocking.
-     *
-     * @return Result of request.
-     */
-    std::pair<Result, InfoServer::Product> provide_product() const;
-
-    /**
-     * @brief Provide the version information of the system.
-     *
-     * This function is blocking.
-     *
-     * @return Result of request.
-     */
-    std::pair<Result, InfoServer::Version> provide_version() const;
-
-    /**
-     * @brief Provide the speed factor of a simulation (with lockstep a simulation can run faster or
-     * slower than realtime).
-     *
-     * This function is blocking.
-     *
-     * @return Result of request.
-     */
-    std::pair<Result, double> provide_speed_factor() const;
+    std::pair<Result, InfoServer::ProtocolVersion> provide_protocol_version() const;
 
     /**
      * @brief Copy constructor.

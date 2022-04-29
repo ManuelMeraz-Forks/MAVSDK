@@ -38,131 +38,65 @@ class InfoServerService final {
   class StubInterface {
    public:
     virtual ~StubInterface() {}
-    // Provide flight information of the system.
-    virtual ::grpc::Status ProvideFlightInformation(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest& request, ::mavsdk::rpc::info_server::ProvideFlightInformationResponse* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideFlightInformationResponse>> AsyncProvideFlightInformation(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideFlightInformationResponse>>(AsyncProvideFlightInformationRaw(context, request, cq));
+    // Provide autopilot version of the system.
+    virtual ::grpc::Status ProvideAutopilotVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest& request, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse>> AsyncProvideAutopilotVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse>>(AsyncProvideAutopilotVersionRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideFlightInformationResponse>> PrepareAsyncProvideFlightInformation(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideFlightInformationResponse>>(PrepareAsyncProvideFlightInformationRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse>> PrepareAsyncProvideAutopilotVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse>>(PrepareAsyncProvideAutopilotVersionRaw(context, request, cq));
     }
-    // Provide the identification of the system.
-    virtual ::grpc::Status ProvideIdentification(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest& request, ::mavsdk::rpc::info_server::ProvideIdentificationResponse* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideIdentificationResponse>> AsyncProvideIdentification(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideIdentificationResponse>>(AsyncProvideIdentificationRaw(context, request, cq));
+    // Provide protocol version of the system.
+    virtual ::grpc::Status ProvideProtocolVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest& request, ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse>> AsyncProvideProtocolVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse>>(AsyncProvideProtocolVersionRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideIdentificationResponse>> PrepareAsyncProvideIdentification(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideIdentificationResponse>>(PrepareAsyncProvideIdentificationRaw(context, request, cq));
-    }
-    // Provide product information of the system.
-    virtual ::grpc::Status ProvideProduct(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProductRequest& request, ::mavsdk::rpc::info_server::ProvideProductResponse* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideProductResponse>> AsyncProvideProduct(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProductRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideProductResponse>>(AsyncProvideProductRaw(context, request, cq));
-    }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideProductResponse>> PrepareAsyncProvideProduct(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProductRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideProductResponse>>(PrepareAsyncProvideProductRaw(context, request, cq));
-    }
-    // Provide the version information of the system.
-    virtual ::grpc::Status ProvideVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideVersionRequest& request, ::mavsdk::rpc::info_server::ProvideVersionResponse* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideVersionResponse>> AsyncProvideVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideVersionRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideVersionResponse>>(AsyncProvideVersionRaw(context, request, cq));
-    }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideVersionResponse>> PrepareAsyncProvideVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideVersionRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideVersionResponse>>(PrepareAsyncProvideVersionRaw(context, request, cq));
-    }
-    // Provide the speed factor of a simulation (with lockstep a simulation can run faster or slower than realtime).
-    virtual ::grpc::Status ProvideSpeedFactor(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest& request, ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse* response) = 0;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse>> AsyncProvideSpeedFactor(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse>>(AsyncProvideSpeedFactorRaw(context, request, cq));
-    }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse>> PrepareAsyncProvideSpeedFactor(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse>>(PrepareAsyncProvideSpeedFactorRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse>> PrepareAsyncProvideProtocolVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse>>(PrepareAsyncProvideProtocolVersionRaw(context, request, cq));
     }
     class async_interface {
      public:
       virtual ~async_interface() {}
-      // Provide flight information of the system.
-      virtual void ProvideFlightInformation(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest* request, ::mavsdk::rpc::info_server::ProvideFlightInformationResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void ProvideFlightInformation(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest* request, ::mavsdk::rpc::info_server::ProvideFlightInformationResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Provide the identification of the system.
-      virtual void ProvideIdentification(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest* request, ::mavsdk::rpc::info_server::ProvideIdentificationResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void ProvideIdentification(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest* request, ::mavsdk::rpc::info_server::ProvideIdentificationResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Provide product information of the system.
-      virtual void ProvideProduct(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProductRequest* request, ::mavsdk::rpc::info_server::ProvideProductResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void ProvideProduct(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProductRequest* request, ::mavsdk::rpc::info_server::ProvideProductResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Provide the version information of the system.
-      virtual void ProvideVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideVersionRequest* request, ::mavsdk::rpc::info_server::ProvideVersionResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void ProvideVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideVersionRequest* request, ::mavsdk::rpc::info_server::ProvideVersionResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
-      // Provide the speed factor of a simulation (with lockstep a simulation can run faster or slower than realtime).
-      virtual void ProvideSpeedFactor(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest* request, ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse* response, std::function<void(::grpc::Status)>) = 0;
-      virtual void ProvideSpeedFactor(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest* request, ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      // Provide autopilot version of the system.
+      virtual void ProvideAutopilotVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest* request, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void ProvideAutopilotVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest* request, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      // Provide protocol version of the system.
+      virtual void ProvideProtocolVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest* request, ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void ProvideProtocolVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest* request, ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
     class async_interface* experimental_async() { return async(); }
   private:
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideFlightInformationResponse>* AsyncProvideFlightInformationRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideFlightInformationResponse>* PrepareAsyncProvideFlightInformationRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideIdentificationResponse>* AsyncProvideIdentificationRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideIdentificationResponse>* PrepareAsyncProvideIdentificationRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideProductResponse>* AsyncProvideProductRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProductRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideProductResponse>* PrepareAsyncProvideProductRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProductRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideVersionResponse>* AsyncProvideVersionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideVersionRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideVersionResponse>* PrepareAsyncProvideVersionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideVersionRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse>* AsyncProvideSpeedFactorRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest& request, ::grpc::CompletionQueue* cq) = 0;
-    virtual ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse>* PrepareAsyncProvideSpeedFactorRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse>* AsyncProvideAutopilotVersionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse>* PrepareAsyncProvideAutopilotVersionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse>* AsyncProvideProtocolVersionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse>* PrepareAsyncProvideProtocolVersionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
     Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
-    ::grpc::Status ProvideFlightInformation(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest& request, ::mavsdk::rpc::info_server::ProvideFlightInformationResponse* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideFlightInformationResponse>> AsyncProvideFlightInformation(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideFlightInformationResponse>>(AsyncProvideFlightInformationRaw(context, request, cq));
+    ::grpc::Status ProvideAutopilotVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest& request, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse>> AsyncProvideAutopilotVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse>>(AsyncProvideAutopilotVersionRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideFlightInformationResponse>> PrepareAsyncProvideFlightInformation(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideFlightInformationResponse>>(PrepareAsyncProvideFlightInformationRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse>> PrepareAsyncProvideAutopilotVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse>>(PrepareAsyncProvideAutopilotVersionRaw(context, request, cq));
     }
-    ::grpc::Status ProvideIdentification(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest& request, ::mavsdk::rpc::info_server::ProvideIdentificationResponse* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideIdentificationResponse>> AsyncProvideIdentification(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideIdentificationResponse>>(AsyncProvideIdentificationRaw(context, request, cq));
+    ::grpc::Status ProvideProtocolVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest& request, ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse>> AsyncProvideProtocolVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse>>(AsyncProvideProtocolVersionRaw(context, request, cq));
     }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideIdentificationResponse>> PrepareAsyncProvideIdentification(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideIdentificationResponse>>(PrepareAsyncProvideIdentificationRaw(context, request, cq));
-    }
-    ::grpc::Status ProvideProduct(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProductRequest& request, ::mavsdk::rpc::info_server::ProvideProductResponse* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideProductResponse>> AsyncProvideProduct(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProductRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideProductResponse>>(AsyncProvideProductRaw(context, request, cq));
-    }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideProductResponse>> PrepareAsyncProvideProduct(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProductRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideProductResponse>>(PrepareAsyncProvideProductRaw(context, request, cq));
-    }
-    ::grpc::Status ProvideVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideVersionRequest& request, ::mavsdk::rpc::info_server::ProvideVersionResponse* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideVersionResponse>> AsyncProvideVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideVersionRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideVersionResponse>>(AsyncProvideVersionRaw(context, request, cq));
-    }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideVersionResponse>> PrepareAsyncProvideVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideVersionRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideVersionResponse>>(PrepareAsyncProvideVersionRaw(context, request, cq));
-    }
-    ::grpc::Status ProvideSpeedFactor(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest& request, ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse* response) override;
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse>> AsyncProvideSpeedFactor(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse>>(AsyncProvideSpeedFactorRaw(context, request, cq));
-    }
-    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse>> PrepareAsyncProvideSpeedFactor(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest& request, ::grpc::CompletionQueue* cq) {
-      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse>>(PrepareAsyncProvideSpeedFactorRaw(context, request, cq));
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse>> PrepareAsyncProvideProtocolVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse>>(PrepareAsyncProvideProtocolVersionRaw(context, request, cq));
     }
     class async final :
       public StubInterface::async_interface {
      public:
-      void ProvideFlightInformation(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest* request, ::mavsdk::rpc::info_server::ProvideFlightInformationResponse* response, std::function<void(::grpc::Status)>) override;
-      void ProvideFlightInformation(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest* request, ::mavsdk::rpc::info_server::ProvideFlightInformationResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void ProvideIdentification(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest* request, ::mavsdk::rpc::info_server::ProvideIdentificationResponse* response, std::function<void(::grpc::Status)>) override;
-      void ProvideIdentification(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest* request, ::mavsdk::rpc::info_server::ProvideIdentificationResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void ProvideProduct(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProductRequest* request, ::mavsdk::rpc::info_server::ProvideProductResponse* response, std::function<void(::grpc::Status)>) override;
-      void ProvideProduct(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProductRequest* request, ::mavsdk::rpc::info_server::ProvideProductResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void ProvideVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideVersionRequest* request, ::mavsdk::rpc::info_server::ProvideVersionResponse* response, std::function<void(::grpc::Status)>) override;
-      void ProvideVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideVersionRequest* request, ::mavsdk::rpc::info_server::ProvideVersionResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
-      void ProvideSpeedFactor(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest* request, ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse* response, std::function<void(::grpc::Status)>) override;
-      void ProvideSpeedFactor(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest* request, ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void ProvideAutopilotVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest* request, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse* response, std::function<void(::grpc::Status)>) override;
+      void ProvideAutopilotVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest* request, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void ProvideProtocolVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest* request, ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse* response, std::function<void(::grpc::Status)>) override;
+      void ProvideProtocolVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest* request, ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -174,21 +108,12 @@ class InfoServerService final {
    private:
     std::shared_ptr< ::grpc::ChannelInterface> channel_;
     class async async_stub_{this};
-    ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideFlightInformationResponse>* AsyncProvideFlightInformationRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideFlightInformationResponse>* PrepareAsyncProvideFlightInformationRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideIdentificationResponse>* AsyncProvideIdentificationRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideIdentificationResponse>* PrepareAsyncProvideIdentificationRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideProductResponse>* AsyncProvideProductRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProductRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideProductResponse>* PrepareAsyncProvideProductRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProductRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideVersionResponse>* AsyncProvideVersionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideVersionRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideVersionResponse>* PrepareAsyncProvideVersionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideVersionRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse>* AsyncProvideSpeedFactorRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest& request, ::grpc::CompletionQueue* cq) override;
-    ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse>* PrepareAsyncProvideSpeedFactorRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest& request, ::grpc::CompletionQueue* cq) override;
-    const ::grpc::internal::RpcMethod rpcmethod_ProvideFlightInformation_;
-    const ::grpc::internal::RpcMethod rpcmethod_ProvideIdentification_;
-    const ::grpc::internal::RpcMethod rpcmethod_ProvideProduct_;
-    const ::grpc::internal::RpcMethod rpcmethod_ProvideVersion_;
-    const ::grpc::internal::RpcMethod rpcmethod_ProvideSpeedFactor_;
+    ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse>* AsyncProvideAutopilotVersionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse>* PrepareAsyncProvideAutopilotVersionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse>* AsyncProvideProtocolVersionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse>* PrepareAsyncProvideProtocolVersionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest& request, ::grpc::CompletionQueue* cq) override;
+    const ::grpc::internal::RpcMethod rpcmethod_ProvideAutopilotVersion_;
+    const ::grpc::internal::RpcMethod rpcmethod_ProvideProtocolVersion_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -196,688 +121,283 @@ class InfoServerService final {
    public:
     Service();
     virtual ~Service();
-    // Provide flight information of the system.
-    virtual ::grpc::Status ProvideFlightInformation(::grpc::ServerContext* context, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest* request, ::mavsdk::rpc::info_server::ProvideFlightInformationResponse* response);
-    // Provide the identification of the system.
-    virtual ::grpc::Status ProvideIdentification(::grpc::ServerContext* context, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest* request, ::mavsdk::rpc::info_server::ProvideIdentificationResponse* response);
-    // Provide product information of the system.
-    virtual ::grpc::Status ProvideProduct(::grpc::ServerContext* context, const ::mavsdk::rpc::info_server::ProvideProductRequest* request, ::mavsdk::rpc::info_server::ProvideProductResponse* response);
-    // Provide the version information of the system.
-    virtual ::grpc::Status ProvideVersion(::grpc::ServerContext* context, const ::mavsdk::rpc::info_server::ProvideVersionRequest* request, ::mavsdk::rpc::info_server::ProvideVersionResponse* response);
-    // Provide the speed factor of a simulation (with lockstep a simulation can run faster or slower than realtime).
-    virtual ::grpc::Status ProvideSpeedFactor(::grpc::ServerContext* context, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest* request, ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse* response);
+    // Provide autopilot version of the system.
+    virtual ::grpc::Status ProvideAutopilotVersion(::grpc::ServerContext* context, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest* request, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse* response);
+    // Provide protocol version of the system.
+    virtual ::grpc::Status ProvideProtocolVersion(::grpc::ServerContext* context, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest* request, ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse* response);
   };
   template <class BaseClass>
-  class WithAsyncMethod_ProvideFlightInformation : public BaseClass {
+  class WithAsyncMethod_ProvideAutopilotVersion : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithAsyncMethod_ProvideFlightInformation() {
+    WithAsyncMethod_ProvideAutopilotVersion() {
       ::grpc::Service::MarkMethodAsync(0);
     }
-    ~WithAsyncMethod_ProvideFlightInformation() override {
+    ~WithAsyncMethod_ProvideAutopilotVersion() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ProvideFlightInformation(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideFlightInformationResponse* /*response*/) override {
+    ::grpc::Status ProvideAutopilotVersion(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestProvideFlightInformation(::grpc::ServerContext* context, ::mavsdk::rpc::info_server::ProvideFlightInformationRequest* request, ::grpc::ServerAsyncResponseWriter< ::mavsdk::rpc::info_server::ProvideFlightInformationResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestProvideAutopilotVersion(::grpc::ServerContext* context, ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest* request, ::grpc::ServerAsyncResponseWriter< ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
-  class WithAsyncMethod_ProvideIdentification : public BaseClass {
+  class WithAsyncMethod_ProvideProtocolVersion : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithAsyncMethod_ProvideIdentification() {
+    WithAsyncMethod_ProvideProtocolVersion() {
       ::grpc::Service::MarkMethodAsync(1);
     }
-    ~WithAsyncMethod_ProvideIdentification() override {
+    ~WithAsyncMethod_ProvideProtocolVersion() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ProvideIdentification(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideIdentificationResponse* /*response*/) override {
+    ::grpc::Status ProvideProtocolVersion(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestProvideIdentification(::grpc::ServerContext* context, ::mavsdk::rpc::info_server::ProvideIdentificationRequest* request, ::grpc::ServerAsyncResponseWriter< ::mavsdk::rpc::info_server::ProvideIdentificationResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestProvideProtocolVersion(::grpc::ServerContext* context, ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest* request, ::grpc::ServerAsyncResponseWriter< ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
+  typedef WithAsyncMethod_ProvideAutopilotVersion<WithAsyncMethod_ProvideProtocolVersion<Service > > AsyncService;
   template <class BaseClass>
-  class WithAsyncMethod_ProvideProduct : public BaseClass {
+  class WithCallbackMethod_ProvideAutopilotVersion : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithAsyncMethod_ProvideProduct() {
-      ::grpc::Service::MarkMethodAsync(2);
-    }
-    ~WithAsyncMethod_ProvideProduct() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status ProvideProduct(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideProductRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideProductResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    void RequestProvideProduct(::grpc::ServerContext* context, ::mavsdk::rpc::info_server::ProvideProductRequest* request, ::grpc::ServerAsyncResponseWriter< ::mavsdk::rpc::info_server::ProvideProductResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
-    }
-  };
-  template <class BaseClass>
-  class WithAsyncMethod_ProvideVersion : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithAsyncMethod_ProvideVersion() {
-      ::grpc::Service::MarkMethodAsync(3);
-    }
-    ~WithAsyncMethod_ProvideVersion() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status ProvideVersion(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideVersionRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideVersionResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    void RequestProvideVersion(::grpc::ServerContext* context, ::mavsdk::rpc::info_server::ProvideVersionRequest* request, ::grpc::ServerAsyncResponseWriter< ::mavsdk::rpc::info_server::ProvideVersionResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
-    }
-  };
-  template <class BaseClass>
-  class WithAsyncMethod_ProvideSpeedFactor : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithAsyncMethod_ProvideSpeedFactor() {
-      ::grpc::Service::MarkMethodAsync(4);
-    }
-    ~WithAsyncMethod_ProvideSpeedFactor() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status ProvideSpeedFactor(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    void RequestProvideSpeedFactor(::grpc::ServerContext* context, ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest* request, ::grpc::ServerAsyncResponseWriter< ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
-    }
-  };
-  typedef WithAsyncMethod_ProvideFlightInformation<WithAsyncMethod_ProvideIdentification<WithAsyncMethod_ProvideProduct<WithAsyncMethod_ProvideVersion<WithAsyncMethod_ProvideSpeedFactor<Service > > > > > AsyncService;
-  template <class BaseClass>
-  class WithCallbackMethod_ProvideFlightInformation : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithCallbackMethod_ProvideFlightInformation() {
+    WithCallbackMethod_ProvideAutopilotVersion() {
       ::grpc::Service::MarkMethodCallback(0,
-          new ::grpc::internal::CallbackUnaryHandler< ::mavsdk::rpc::info_server::ProvideFlightInformationRequest, ::mavsdk::rpc::info_server::ProvideFlightInformationResponse>(
+          new ::grpc::internal::CallbackUnaryHandler< ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest* request, ::mavsdk::rpc::info_server::ProvideFlightInformationResponse* response) { return this->ProvideFlightInformation(context, request, response); }));}
-    void SetMessageAllocatorFor_ProvideFlightInformation(
-        ::grpc::MessageAllocator< ::mavsdk::rpc::info_server::ProvideFlightInformationRequest, ::mavsdk::rpc::info_server::ProvideFlightInformationResponse>* allocator) {
+                   ::grpc::CallbackServerContext* context, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest* request, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse* response) { return this->ProvideAutopilotVersion(context, request, response); }));}
+    void SetMessageAllocatorFor_ProvideAutopilotVersion(
+        ::grpc::MessageAllocator< ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(0);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::mavsdk::rpc::info_server::ProvideFlightInformationRequest, ::mavsdk::rpc::info_server::ProvideFlightInformationResponse>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
-    ~WithCallbackMethod_ProvideFlightInformation() override {
+    ~WithCallbackMethod_ProvideAutopilotVersion() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ProvideFlightInformation(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideFlightInformationResponse* /*response*/) override {
+    ::grpc::Status ProvideAutopilotVersion(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* ProvideFlightInformation(
-      ::grpc::CallbackServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideFlightInformationResponse* /*response*/)  { return nullptr; }
+    virtual ::grpc::ServerUnaryReactor* ProvideAutopilotVersion(
+      ::grpc::CallbackServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithCallbackMethod_ProvideIdentification : public BaseClass {
+  class WithCallbackMethod_ProvideProtocolVersion : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithCallbackMethod_ProvideIdentification() {
+    WithCallbackMethod_ProvideProtocolVersion() {
       ::grpc::Service::MarkMethodCallback(1,
-          new ::grpc::internal::CallbackUnaryHandler< ::mavsdk::rpc::info_server::ProvideIdentificationRequest, ::mavsdk::rpc::info_server::ProvideIdentificationResponse>(
+          new ::grpc::internal::CallbackUnaryHandler< ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest, ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest* request, ::mavsdk::rpc::info_server::ProvideIdentificationResponse* response) { return this->ProvideIdentification(context, request, response); }));}
-    void SetMessageAllocatorFor_ProvideIdentification(
-        ::grpc::MessageAllocator< ::mavsdk::rpc::info_server::ProvideIdentificationRequest, ::mavsdk::rpc::info_server::ProvideIdentificationResponse>* allocator) {
+                   ::grpc::CallbackServerContext* context, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest* request, ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse* response) { return this->ProvideProtocolVersion(context, request, response); }));}
+    void SetMessageAllocatorFor_ProvideProtocolVersion(
+        ::grpc::MessageAllocator< ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest, ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse>* allocator) {
       ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(1);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::mavsdk::rpc::info_server::ProvideIdentificationRequest, ::mavsdk::rpc::info_server::ProvideIdentificationResponse>*>(handler)
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest, ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
-    ~WithCallbackMethod_ProvideIdentification() override {
+    ~WithCallbackMethod_ProvideProtocolVersion() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ProvideIdentification(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideIdentificationResponse* /*response*/) override {
+    ::grpc::Status ProvideProtocolVersion(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* ProvideIdentification(
-      ::grpc::CallbackServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideIdentificationResponse* /*response*/)  { return nullptr; }
+    virtual ::grpc::ServerUnaryReactor* ProvideProtocolVersion(
+      ::grpc::CallbackServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse* /*response*/)  { return nullptr; }
   };
-  template <class BaseClass>
-  class WithCallbackMethod_ProvideProduct : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithCallbackMethod_ProvideProduct() {
-      ::grpc::Service::MarkMethodCallback(2,
-          new ::grpc::internal::CallbackUnaryHandler< ::mavsdk::rpc::info_server::ProvideProductRequest, ::mavsdk::rpc::info_server::ProvideProductResponse>(
-            [this](
-                   ::grpc::CallbackServerContext* context, const ::mavsdk::rpc::info_server::ProvideProductRequest* request, ::mavsdk::rpc::info_server::ProvideProductResponse* response) { return this->ProvideProduct(context, request, response); }));}
-    void SetMessageAllocatorFor_ProvideProduct(
-        ::grpc::MessageAllocator< ::mavsdk::rpc::info_server::ProvideProductRequest, ::mavsdk::rpc::info_server::ProvideProductResponse>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(2);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::mavsdk::rpc::info_server::ProvideProductRequest, ::mavsdk::rpc::info_server::ProvideProductResponse>*>(handler)
-              ->SetMessageAllocator(allocator);
-    }
-    ~WithCallbackMethod_ProvideProduct() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status ProvideProduct(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideProductRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideProductResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    virtual ::grpc::ServerUnaryReactor* ProvideProduct(
-      ::grpc::CallbackServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideProductRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideProductResponse* /*response*/)  { return nullptr; }
-  };
-  template <class BaseClass>
-  class WithCallbackMethod_ProvideVersion : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithCallbackMethod_ProvideVersion() {
-      ::grpc::Service::MarkMethodCallback(3,
-          new ::grpc::internal::CallbackUnaryHandler< ::mavsdk::rpc::info_server::ProvideVersionRequest, ::mavsdk::rpc::info_server::ProvideVersionResponse>(
-            [this](
-                   ::grpc::CallbackServerContext* context, const ::mavsdk::rpc::info_server::ProvideVersionRequest* request, ::mavsdk::rpc::info_server::ProvideVersionResponse* response) { return this->ProvideVersion(context, request, response); }));}
-    void SetMessageAllocatorFor_ProvideVersion(
-        ::grpc::MessageAllocator< ::mavsdk::rpc::info_server::ProvideVersionRequest, ::mavsdk::rpc::info_server::ProvideVersionResponse>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(3);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::mavsdk::rpc::info_server::ProvideVersionRequest, ::mavsdk::rpc::info_server::ProvideVersionResponse>*>(handler)
-              ->SetMessageAllocator(allocator);
-    }
-    ~WithCallbackMethod_ProvideVersion() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status ProvideVersion(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideVersionRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideVersionResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    virtual ::grpc::ServerUnaryReactor* ProvideVersion(
-      ::grpc::CallbackServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideVersionRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideVersionResponse* /*response*/)  { return nullptr; }
-  };
-  template <class BaseClass>
-  class WithCallbackMethod_ProvideSpeedFactor : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithCallbackMethod_ProvideSpeedFactor() {
-      ::grpc::Service::MarkMethodCallback(4,
-          new ::grpc::internal::CallbackUnaryHandler< ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest, ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse>(
-            [this](
-                   ::grpc::CallbackServerContext* context, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest* request, ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse* response) { return this->ProvideSpeedFactor(context, request, response); }));}
-    void SetMessageAllocatorFor_ProvideSpeedFactor(
-        ::grpc::MessageAllocator< ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest, ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(4);
-      static_cast<::grpc::internal::CallbackUnaryHandler< ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest, ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse>*>(handler)
-              ->SetMessageAllocator(allocator);
-    }
-    ~WithCallbackMethod_ProvideSpeedFactor() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status ProvideSpeedFactor(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    virtual ::grpc::ServerUnaryReactor* ProvideSpeedFactor(
-      ::grpc::CallbackServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse* /*response*/)  { return nullptr; }
-  };
-  typedef WithCallbackMethod_ProvideFlightInformation<WithCallbackMethod_ProvideIdentification<WithCallbackMethod_ProvideProduct<WithCallbackMethod_ProvideVersion<WithCallbackMethod_ProvideSpeedFactor<Service > > > > > CallbackService;
+  typedef WithCallbackMethod_ProvideAutopilotVersion<WithCallbackMethod_ProvideProtocolVersion<Service > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
-  class WithGenericMethod_ProvideFlightInformation : public BaseClass {
+  class WithGenericMethod_ProvideAutopilotVersion : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithGenericMethod_ProvideFlightInformation() {
+    WithGenericMethod_ProvideAutopilotVersion() {
       ::grpc::Service::MarkMethodGeneric(0);
     }
-    ~WithGenericMethod_ProvideFlightInformation() override {
+    ~WithGenericMethod_ProvideAutopilotVersion() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ProvideFlightInformation(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideFlightInformationResponse* /*response*/) override {
+    ::grpc::Status ProvideAutopilotVersion(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
   };
   template <class BaseClass>
-  class WithGenericMethod_ProvideIdentification : public BaseClass {
+  class WithGenericMethod_ProvideProtocolVersion : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithGenericMethod_ProvideIdentification() {
+    WithGenericMethod_ProvideProtocolVersion() {
       ::grpc::Service::MarkMethodGeneric(1);
     }
-    ~WithGenericMethod_ProvideIdentification() override {
+    ~WithGenericMethod_ProvideProtocolVersion() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ProvideIdentification(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideIdentificationResponse* /*response*/) override {
+    ::grpc::Status ProvideProtocolVersion(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
   };
   template <class BaseClass>
-  class WithGenericMethod_ProvideProduct : public BaseClass {
+  class WithRawMethod_ProvideAutopilotVersion : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithGenericMethod_ProvideProduct() {
-      ::grpc::Service::MarkMethodGeneric(2);
-    }
-    ~WithGenericMethod_ProvideProduct() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status ProvideProduct(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideProductRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideProductResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-  };
-  template <class BaseClass>
-  class WithGenericMethod_ProvideVersion : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithGenericMethod_ProvideVersion() {
-      ::grpc::Service::MarkMethodGeneric(3);
-    }
-    ~WithGenericMethod_ProvideVersion() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status ProvideVersion(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideVersionRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideVersionResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-  };
-  template <class BaseClass>
-  class WithGenericMethod_ProvideSpeedFactor : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithGenericMethod_ProvideSpeedFactor() {
-      ::grpc::Service::MarkMethodGeneric(4);
-    }
-    ~WithGenericMethod_ProvideSpeedFactor() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status ProvideSpeedFactor(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-  };
-  template <class BaseClass>
-  class WithRawMethod_ProvideFlightInformation : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithRawMethod_ProvideFlightInformation() {
+    WithRawMethod_ProvideAutopilotVersion() {
       ::grpc::Service::MarkMethodRaw(0);
     }
-    ~WithRawMethod_ProvideFlightInformation() override {
+    ~WithRawMethod_ProvideAutopilotVersion() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ProvideFlightInformation(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideFlightInformationResponse* /*response*/) override {
+    ::grpc::Status ProvideAutopilotVersion(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestProvideFlightInformation(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestProvideAutopilotVersion(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
-  class WithRawMethod_ProvideIdentification : public BaseClass {
+  class WithRawMethod_ProvideProtocolVersion : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawMethod_ProvideIdentification() {
+    WithRawMethod_ProvideProtocolVersion() {
       ::grpc::Service::MarkMethodRaw(1);
     }
-    ~WithRawMethod_ProvideIdentification() override {
+    ~WithRawMethod_ProvideProtocolVersion() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ProvideIdentification(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideIdentificationResponse* /*response*/) override {
+    ::grpc::Status ProvideProtocolVersion(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    void RequestProvideIdentification(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+    void RequestProvideProtocolVersion(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(1, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
-  class WithRawMethod_ProvideProduct : public BaseClass {
+  class WithRawCallbackMethod_ProvideAutopilotVersion : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawMethod_ProvideProduct() {
-      ::grpc::Service::MarkMethodRaw(2);
-    }
-    ~WithRawMethod_ProvideProduct() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status ProvideProduct(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideProductRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideProductResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    void RequestProvideProduct(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
-    }
-  };
-  template <class BaseClass>
-  class WithRawMethod_ProvideVersion : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithRawMethod_ProvideVersion() {
-      ::grpc::Service::MarkMethodRaw(3);
-    }
-    ~WithRawMethod_ProvideVersion() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status ProvideVersion(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideVersionRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideVersionResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    void RequestProvideVersion(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
-    }
-  };
-  template <class BaseClass>
-  class WithRawMethod_ProvideSpeedFactor : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithRawMethod_ProvideSpeedFactor() {
-      ::grpc::Service::MarkMethodRaw(4);
-    }
-    ~WithRawMethod_ProvideSpeedFactor() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status ProvideSpeedFactor(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    void RequestProvideSpeedFactor(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
-    }
-  };
-  template <class BaseClass>
-  class WithRawCallbackMethod_ProvideFlightInformation : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithRawCallbackMethod_ProvideFlightInformation() {
+    WithRawCallbackMethod_ProvideAutopilotVersion() {
       ::grpc::Service::MarkMethodRawCallback(0,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->ProvideFlightInformation(context, request, response); }));
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->ProvideAutopilotVersion(context, request, response); }));
     }
-    ~WithRawCallbackMethod_ProvideFlightInformation() override {
+    ~WithRawCallbackMethod_ProvideAutopilotVersion() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ProvideFlightInformation(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideFlightInformationResponse* /*response*/) override {
+    ::grpc::Status ProvideAutopilotVersion(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* ProvideFlightInformation(
+    virtual ::grpc::ServerUnaryReactor* ProvideAutopilotVersion(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithRawCallbackMethod_ProvideIdentification : public BaseClass {
+  class WithRawCallbackMethod_ProvideProtocolVersion : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawCallbackMethod_ProvideIdentification() {
+    WithRawCallbackMethod_ProvideProtocolVersion() {
       ::grpc::Service::MarkMethodRawCallback(1,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
-                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->ProvideIdentification(context, request, response); }));
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->ProvideProtocolVersion(context, request, response); }));
     }
-    ~WithRawCallbackMethod_ProvideIdentification() override {
+    ~WithRawCallbackMethod_ProvideProtocolVersion() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable synchronous version of this method
-    ::grpc::Status ProvideIdentification(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideIdentificationResponse* /*response*/) override {
+    ::grpc::Status ProvideProtocolVersion(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
-    virtual ::grpc::ServerUnaryReactor* ProvideIdentification(
+    virtual ::grpc::ServerUnaryReactor* ProvideProtocolVersion(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
-  class WithRawCallbackMethod_ProvideProduct : public BaseClass {
+  class WithStreamedUnaryMethod_ProvideAutopilotVersion : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithRawCallbackMethod_ProvideProduct() {
-      ::grpc::Service::MarkMethodRawCallback(2,
-          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-            [this](
-                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->ProvideProduct(context, request, response); }));
-    }
-    ~WithRawCallbackMethod_ProvideProduct() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status ProvideProduct(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideProductRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideProductResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    virtual ::grpc::ServerUnaryReactor* ProvideProduct(
-      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
-  };
-  template <class BaseClass>
-  class WithRawCallbackMethod_ProvideVersion : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithRawCallbackMethod_ProvideVersion() {
-      ::grpc::Service::MarkMethodRawCallback(3,
-          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-            [this](
-                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->ProvideVersion(context, request, response); }));
-    }
-    ~WithRawCallbackMethod_ProvideVersion() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status ProvideVersion(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideVersionRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideVersionResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    virtual ::grpc::ServerUnaryReactor* ProvideVersion(
-      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
-  };
-  template <class BaseClass>
-  class WithRawCallbackMethod_ProvideSpeedFactor : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithRawCallbackMethod_ProvideSpeedFactor() {
-      ::grpc::Service::MarkMethodRawCallback(4,
-          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
-            [this](
-                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->ProvideSpeedFactor(context, request, response); }));
-    }
-    ~WithRawCallbackMethod_ProvideSpeedFactor() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable synchronous version of this method
-    ::grpc::Status ProvideSpeedFactor(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    virtual ::grpc::ServerUnaryReactor* ProvideSpeedFactor(
-      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
-  };
-  template <class BaseClass>
-  class WithStreamedUnaryMethod_ProvideFlightInformation : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithStreamedUnaryMethod_ProvideFlightInformation() {
+    WithStreamedUnaryMethod_ProvideAutopilotVersion() {
       ::grpc::Service::MarkMethodStreamed(0,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::mavsdk::rpc::info_server::ProvideFlightInformationRequest, ::mavsdk::rpc::info_server::ProvideFlightInformationResponse>(
+          ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::mavsdk::rpc::info_server::ProvideFlightInformationRequest, ::mavsdk::rpc::info_server::ProvideFlightInformationResponse>* streamer) {
-                       return this->StreamedProvideFlightInformation(context,
+                     ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse>* streamer) {
+                       return this->StreamedProvideAutopilotVersion(context,
                          streamer);
                   }));
     }
-    ~WithStreamedUnaryMethod_ProvideFlightInformation() override {
+    ~WithStreamedUnaryMethod_ProvideAutopilotVersion() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status ProvideFlightInformation(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideFlightInformationRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideFlightInformationResponse* /*response*/) override {
+    ::grpc::Status ProvideAutopilotVersion(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedProvideFlightInformation(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::mavsdk::rpc::info_server::ProvideFlightInformationRequest,::mavsdk::rpc::info_server::ProvideFlightInformationResponse>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedProvideAutopilotVersion(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest,::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
-  class WithStreamedUnaryMethod_ProvideIdentification : public BaseClass {
+  class WithStreamedUnaryMethod_ProvideProtocolVersion : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
-    WithStreamedUnaryMethod_ProvideIdentification() {
+    WithStreamedUnaryMethod_ProvideProtocolVersion() {
       ::grpc::Service::MarkMethodStreamed(1,
         new ::grpc::internal::StreamedUnaryHandler<
-          ::mavsdk::rpc::info_server::ProvideIdentificationRequest, ::mavsdk::rpc::info_server::ProvideIdentificationResponse>(
+          ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest, ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse>(
             [this](::grpc::ServerContext* context,
                    ::grpc::ServerUnaryStreamer<
-                     ::mavsdk::rpc::info_server::ProvideIdentificationRequest, ::mavsdk::rpc::info_server::ProvideIdentificationResponse>* streamer) {
-                       return this->StreamedProvideIdentification(context,
+                     ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest, ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse>* streamer) {
+                       return this->StreamedProvideProtocolVersion(context,
                          streamer);
                   }));
     }
-    ~WithStreamedUnaryMethod_ProvideIdentification() override {
+    ~WithStreamedUnaryMethod_ProvideProtocolVersion() override {
       BaseClassMustBeDerivedFromService(this);
     }
     // disable regular version of this method
-    ::grpc::Status ProvideIdentification(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideIdentificationRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideIdentificationResponse* /*response*/) override {
+    ::grpc::Status ProvideProtocolVersion(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedProvideIdentification(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::mavsdk::rpc::info_server::ProvideIdentificationRequest,::mavsdk::rpc::info_server::ProvideIdentificationResponse>* server_unary_streamer) = 0;
+    virtual ::grpc::Status StreamedProvideProtocolVersion(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest,::mavsdk::rpc::info_server::ProvideProtocolVersionResponse>* server_unary_streamer) = 0;
   };
-  template <class BaseClass>
-  class WithStreamedUnaryMethod_ProvideProduct : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithStreamedUnaryMethod_ProvideProduct() {
-      ::grpc::Service::MarkMethodStreamed(2,
-        new ::grpc::internal::StreamedUnaryHandler<
-          ::mavsdk::rpc::info_server::ProvideProductRequest, ::mavsdk::rpc::info_server::ProvideProductResponse>(
-            [this](::grpc::ServerContext* context,
-                   ::grpc::ServerUnaryStreamer<
-                     ::mavsdk::rpc::info_server::ProvideProductRequest, ::mavsdk::rpc::info_server::ProvideProductResponse>* streamer) {
-                       return this->StreamedProvideProduct(context,
-                         streamer);
-                  }));
-    }
-    ~WithStreamedUnaryMethod_ProvideProduct() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable regular version of this method
-    ::grpc::Status ProvideProduct(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideProductRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideProductResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedProvideProduct(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::mavsdk::rpc::info_server::ProvideProductRequest,::mavsdk::rpc::info_server::ProvideProductResponse>* server_unary_streamer) = 0;
-  };
-  template <class BaseClass>
-  class WithStreamedUnaryMethod_ProvideVersion : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithStreamedUnaryMethod_ProvideVersion() {
-      ::grpc::Service::MarkMethodStreamed(3,
-        new ::grpc::internal::StreamedUnaryHandler<
-          ::mavsdk::rpc::info_server::ProvideVersionRequest, ::mavsdk::rpc::info_server::ProvideVersionResponse>(
-            [this](::grpc::ServerContext* context,
-                   ::grpc::ServerUnaryStreamer<
-                     ::mavsdk::rpc::info_server::ProvideVersionRequest, ::mavsdk::rpc::info_server::ProvideVersionResponse>* streamer) {
-                       return this->StreamedProvideVersion(context,
-                         streamer);
-                  }));
-    }
-    ~WithStreamedUnaryMethod_ProvideVersion() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable regular version of this method
-    ::grpc::Status ProvideVersion(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideVersionRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideVersionResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedProvideVersion(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::mavsdk::rpc::info_server::ProvideVersionRequest,::mavsdk::rpc::info_server::ProvideVersionResponse>* server_unary_streamer) = 0;
-  };
-  template <class BaseClass>
-  class WithStreamedUnaryMethod_ProvideSpeedFactor : public BaseClass {
-   private:
-    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
-   public:
-    WithStreamedUnaryMethod_ProvideSpeedFactor() {
-      ::grpc::Service::MarkMethodStreamed(4,
-        new ::grpc::internal::StreamedUnaryHandler<
-          ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest, ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse>(
-            [this](::grpc::ServerContext* context,
-                   ::grpc::ServerUnaryStreamer<
-                     ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest, ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse>* streamer) {
-                       return this->StreamedProvideSpeedFactor(context,
-                         streamer);
-                  }));
-    }
-    ~WithStreamedUnaryMethod_ProvideSpeedFactor() override {
-      BaseClassMustBeDerivedFromService(this);
-    }
-    // disable regular version of this method
-    ::grpc::Status ProvideSpeedFactor(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest* /*request*/, ::mavsdk::rpc::info_server::ProvideSpeedFactorResponse* /*response*/) override {
-      abort();
-      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
-    }
-    // replace default version of method with streamed unary
-    virtual ::grpc::Status StreamedProvideSpeedFactor(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::mavsdk::rpc::info_server::ProvideSpeedFactorRequest,::mavsdk::rpc::info_server::ProvideSpeedFactorResponse>* server_unary_streamer) = 0;
-  };
-  typedef WithStreamedUnaryMethod_ProvideFlightInformation<WithStreamedUnaryMethod_ProvideIdentification<WithStreamedUnaryMethod_ProvideProduct<WithStreamedUnaryMethod_ProvideVersion<WithStreamedUnaryMethod_ProvideSpeedFactor<Service > > > > > StreamedUnaryService;
+  typedef WithStreamedUnaryMethod_ProvideAutopilotVersion<WithStreamedUnaryMethod_ProvideProtocolVersion<Service > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_ProvideFlightInformation<WithStreamedUnaryMethod_ProvideIdentification<WithStreamedUnaryMethod_ProvideProduct<WithStreamedUnaryMethod_ProvideVersion<WithStreamedUnaryMethod_ProvideSpeedFactor<Service > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_ProvideAutopilotVersion<WithStreamedUnaryMethod_ProvideProtocolVersion<Service > > StreamedService;
 };
 
 }  // namespace info_server

@@ -24,7 +24,6 @@ class InfoServerServiceImpl final : public rpc::info_server::InfoServerService::
 public:
     InfoServerServiceImpl(LazyPlugin& lazy_plugin) : _lazy_plugin(lazy_plugin) {}
 
-
     template<typename ResponseType>
     void fillResponseWithResult(ResponseType* response, mavsdk::InfoServer::Result& result) const
     {
@@ -39,245 +38,104 @@ public:
         response->set_allocated_info_server_result(rpc_info_server_result);
     }
 
-
-
-
-    static std::unique_ptr<rpc::info_server::FlightInfo> translateToRpcFlightInfo(const mavsdk::InfoServer::FlightInfo &flight_info)
+    static std::unique_ptr<rpc::info_server::ProtocolVersion>
+    translateToRpcProtocolVersion(const mavsdk::InfoServer::ProtocolVersion& protocol_version)
     {
-        auto rpc_obj = std::make_unique<rpc::info_server::FlightInfo>();
+        auto rpc_obj = std::make_unique<rpc::info_server::ProtocolVersion>();
 
+        rpc_obj->set_version(protocol_version.version);
 
-            
-        rpc_obj->set_time_boot_ms(flight_info.time_boot_ms);
-            
-        
-            
-        rpc_obj->set_flight_uid(flight_info.flight_uid);
-            
-        
+        rpc_obj->set_min_version(protocol_version.min_version);
+
+        rpc_obj->set_max_version(protocol_version.max_version);
+
+        rpc_obj->set_spec_version_hash(protocol_version.spec_version_hash);
+
+        rpc_obj->set_library_version_hash(protocol_version.library_version_hash);
 
         return rpc_obj;
     }
 
-    static mavsdk::InfoServer::FlightInfo translateFromRpcFlightInfo(const rpc::info_server::FlightInfo& flight_info)
+    static mavsdk::InfoServer::ProtocolVersion
+    translateFromRpcProtocolVersion(const rpc::info_server::ProtocolVersion& protocol_version)
     {
-        mavsdk::InfoServer::FlightInfo obj;
+        mavsdk::InfoServer::ProtocolVersion obj;
 
+        obj.version = protocol_version.version();
 
-            
-        obj.time_boot_ms = flight_info.time_boot_ms();
-            
-        
-            
-        obj.flight_uid = flight_info.flight_uid();
-            
-        
+        obj.min_version = protocol_version.min_version();
+
+        obj.max_version = protocol_version.max_version();
+
+        obj.spec_version_hash = protocol_version.spec_version_hash();
+
+        obj.library_version_hash = protocol_version.library_version_hash();
+
         return obj;
     }
 
-
-
-
-
-    static std::unique_ptr<rpc::info_server::Identification> translateToRpcIdentification(const mavsdk::InfoServer::Identification &identification)
+    static std::unique_ptr<rpc::info_server::AutopilotVersion>
+    translateToRpcAutopilotVersion(const mavsdk::InfoServer::AutopilotVersion& autopilot_version)
     {
-        auto rpc_obj = std::make_unique<rpc::info_server::Identification>();
+        auto rpc_obj = std::make_unique<rpc::info_server::AutopilotVersion>();
 
+        rpc_obj->set_flight_sw_major(autopilot_version.flight_sw_major);
 
-            
-        rpc_obj->set_hardware_uid(identification.hardware_uid);
-            
-        
-            
-        rpc_obj->set_legacy_uid(identification.legacy_uid);
-            
-        
+        rpc_obj->set_flight_sw_minor(autopilot_version.flight_sw_minor);
+
+        rpc_obj->set_flight_sw_patch(autopilot_version.flight_sw_patch);
+
+        rpc_obj->set_flight_sw_vendor_major(autopilot_version.flight_sw_vendor_major);
+
+        rpc_obj->set_flight_sw_vendor_minor(autopilot_version.flight_sw_vendor_minor);
+
+        rpc_obj->set_flight_sw_vendor_patch(autopilot_version.flight_sw_vendor_patch);
+
+        rpc_obj->set_os_sw_major(autopilot_version.os_sw_major);
+
+        rpc_obj->set_os_sw_minor(autopilot_version.os_sw_minor);
+
+        rpc_obj->set_os_sw_patch(autopilot_version.os_sw_patch);
+
+        rpc_obj->set_flight_sw_git_hash(autopilot_version.flight_sw_git_hash);
+
+        rpc_obj->set_os_sw_git_hash(autopilot_version.os_sw_git_hash);
 
         return rpc_obj;
     }
 
-    static mavsdk::InfoServer::Identification translateFromRpcIdentification(const rpc::info_server::Identification& identification)
+    static mavsdk::InfoServer::AutopilotVersion
+    translateFromRpcAutopilotVersion(const rpc::info_server::AutopilotVersion& autopilot_version)
     {
-        mavsdk::InfoServer::Identification obj;
+        mavsdk::InfoServer::AutopilotVersion obj;
 
+        obj.flight_sw_major = autopilot_version.flight_sw_major();
 
-            
-        obj.hardware_uid = identification.hardware_uid();
-            
-        
-            
-        obj.legacy_uid = identification.legacy_uid();
-            
-        
+        obj.flight_sw_minor = autopilot_version.flight_sw_minor();
+
+        obj.flight_sw_patch = autopilot_version.flight_sw_patch();
+
+        obj.flight_sw_vendor_major = autopilot_version.flight_sw_vendor_major();
+
+        obj.flight_sw_vendor_minor = autopilot_version.flight_sw_vendor_minor();
+
+        obj.flight_sw_vendor_patch = autopilot_version.flight_sw_vendor_patch();
+
+        obj.os_sw_major = autopilot_version.os_sw_major();
+
+        obj.os_sw_minor = autopilot_version.os_sw_minor();
+
+        obj.os_sw_patch = autopilot_version.os_sw_patch();
+
+        obj.flight_sw_git_hash = autopilot_version.flight_sw_git_hash();
+
+        obj.os_sw_git_hash = autopilot_version.os_sw_git_hash();
+
         return obj;
     }
 
-
-
-
-
-    static std::unique_ptr<rpc::info_server::Product> translateToRpcProduct(const mavsdk::InfoServer::Product &product)
-    {
-        auto rpc_obj = std::make_unique<rpc::info_server::Product>();
-
-
-            
-        rpc_obj->set_vendor_id(product.vendor_id);
-            
-        
-            
-        rpc_obj->set_vendor_name(product.vendor_name);
-            
-        
-            
-        rpc_obj->set_product_id(product.product_id);
-            
-        
-            
-        rpc_obj->set_product_name(product.product_name);
-            
-        
-
-        return rpc_obj;
-    }
-
-    static mavsdk::InfoServer::Product translateFromRpcProduct(const rpc::info_server::Product& product)
-    {
-        mavsdk::InfoServer::Product obj;
-
-
-            
-        obj.vendor_id = product.vendor_id();
-            
-        
-            
-        obj.vendor_name = product.vendor_name();
-            
-        
-            
-        obj.product_id = product.product_id();
-            
-        
-            
-        obj.product_name = product.product_name();
-            
-        
-        return obj;
-    }
-
-
-
-
-
-    static std::unique_ptr<rpc::info_server::Version> translateToRpcVersion(const mavsdk::InfoServer::Version &version)
-    {
-        auto rpc_obj = std::make_unique<rpc::info_server::Version>();
-
-
-            
-        rpc_obj->set_flight_sw_major(version.flight_sw_major);
-            
-        
-            
-        rpc_obj->set_flight_sw_minor(version.flight_sw_minor);
-            
-        
-            
-        rpc_obj->set_flight_sw_patch(version.flight_sw_patch);
-            
-        
-            
-        rpc_obj->set_flight_sw_vendor_major(version.flight_sw_vendor_major);
-            
-        
-            
-        rpc_obj->set_flight_sw_vendor_minor(version.flight_sw_vendor_minor);
-            
-        
-            
-        rpc_obj->set_flight_sw_vendor_patch(version.flight_sw_vendor_patch);
-            
-        
-            
-        rpc_obj->set_os_sw_major(version.os_sw_major);
-            
-        
-            
-        rpc_obj->set_os_sw_minor(version.os_sw_minor);
-            
-        
-            
-        rpc_obj->set_os_sw_patch(version.os_sw_patch);
-            
-        
-            
-        rpc_obj->set_flight_sw_git_hash(version.flight_sw_git_hash);
-            
-        
-            
-        rpc_obj->set_os_sw_git_hash(version.os_sw_git_hash);
-            
-        
-
-        return rpc_obj;
-    }
-
-    static mavsdk::InfoServer::Version translateFromRpcVersion(const rpc::info_server::Version& version)
-    {
-        mavsdk::InfoServer::Version obj;
-
-
-            
-        obj.flight_sw_major = version.flight_sw_major();
-            
-        
-            
-        obj.flight_sw_minor = version.flight_sw_minor();
-            
-        
-            
-        obj.flight_sw_patch = version.flight_sw_patch();
-            
-        
-            
-        obj.flight_sw_vendor_major = version.flight_sw_vendor_major();
-            
-        
-            
-        obj.flight_sw_vendor_minor = version.flight_sw_vendor_minor();
-            
-        
-            
-        obj.flight_sw_vendor_patch = version.flight_sw_vendor_patch();
-            
-        
-            
-        obj.os_sw_major = version.os_sw_major();
-            
-        
-            
-        obj.os_sw_minor = version.os_sw_minor();
-            
-        
-            
-        obj.os_sw_patch = version.os_sw_patch();
-            
-        
-            
-        obj.flight_sw_git_hash = version.flight_sw_git_hash();
-            
-        
-            
-        obj.os_sw_git_hash = version.os_sw_git_hash();
-            
-        
-        return obj;
-    }
-
-
-
-
-    static rpc::info_server::InfoResult::Result translateToRpcResult(const mavsdk::InfoServer::Result& result)
+    static rpc::info_server::InfoResult::Result
+    translateToRpcResult(const mavsdk::InfoServer::Result& result)
     {
         switch (result) {
             default:
@@ -294,7 +152,8 @@ public:
         }
     }
 
-    static mavsdk::InfoServer::Result translateFromRpcResult(const rpc::info_server::InfoResult::Result result)
+    static mavsdk::InfoServer::Result
+    translateFromRpcResult(const rpc::info_server::InfoResult::Result result)
     {
         switch (result) {
             default:
@@ -311,161 +170,60 @@ public:
         }
     }
 
-
-
-
-    grpc::Status ProvideFlightInformation(
+    grpc::Status ProvideAutopilotVersion(
         grpc::ServerContext* /* context */,
-        const rpc::info_server::ProvideFlightInformationRequest* /* request */,
-        rpc::info_server::ProvideFlightInformationResponse* response) override
+        const rpc::info_server::ProvideAutopilotVersionRequest* /* request */,
+        rpc::info_server::ProvideAutopilotVersionResponse* response) override
     {
         if (_lazy_plugin.maybe_plugin() == nullptr) {
-            
             if (response != nullptr) {
                 auto result = mavsdk::InfoServer::Result::NoSystem;
                 fillResponseWithResult(response, result);
             }
-            
+
             return grpc::Status::OK;
         }
 
-        
-
-        auto result = _lazy_plugin.maybe_plugin()->provide_flight_information();
+        auto result = _lazy_plugin.maybe_plugin()->provide_autopilot_version();
 
         if (response != nullptr) {
             fillResponseWithResult(response, result.first);
-            
-            response->set_allocated_flight_info(translateToRpcFlightInfo(result.second).release());
-            
-        }
 
+            response->set_allocated_protocol_version_info(
+                translateToRpcAutopilotVersion(result.second).release());
+        }
 
         return grpc::Status::OK;
     }
 
-    grpc::Status ProvideIdentification(
+    grpc::Status ProvideProtocolVersion(
         grpc::ServerContext* /* context */,
-        const rpc::info_server::ProvideIdentificationRequest* /* request */,
-        rpc::info_server::ProvideIdentificationResponse* response) override
+        const rpc::info_server::ProvideProtocolVersionRequest* /* request */,
+        rpc::info_server::ProvideProtocolVersionResponse* response) override
     {
         if (_lazy_plugin.maybe_plugin() == nullptr) {
-            
             if (response != nullptr) {
                 auto result = mavsdk::InfoServer::Result::NoSystem;
                 fillResponseWithResult(response, result);
             }
-            
+
             return grpc::Status::OK;
         }
 
-        
-
-        auto result = _lazy_plugin.maybe_plugin()->provide_identification();
+        auto result = _lazy_plugin.maybe_plugin()->provide_protocol_version();
 
         if (response != nullptr) {
             fillResponseWithResult(response, result.first);
-            
-            response->set_allocated_identification(translateToRpcIdentification(result.second).release());
-            
-        }
 
+            response->set_allocated_protocol_version_info(
+                translateToRpcProtocolVersion(result.second).release());
+        }
 
         return grpc::Status::OK;
     }
 
-    grpc::Status ProvideProduct(
-        grpc::ServerContext* /* context */,
-        const rpc::info_server::ProvideProductRequest* /* request */,
-        rpc::info_server::ProvideProductResponse* response) override
+    void stop()
     {
-        if (_lazy_plugin.maybe_plugin() == nullptr) {
-            
-            if (response != nullptr) {
-                auto result = mavsdk::InfoServer::Result::NoSystem;
-                fillResponseWithResult(response, result);
-            }
-            
-            return grpc::Status::OK;
-        }
-
-        
-
-        auto result = _lazy_plugin.maybe_plugin()->provide_product();
-
-        if (response != nullptr) {
-            fillResponseWithResult(response, result.first);
-            
-            response->set_allocated_product(translateToRpcProduct(result.second).release());
-            
-        }
-
-
-        return grpc::Status::OK;
-    }
-
-    grpc::Status ProvideVersion(
-        grpc::ServerContext* /* context */,
-        const rpc::info_server::ProvideVersionRequest* /* request */,
-        rpc::info_server::ProvideVersionResponse* response) override
-    {
-        if (_lazy_plugin.maybe_plugin() == nullptr) {
-            
-            if (response != nullptr) {
-                auto result = mavsdk::InfoServer::Result::NoSystem;
-                fillResponseWithResult(response, result);
-            }
-            
-            return grpc::Status::OK;
-        }
-
-        
-
-        auto result = _lazy_plugin.maybe_plugin()->provide_version();
-
-        if (response != nullptr) {
-            fillResponseWithResult(response, result.first);
-            
-            response->set_allocated_version(translateToRpcVersion(result.second).release());
-            
-        }
-
-
-        return grpc::Status::OK;
-    }
-
-    grpc::Status ProvideSpeedFactor(
-        grpc::ServerContext* /* context */,
-        const rpc::info_server::ProvideSpeedFactorRequest* /* request */,
-        rpc::info_server::ProvideSpeedFactorResponse* response) override
-    {
-        if (_lazy_plugin.maybe_plugin() == nullptr) {
-            
-            if (response != nullptr) {
-                auto result = mavsdk::InfoServer::Result::NoSystem;
-                fillResponseWithResult(response, result);
-            }
-            
-            return grpc::Status::OK;
-        }
-
-        
-
-        auto result = _lazy_plugin.maybe_plugin()->provide_speed_factor();
-
-        if (response != nullptr) {
-            fillResponseWithResult(response, result.first);
-            
-            response->set_speed_factor(result.second);
-            
-        }
-
-
-        return grpc::Status::OK;
-    }
-
-
-    void stop() {
         _stopped.store(true);
         for (auto& prom : _stream_stop_promises) {
             if (auto handle = prom.lock()) {
@@ -475,7 +233,8 @@ public:
     }
 
 private:
-    void register_stream_stop_promise(std::weak_ptr<std::promise<void>> prom) {
+    void register_stream_stop_promise(std::weak_ptr<std::promise<void>> prom)
+    {
         // If we have already stopped, set promise immediately and don't add it to list.
         if (_stopped.load()) {
             if (auto handle = prom.lock()) {
@@ -486,8 +245,10 @@ private:
         }
     }
 
-    void unregister_stream_stop_promise(std::shared_ptr<std::promise<void>> prom) {
-        for (auto it = _stream_stop_promises.begin(); it != _stream_stop_promises.end(); /* ++it */) {
+    void unregister_stream_stop_promise(std::shared_ptr<std::promise<void>> prom)
+    {
+        for (auto it = _stream_stop_promises.begin(); it != _stream_stop_promises.end();
+             /* ++it */) {
             if (it->lock() == prom) {
                 it = _stream_stop_promises.erase(it);
             } else {
@@ -498,7 +259,7 @@ private:
 
     LazyPlugin& _lazy_plugin;
     std::atomic<bool> _stopped{false};
-    std::vector<std::weak_ptr<std::promise<void>>> _stream_stop_promises {};
+    std::vector<std::weak_ptr<std::promise<void>>> _stream_stop_promises{};
 };
 
 } // namespace mavsdk_server
