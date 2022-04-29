@@ -21,6 +21,9 @@ public:
 
     std::pair<InfoServer::Result, InfoServer::ProtocolVersion> provide_protocol_version();
 
+    InfoServer::Result set_autopilot_version(const InfoServer::AutopilotVersion &);
+    InfoServer::Result set_protocol_version(const InfoServer::ProtocolVersion &);
+
 private:
     mavlink_message_t
     process_command_request_message(const MavlinkCommandReceiver::CommandLong& command);

@@ -132,4 +132,18 @@ void InfoServerImpl::send_autopilot_version() const
     _parent->send_message(msg);
 }
 
+InfoServer::Result InfoServerImpl::set_autopilot_version(const InfoServer::AutopilotVersion& autopilot_version)
+{
+    std::lock_guard<std::mutex> lock(_autopilot_version_mutex);
+    _autopilot_version = autopilot_version;
+    return InfoServer::Result::Success;
+}
+
+InfoServer::Result InfoServerImpl::set_protocol_version(const InfoServer::ProtocolVersion& protocol_version)
+{
+    std::lock_guard<std::mutex> lock(_protocol_version_mutex);
+    _protocol_version = protocol_version;
+    return InfoServer::Result::Success;
+}
+
 } // namespace mavsdk
