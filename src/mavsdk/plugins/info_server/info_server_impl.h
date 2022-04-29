@@ -22,6 +22,21 @@ public:
     std::pair<InfoServer::Result, InfoServer::ProtocolVersion> provide_protocol_version();
 
 private:
+    mavlink_message_t
+    process_command_request_message(const MavlinkCommandReceiver::CommandLong& command);
+    mavlink_message_t process_command_request_autopilot_capabilities(
+        const MavlinkCommandReceiver::CommandLong& command);
+    mavlink_message_t
+    process_command_request_protocol_version(const MavlinkCommandReceiver::CommandLong& command);
+
+    void send_protocol_version() const;
+    void send_autopilot_version() const;
+
+    InfoServer::ProtocolVersion _protocol_version{};
+    mutable std::mutex _protocol_version_mutex{};
+
+    InfoServer::AutopilotVersion _autopilot_version{};
+    mutable std::mutex _autopilot_version_mutex{};
 };
 
 } // namespace mavsdk

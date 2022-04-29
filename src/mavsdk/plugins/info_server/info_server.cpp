@@ -59,33 +59,32 @@ std::ostream& operator<<(std::ostream& str, InfoServer::ProtocolVersion const& p
 
 bool operator==(const InfoServer::AutopilotVersion& lhs, const InfoServer::AutopilotVersion& rhs)
 {
-    return (rhs.flight_sw_major == lhs.flight_sw_major) &&
-           (rhs.flight_sw_minor == lhs.flight_sw_minor) &&
-           (rhs.flight_sw_patch == lhs.flight_sw_patch) &&
-           (rhs.flight_sw_vendor_major == lhs.flight_sw_vendor_major) &&
-           (rhs.flight_sw_vendor_minor == lhs.flight_sw_vendor_minor) &&
-           (rhs.flight_sw_vendor_patch == lhs.flight_sw_vendor_patch) &&
-           (rhs.os_sw_major == lhs.os_sw_major) && (rhs.os_sw_minor == lhs.os_sw_minor) &&
-           (rhs.os_sw_patch == lhs.os_sw_patch) &&
-           (rhs.flight_sw_git_hash == lhs.flight_sw_git_hash) &&
-           (rhs.os_sw_git_hash == lhs.os_sw_git_hash);
+    return (rhs.capabilities == lhs.capabilities) &&
+           (rhs.flight_sw_version == lhs.flight_sw_version) &&
+           (rhs.middleware_sw_version == lhs.middleware_sw_version) &&
+           (rhs.os_sw_version == lhs.os_sw_version) && (rhs.board_version == lhs.board_version) &&
+           (rhs.flight_custom_version == lhs.flight_custom_version) &&
+           (rhs.middleware_custom_version == lhs.middleware_custom_version) &&
+           (rhs.os_custom_version == lhs.os_custom_version) && (rhs.vendor_id == lhs.vendor_id) &&
+           (rhs.product_id == lhs.product_id) && (rhs.uid == lhs.uid) && (rhs.uid2 == lhs.uid2);
 }
 
 std::ostream& operator<<(std::ostream& str, InfoServer::AutopilotVersion const& autopilot_version)
 {
     str << std::setprecision(15);
     str << "autopilot_version:" << '\n' << "{\n";
-    str << "    flight_sw_major: " << autopilot_version.flight_sw_major << '\n';
-    str << "    flight_sw_minor: " << autopilot_version.flight_sw_minor << '\n';
-    str << "    flight_sw_patch: " << autopilot_version.flight_sw_patch << '\n';
-    str << "    flight_sw_vendor_major: " << autopilot_version.flight_sw_vendor_major << '\n';
-    str << "    flight_sw_vendor_minor: " << autopilot_version.flight_sw_vendor_minor << '\n';
-    str << "    flight_sw_vendor_patch: " << autopilot_version.flight_sw_vendor_patch << '\n';
-    str << "    os_sw_major: " << autopilot_version.os_sw_major << '\n';
-    str << "    os_sw_minor: " << autopilot_version.os_sw_minor << '\n';
-    str << "    os_sw_patch: " << autopilot_version.os_sw_patch << '\n';
-    str << "    flight_sw_git_hash: " << autopilot_version.flight_sw_git_hash << '\n';
-    str << "    os_sw_git_hash: " << autopilot_version.os_sw_git_hash << '\n';
+    str << "    capabilities: " << autopilot_version.capabilities << '\n';
+    str << "    flight_sw_version: " << autopilot_version.flight_sw_version << '\n';
+    str << "    middleware_sw_version: " << autopilot_version.middleware_sw_version << '\n';
+    str << "    os_sw_version: " << autopilot_version.os_sw_version << '\n';
+    str << "    board_version: " << autopilot_version.board_version << '\n';
+    str << "    flight_custom_version: " << autopilot_version.flight_custom_version << '\n';
+    str << "    middleware_custom_version: " << autopilot_version.middleware_custom_version << '\n';
+    str << "    os_custom_version: " << autopilot_version.os_custom_version << '\n';
+    str << "    vendor_id: " << autopilot_version.vendor_id << '\n';
+    str << "    product_id: " << autopilot_version.product_id << '\n';
+    str << "    uid: " << autopilot_version.uid << '\n';
+    str << "    uid2: " << autopilot_version.uid2 << '\n';
     str << '}';
     return str;
 }

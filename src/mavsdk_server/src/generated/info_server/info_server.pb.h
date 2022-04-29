@@ -861,31 +861,31 @@ class ProtocolVersion final :
   std::string* _internal_mutable_library_version_hash();
   public:
 
-  // int32 version = 1;
+  // uint32 version = 1;
   void clear_version();
-  ::PROTOBUF_NAMESPACE_ID::int32 version() const;
-  void set_version(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::uint32 version() const;
+  void set_version(::PROTOBUF_NAMESPACE_ID::uint32 value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_version() const;
-  void _internal_set_version(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_version() const;
+  void _internal_set_version(::PROTOBUF_NAMESPACE_ID::uint32 value);
   public:
 
-  // int32 min_version = 2;
+  // uint32 min_version = 2;
   void clear_min_version();
-  ::PROTOBUF_NAMESPACE_ID::int32 min_version() const;
-  void set_min_version(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::uint32 min_version() const;
+  void set_min_version(::PROTOBUF_NAMESPACE_ID::uint32 value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_min_version() const;
-  void _internal_set_min_version(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_min_version() const;
+  void _internal_set_min_version(::PROTOBUF_NAMESPACE_ID::uint32 value);
   public:
 
-  // int32 max_version = 3;
+  // uint32 max_version = 3;
   void clear_max_version();
-  ::PROTOBUF_NAMESPACE_ID::int32 max_version() const;
-  void set_max_version(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::uint32 max_version() const;
+  void set_max_version(::PROTOBUF_NAMESPACE_ID::uint32 value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_max_version() const;
-  void _internal_set_max_version(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_max_version() const;
+  void _internal_set_max_version(::PROTOBUF_NAMESPACE_ID::uint32 value);
   public:
 
   // @@protoc_insertion_point(class_scope:mavsdk.rpc.info_server.ProtocolVersion)
@@ -897,9 +897,9 @@ class ProtocolVersion final :
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr spec_version_hash_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr library_version_hash_;
-  ::PROTOBUF_NAMESPACE_ID::int32 version_;
-  ::PROTOBUF_NAMESPACE_ID::int32 min_version_;
-  ::PROTOBUF_NAMESPACE_ID::int32 max_version_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 version_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 min_version_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 max_version_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_info_5fserver_2finfo_5fserver_2eproto;
 };
@@ -1020,125 +1020,145 @@ class AutopilotVersion final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kFlightSwGitHashFieldNumber = 10,
-    kOsSwGitHashFieldNumber = 11,
-    kFlightSwMajorFieldNumber = 1,
-    kFlightSwMinorFieldNumber = 2,
-    kFlightSwPatchFieldNumber = 3,
-    kFlightSwVendorMajorFieldNumber = 4,
-    kFlightSwVendorMinorFieldNumber = 5,
-    kFlightSwVendorPatchFieldNumber = 6,
-    kOsSwMajorFieldNumber = 7,
-    kOsSwMinorFieldNumber = 8,
-    kOsSwPatchFieldNumber = 9,
+    kFlightCustomVersionFieldNumber = 6,
+    kMiddlewareCustomVersionFieldNumber = 7,
+    kOsCustomVersionFieldNumber = 8,
+    kUid2FieldNumber = 12,
+    kCapabilitiesFieldNumber = 1,
+    kFlightSwVersionFieldNumber = 2,
+    kMiddlewareSwVersionFieldNumber = 3,
+    kOsSwVersionFieldNumber = 4,
+    kBoardVersionFieldNumber = 5,
+    kVendorIdFieldNumber = 9,
+    kProductIdFieldNumber = 10,
+    kUidFieldNumber = 11,
   };
-  // string flight_sw_git_hash = 10;
-  void clear_flight_sw_git_hash();
-  const std::string& flight_sw_git_hash() const;
+  // string flight_custom_version = 6;
+  void clear_flight_custom_version();
+  const std::string& flight_custom_version() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_flight_sw_git_hash(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_flight_sw_git_hash();
-  PROTOBUF_MUST_USE_RESULT std::string* release_flight_sw_git_hash();
-  void set_allocated_flight_sw_git_hash(std::string* flight_sw_git_hash);
+  void set_flight_custom_version(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_flight_custom_version();
+  PROTOBUF_MUST_USE_RESULT std::string* release_flight_custom_version();
+  void set_allocated_flight_custom_version(std::string* flight_custom_version);
   private:
-  const std::string& _internal_flight_sw_git_hash() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_flight_sw_git_hash(const std::string& value);
-  std::string* _internal_mutable_flight_sw_git_hash();
+  const std::string& _internal_flight_custom_version() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_flight_custom_version(const std::string& value);
+  std::string* _internal_mutable_flight_custom_version();
   public:
 
-  // string os_sw_git_hash = 11;
-  void clear_os_sw_git_hash();
-  const std::string& os_sw_git_hash() const;
+  // string middleware_custom_version = 7;
+  void clear_middleware_custom_version();
+  const std::string& middleware_custom_version() const;
   template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_os_sw_git_hash(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_os_sw_git_hash();
-  PROTOBUF_MUST_USE_RESULT std::string* release_os_sw_git_hash();
-  void set_allocated_os_sw_git_hash(std::string* os_sw_git_hash);
+  void set_middleware_custom_version(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_middleware_custom_version();
+  PROTOBUF_MUST_USE_RESULT std::string* release_middleware_custom_version();
+  void set_allocated_middleware_custom_version(std::string* middleware_custom_version);
   private:
-  const std::string& _internal_os_sw_git_hash() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_os_sw_git_hash(const std::string& value);
-  std::string* _internal_mutable_os_sw_git_hash();
+  const std::string& _internal_middleware_custom_version() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_middleware_custom_version(const std::string& value);
+  std::string* _internal_mutable_middleware_custom_version();
   public:
 
-  // int32 flight_sw_major = 1;
-  void clear_flight_sw_major();
-  ::PROTOBUF_NAMESPACE_ID::int32 flight_sw_major() const;
-  void set_flight_sw_major(::PROTOBUF_NAMESPACE_ID::int32 value);
+  // string os_custom_version = 8;
+  void clear_os_custom_version();
+  const std::string& os_custom_version() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_os_custom_version(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_os_custom_version();
+  PROTOBUF_MUST_USE_RESULT std::string* release_os_custom_version();
+  void set_allocated_os_custom_version(std::string* os_custom_version);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_flight_sw_major() const;
-  void _internal_set_flight_sw_major(::PROTOBUF_NAMESPACE_ID::int32 value);
+  const std::string& _internal_os_custom_version() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_os_custom_version(const std::string& value);
+  std::string* _internal_mutable_os_custom_version();
   public:
 
-  // int32 flight_sw_minor = 2;
-  void clear_flight_sw_minor();
-  ::PROTOBUF_NAMESPACE_ID::int32 flight_sw_minor() const;
-  void set_flight_sw_minor(::PROTOBUF_NAMESPACE_ID::int32 value);
+  // string uid2 = 12;
+  void clear_uid2();
+  const std::string& uid2() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_uid2(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_uid2();
+  PROTOBUF_MUST_USE_RESULT std::string* release_uid2();
+  void set_allocated_uid2(std::string* uid2);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_flight_sw_minor() const;
-  void _internal_set_flight_sw_minor(::PROTOBUF_NAMESPACE_ID::int32 value);
+  const std::string& _internal_uid2() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_uid2(const std::string& value);
+  std::string* _internal_mutable_uid2();
   public:
 
-  // int32 flight_sw_patch = 3;
-  void clear_flight_sw_patch();
-  ::PROTOBUF_NAMESPACE_ID::int32 flight_sw_patch() const;
-  void set_flight_sw_patch(::PROTOBUF_NAMESPACE_ID::int32 value);
+  // uint64 capabilities = 1;
+  void clear_capabilities();
+  ::PROTOBUF_NAMESPACE_ID::uint64 capabilities() const;
+  void set_capabilities(::PROTOBUF_NAMESPACE_ID::uint64 value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_flight_sw_patch() const;
-  void _internal_set_flight_sw_patch(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_capabilities() const;
+  void _internal_set_capabilities(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
-  // int32 flight_sw_vendor_major = 4;
-  void clear_flight_sw_vendor_major();
-  ::PROTOBUF_NAMESPACE_ID::int32 flight_sw_vendor_major() const;
-  void set_flight_sw_vendor_major(::PROTOBUF_NAMESPACE_ID::int32 value);
+  // uint32 flight_sw_version = 2;
+  void clear_flight_sw_version();
+  ::PROTOBUF_NAMESPACE_ID::uint32 flight_sw_version() const;
+  void set_flight_sw_version(::PROTOBUF_NAMESPACE_ID::uint32 value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_flight_sw_vendor_major() const;
-  void _internal_set_flight_sw_vendor_major(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_flight_sw_version() const;
+  void _internal_set_flight_sw_version(::PROTOBUF_NAMESPACE_ID::uint32 value);
   public:
 
-  // int32 flight_sw_vendor_minor = 5;
-  void clear_flight_sw_vendor_minor();
-  ::PROTOBUF_NAMESPACE_ID::int32 flight_sw_vendor_minor() const;
-  void set_flight_sw_vendor_minor(::PROTOBUF_NAMESPACE_ID::int32 value);
+  // uint32 middleware_sw_version = 3;
+  void clear_middleware_sw_version();
+  ::PROTOBUF_NAMESPACE_ID::uint32 middleware_sw_version() const;
+  void set_middleware_sw_version(::PROTOBUF_NAMESPACE_ID::uint32 value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_flight_sw_vendor_minor() const;
-  void _internal_set_flight_sw_vendor_minor(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_middleware_sw_version() const;
+  void _internal_set_middleware_sw_version(::PROTOBUF_NAMESPACE_ID::uint32 value);
   public:
 
-  // int32 flight_sw_vendor_patch = 6;
-  void clear_flight_sw_vendor_patch();
-  ::PROTOBUF_NAMESPACE_ID::int32 flight_sw_vendor_patch() const;
-  void set_flight_sw_vendor_patch(::PROTOBUF_NAMESPACE_ID::int32 value);
+  // uint32 os_sw_version = 4;
+  void clear_os_sw_version();
+  ::PROTOBUF_NAMESPACE_ID::uint32 os_sw_version() const;
+  void set_os_sw_version(::PROTOBUF_NAMESPACE_ID::uint32 value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_flight_sw_vendor_patch() const;
-  void _internal_set_flight_sw_vendor_patch(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_os_sw_version() const;
+  void _internal_set_os_sw_version(::PROTOBUF_NAMESPACE_ID::uint32 value);
   public:
 
-  // int32 os_sw_major = 7;
-  void clear_os_sw_major();
-  ::PROTOBUF_NAMESPACE_ID::int32 os_sw_major() const;
-  void set_os_sw_major(::PROTOBUF_NAMESPACE_ID::int32 value);
+  // uint32 board_version = 5;
+  void clear_board_version();
+  ::PROTOBUF_NAMESPACE_ID::uint32 board_version() const;
+  void set_board_version(::PROTOBUF_NAMESPACE_ID::uint32 value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_os_sw_major() const;
-  void _internal_set_os_sw_major(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_board_version() const;
+  void _internal_set_board_version(::PROTOBUF_NAMESPACE_ID::uint32 value);
   public:
 
-  // int32 os_sw_minor = 8;
-  void clear_os_sw_minor();
-  ::PROTOBUF_NAMESPACE_ID::int32 os_sw_minor() const;
-  void set_os_sw_minor(::PROTOBUF_NAMESPACE_ID::int32 value);
+  // uint32 vendor_id = 9;
+  void clear_vendor_id();
+  ::PROTOBUF_NAMESPACE_ID::uint32 vendor_id() const;
+  void set_vendor_id(::PROTOBUF_NAMESPACE_ID::uint32 value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_os_sw_minor() const;
-  void _internal_set_os_sw_minor(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_vendor_id() const;
+  void _internal_set_vendor_id(::PROTOBUF_NAMESPACE_ID::uint32 value);
   public:
 
-  // int32 os_sw_patch = 9;
-  void clear_os_sw_patch();
-  ::PROTOBUF_NAMESPACE_ID::int32 os_sw_patch() const;
-  void set_os_sw_patch(::PROTOBUF_NAMESPACE_ID::int32 value);
+  // uint32 product_id = 10;
+  void clear_product_id();
+  ::PROTOBUF_NAMESPACE_ID::uint32 product_id() const;
+  void set_product_id(::PROTOBUF_NAMESPACE_ID::uint32 value);
   private:
-  ::PROTOBUF_NAMESPACE_ID::int32 _internal_os_sw_patch() const;
-  void _internal_set_os_sw_patch(::PROTOBUF_NAMESPACE_ID::int32 value);
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_product_id() const;
+  void _internal_set_product_id(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
+  // uint64 uid = 11;
+  void clear_uid();
+  ::PROTOBUF_NAMESPACE_ID::uint64 uid() const;
+  void set_uid(::PROTOBUF_NAMESPACE_ID::uint64 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint64 _internal_uid() const;
+  void _internal_set_uid(::PROTOBUF_NAMESPACE_ID::uint64 value);
   public:
 
   // @@protoc_insertion_point(class_scope:mavsdk.rpc.info_server.AutopilotVersion)
@@ -1148,17 +1168,18 @@ class AutopilotVersion final :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr flight_sw_git_hash_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr os_sw_git_hash_;
-  ::PROTOBUF_NAMESPACE_ID::int32 flight_sw_major_;
-  ::PROTOBUF_NAMESPACE_ID::int32 flight_sw_minor_;
-  ::PROTOBUF_NAMESPACE_ID::int32 flight_sw_patch_;
-  ::PROTOBUF_NAMESPACE_ID::int32 flight_sw_vendor_major_;
-  ::PROTOBUF_NAMESPACE_ID::int32 flight_sw_vendor_minor_;
-  ::PROTOBUF_NAMESPACE_ID::int32 flight_sw_vendor_patch_;
-  ::PROTOBUF_NAMESPACE_ID::int32 os_sw_major_;
-  ::PROTOBUF_NAMESPACE_ID::int32 os_sw_minor_;
-  ::PROTOBUF_NAMESPACE_ID::int32 os_sw_patch_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr flight_custom_version_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr middleware_custom_version_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr os_custom_version_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr uid2_;
+  ::PROTOBUF_NAMESPACE_ID::uint64 capabilities_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 flight_sw_version_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 middleware_sw_version_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 os_sw_version_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 board_version_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 vendor_id_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 product_id_;
+  ::PROTOBUF_NAMESPACE_ID::uint64 uid_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_info_5fserver_2finfo_5fserver_2eproto;
 };
@@ -1738,62 +1759,62 @@ inline void ProvideAutopilotVersionResponse::set_allocated_protocol_version_info
 
 // ProtocolVersion
 
-// int32 version = 1;
+// uint32 version = 1;
 inline void ProtocolVersion::clear_version() {
-  version_ = 0;
+  version_ = 0u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 ProtocolVersion::_internal_version() const {
+inline ::PROTOBUF_NAMESPACE_ID::uint32 ProtocolVersion::_internal_version() const {
   return version_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 ProtocolVersion::version() const {
+inline ::PROTOBUF_NAMESPACE_ID::uint32 ProtocolVersion::version() const {
   // @@protoc_insertion_point(field_get:mavsdk.rpc.info_server.ProtocolVersion.version)
   return _internal_version();
 }
-inline void ProtocolVersion::_internal_set_version(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void ProtocolVersion::_internal_set_version(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   
   version_ = value;
 }
-inline void ProtocolVersion::set_version(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void ProtocolVersion::set_version(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   _internal_set_version(value);
   // @@protoc_insertion_point(field_set:mavsdk.rpc.info_server.ProtocolVersion.version)
 }
 
-// int32 min_version = 2;
+// uint32 min_version = 2;
 inline void ProtocolVersion::clear_min_version() {
-  min_version_ = 0;
+  min_version_ = 0u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 ProtocolVersion::_internal_min_version() const {
+inline ::PROTOBUF_NAMESPACE_ID::uint32 ProtocolVersion::_internal_min_version() const {
   return min_version_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 ProtocolVersion::min_version() const {
+inline ::PROTOBUF_NAMESPACE_ID::uint32 ProtocolVersion::min_version() const {
   // @@protoc_insertion_point(field_get:mavsdk.rpc.info_server.ProtocolVersion.min_version)
   return _internal_min_version();
 }
-inline void ProtocolVersion::_internal_set_min_version(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void ProtocolVersion::_internal_set_min_version(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   
   min_version_ = value;
 }
-inline void ProtocolVersion::set_min_version(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void ProtocolVersion::set_min_version(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   _internal_set_min_version(value);
   // @@protoc_insertion_point(field_set:mavsdk.rpc.info_server.ProtocolVersion.min_version)
 }
 
-// int32 max_version = 3;
+// uint32 max_version = 3;
 inline void ProtocolVersion::clear_max_version() {
-  max_version_ = 0;
+  max_version_ = 0u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 ProtocolVersion::_internal_max_version() const {
+inline ::PROTOBUF_NAMESPACE_ID::uint32 ProtocolVersion::_internal_max_version() const {
   return max_version_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 ProtocolVersion::max_version() const {
+inline ::PROTOBUF_NAMESPACE_ID::uint32 ProtocolVersion::max_version() const {
   // @@protoc_insertion_point(field_get:mavsdk.rpc.info_server.ProtocolVersion.max_version)
   return _internal_max_version();
 }
-inline void ProtocolVersion::_internal_set_max_version(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void ProtocolVersion::_internal_set_max_version(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   
   max_version_ = value;
 }
-inline void ProtocolVersion::set_max_version(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void ProtocolVersion::set_max_version(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   _internal_set_max_version(value);
   // @@protoc_insertion_point(field_set:mavsdk.rpc.info_server.ProtocolVersion.max_version)
 }
@@ -1894,276 +1915,348 @@ inline void ProtocolVersion::set_allocated_library_version_hash(std::string* lib
 
 // AutopilotVersion
 
-// int32 flight_sw_major = 1;
-inline void AutopilotVersion::clear_flight_sw_major() {
-  flight_sw_major_ = 0;
+// uint64 capabilities = 1;
+inline void AutopilotVersion::clear_capabilities() {
+  capabilities_ = uint64_t{0u};
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 AutopilotVersion::_internal_flight_sw_major() const {
-  return flight_sw_major_;
+inline ::PROTOBUF_NAMESPACE_ID::uint64 AutopilotVersion::_internal_capabilities() const {
+  return capabilities_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 AutopilotVersion::flight_sw_major() const {
-  // @@protoc_insertion_point(field_get:mavsdk.rpc.info_server.AutopilotVersion.flight_sw_major)
-  return _internal_flight_sw_major();
+inline ::PROTOBUF_NAMESPACE_ID::uint64 AutopilotVersion::capabilities() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.info_server.AutopilotVersion.capabilities)
+  return _internal_capabilities();
 }
-inline void AutopilotVersion::_internal_set_flight_sw_major(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void AutopilotVersion::_internal_set_capabilities(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   
-  flight_sw_major_ = value;
+  capabilities_ = value;
 }
-inline void AutopilotVersion::set_flight_sw_major(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_flight_sw_major(value);
-  // @@protoc_insertion_point(field_set:mavsdk.rpc.info_server.AutopilotVersion.flight_sw_major)
+inline void AutopilotVersion::set_capabilities(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _internal_set_capabilities(value);
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.info_server.AutopilotVersion.capabilities)
 }
 
-// int32 flight_sw_minor = 2;
-inline void AutopilotVersion::clear_flight_sw_minor() {
-  flight_sw_minor_ = 0;
+// uint32 flight_sw_version = 2;
+inline void AutopilotVersion::clear_flight_sw_version() {
+  flight_sw_version_ = 0u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 AutopilotVersion::_internal_flight_sw_minor() const {
-  return flight_sw_minor_;
+inline ::PROTOBUF_NAMESPACE_ID::uint32 AutopilotVersion::_internal_flight_sw_version() const {
+  return flight_sw_version_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 AutopilotVersion::flight_sw_minor() const {
-  // @@protoc_insertion_point(field_get:mavsdk.rpc.info_server.AutopilotVersion.flight_sw_minor)
-  return _internal_flight_sw_minor();
+inline ::PROTOBUF_NAMESPACE_ID::uint32 AutopilotVersion::flight_sw_version() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.info_server.AutopilotVersion.flight_sw_version)
+  return _internal_flight_sw_version();
 }
-inline void AutopilotVersion::_internal_set_flight_sw_minor(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void AutopilotVersion::_internal_set_flight_sw_version(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   
-  flight_sw_minor_ = value;
+  flight_sw_version_ = value;
 }
-inline void AutopilotVersion::set_flight_sw_minor(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_flight_sw_minor(value);
-  // @@protoc_insertion_point(field_set:mavsdk.rpc.info_server.AutopilotVersion.flight_sw_minor)
+inline void AutopilotVersion::set_flight_sw_version(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_flight_sw_version(value);
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.info_server.AutopilotVersion.flight_sw_version)
 }
 
-// int32 flight_sw_patch = 3;
-inline void AutopilotVersion::clear_flight_sw_patch() {
-  flight_sw_patch_ = 0;
+// uint32 middleware_sw_version = 3;
+inline void AutopilotVersion::clear_middleware_sw_version() {
+  middleware_sw_version_ = 0u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 AutopilotVersion::_internal_flight_sw_patch() const {
-  return flight_sw_patch_;
+inline ::PROTOBUF_NAMESPACE_ID::uint32 AutopilotVersion::_internal_middleware_sw_version() const {
+  return middleware_sw_version_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 AutopilotVersion::flight_sw_patch() const {
-  // @@protoc_insertion_point(field_get:mavsdk.rpc.info_server.AutopilotVersion.flight_sw_patch)
-  return _internal_flight_sw_patch();
+inline ::PROTOBUF_NAMESPACE_ID::uint32 AutopilotVersion::middleware_sw_version() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.info_server.AutopilotVersion.middleware_sw_version)
+  return _internal_middleware_sw_version();
 }
-inline void AutopilotVersion::_internal_set_flight_sw_patch(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void AutopilotVersion::_internal_set_middleware_sw_version(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   
-  flight_sw_patch_ = value;
+  middleware_sw_version_ = value;
 }
-inline void AutopilotVersion::set_flight_sw_patch(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_flight_sw_patch(value);
-  // @@protoc_insertion_point(field_set:mavsdk.rpc.info_server.AutopilotVersion.flight_sw_patch)
+inline void AutopilotVersion::set_middleware_sw_version(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_middleware_sw_version(value);
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.info_server.AutopilotVersion.middleware_sw_version)
 }
 
-// int32 flight_sw_vendor_major = 4;
-inline void AutopilotVersion::clear_flight_sw_vendor_major() {
-  flight_sw_vendor_major_ = 0;
+// uint32 os_sw_version = 4;
+inline void AutopilotVersion::clear_os_sw_version() {
+  os_sw_version_ = 0u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 AutopilotVersion::_internal_flight_sw_vendor_major() const {
-  return flight_sw_vendor_major_;
+inline ::PROTOBUF_NAMESPACE_ID::uint32 AutopilotVersion::_internal_os_sw_version() const {
+  return os_sw_version_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 AutopilotVersion::flight_sw_vendor_major() const {
-  // @@protoc_insertion_point(field_get:mavsdk.rpc.info_server.AutopilotVersion.flight_sw_vendor_major)
-  return _internal_flight_sw_vendor_major();
+inline ::PROTOBUF_NAMESPACE_ID::uint32 AutopilotVersion::os_sw_version() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.info_server.AutopilotVersion.os_sw_version)
+  return _internal_os_sw_version();
 }
-inline void AutopilotVersion::_internal_set_flight_sw_vendor_major(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void AutopilotVersion::_internal_set_os_sw_version(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   
-  flight_sw_vendor_major_ = value;
+  os_sw_version_ = value;
 }
-inline void AutopilotVersion::set_flight_sw_vendor_major(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_flight_sw_vendor_major(value);
-  // @@protoc_insertion_point(field_set:mavsdk.rpc.info_server.AutopilotVersion.flight_sw_vendor_major)
+inline void AutopilotVersion::set_os_sw_version(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_os_sw_version(value);
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.info_server.AutopilotVersion.os_sw_version)
 }
 
-// int32 flight_sw_vendor_minor = 5;
-inline void AutopilotVersion::clear_flight_sw_vendor_minor() {
-  flight_sw_vendor_minor_ = 0;
+// uint32 board_version = 5;
+inline void AutopilotVersion::clear_board_version() {
+  board_version_ = 0u;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 AutopilotVersion::_internal_flight_sw_vendor_minor() const {
-  return flight_sw_vendor_minor_;
+inline ::PROTOBUF_NAMESPACE_ID::uint32 AutopilotVersion::_internal_board_version() const {
+  return board_version_;
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 AutopilotVersion::flight_sw_vendor_minor() const {
-  // @@protoc_insertion_point(field_get:mavsdk.rpc.info_server.AutopilotVersion.flight_sw_vendor_minor)
-  return _internal_flight_sw_vendor_minor();
+inline ::PROTOBUF_NAMESPACE_ID::uint32 AutopilotVersion::board_version() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.info_server.AutopilotVersion.board_version)
+  return _internal_board_version();
 }
-inline void AutopilotVersion::_internal_set_flight_sw_vendor_minor(::PROTOBUF_NAMESPACE_ID::int32 value) {
+inline void AutopilotVersion::_internal_set_board_version(::PROTOBUF_NAMESPACE_ID::uint32 value) {
   
-  flight_sw_vendor_minor_ = value;
+  board_version_ = value;
 }
-inline void AutopilotVersion::set_flight_sw_vendor_minor(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_flight_sw_vendor_minor(value);
-  // @@protoc_insertion_point(field_set:mavsdk.rpc.info_server.AutopilotVersion.flight_sw_vendor_minor)
+inline void AutopilotVersion::set_board_version(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_board_version(value);
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.info_server.AutopilotVersion.board_version)
 }
 
-// int32 flight_sw_vendor_patch = 6;
-inline void AutopilotVersion::clear_flight_sw_vendor_patch() {
-  flight_sw_vendor_patch_ = 0;
+// string flight_custom_version = 6;
+inline void AutopilotVersion::clear_flight_custom_version() {
+  flight_custom_version_.ClearToEmpty();
 }
-inline ::PROTOBUF_NAMESPACE_ID::int32 AutopilotVersion::_internal_flight_sw_vendor_patch() const {
-  return flight_sw_vendor_patch_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::int32 AutopilotVersion::flight_sw_vendor_patch() const {
-  // @@protoc_insertion_point(field_get:mavsdk.rpc.info_server.AutopilotVersion.flight_sw_vendor_patch)
-  return _internal_flight_sw_vendor_patch();
-}
-inline void AutopilotVersion::_internal_set_flight_sw_vendor_patch(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  
-  flight_sw_vendor_patch_ = value;
-}
-inline void AutopilotVersion::set_flight_sw_vendor_patch(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_flight_sw_vendor_patch(value);
-  // @@protoc_insertion_point(field_set:mavsdk.rpc.info_server.AutopilotVersion.flight_sw_vendor_patch)
-}
-
-// int32 os_sw_major = 7;
-inline void AutopilotVersion::clear_os_sw_major() {
-  os_sw_major_ = 0;
-}
-inline ::PROTOBUF_NAMESPACE_ID::int32 AutopilotVersion::_internal_os_sw_major() const {
-  return os_sw_major_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::int32 AutopilotVersion::os_sw_major() const {
-  // @@protoc_insertion_point(field_get:mavsdk.rpc.info_server.AutopilotVersion.os_sw_major)
-  return _internal_os_sw_major();
-}
-inline void AutopilotVersion::_internal_set_os_sw_major(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  
-  os_sw_major_ = value;
-}
-inline void AutopilotVersion::set_os_sw_major(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_os_sw_major(value);
-  // @@protoc_insertion_point(field_set:mavsdk.rpc.info_server.AutopilotVersion.os_sw_major)
-}
-
-// int32 os_sw_minor = 8;
-inline void AutopilotVersion::clear_os_sw_minor() {
-  os_sw_minor_ = 0;
-}
-inline ::PROTOBUF_NAMESPACE_ID::int32 AutopilotVersion::_internal_os_sw_minor() const {
-  return os_sw_minor_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::int32 AutopilotVersion::os_sw_minor() const {
-  // @@protoc_insertion_point(field_get:mavsdk.rpc.info_server.AutopilotVersion.os_sw_minor)
-  return _internal_os_sw_minor();
-}
-inline void AutopilotVersion::_internal_set_os_sw_minor(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  
-  os_sw_minor_ = value;
-}
-inline void AutopilotVersion::set_os_sw_minor(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_os_sw_minor(value);
-  // @@protoc_insertion_point(field_set:mavsdk.rpc.info_server.AutopilotVersion.os_sw_minor)
-}
-
-// int32 os_sw_patch = 9;
-inline void AutopilotVersion::clear_os_sw_patch() {
-  os_sw_patch_ = 0;
-}
-inline ::PROTOBUF_NAMESPACE_ID::int32 AutopilotVersion::_internal_os_sw_patch() const {
-  return os_sw_patch_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::int32 AutopilotVersion::os_sw_patch() const {
-  // @@protoc_insertion_point(field_get:mavsdk.rpc.info_server.AutopilotVersion.os_sw_patch)
-  return _internal_os_sw_patch();
-}
-inline void AutopilotVersion::_internal_set_os_sw_patch(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  
-  os_sw_patch_ = value;
-}
-inline void AutopilotVersion::set_os_sw_patch(::PROTOBUF_NAMESPACE_ID::int32 value) {
-  _internal_set_os_sw_patch(value);
-  // @@protoc_insertion_point(field_set:mavsdk.rpc.info_server.AutopilotVersion.os_sw_patch)
-}
-
-// string flight_sw_git_hash = 10;
-inline void AutopilotVersion::clear_flight_sw_git_hash() {
-  flight_sw_git_hash_.ClearToEmpty();
-}
-inline const std::string& AutopilotVersion::flight_sw_git_hash() const {
-  // @@protoc_insertion_point(field_get:mavsdk.rpc.info_server.AutopilotVersion.flight_sw_git_hash)
-  return _internal_flight_sw_git_hash();
+inline const std::string& AutopilotVersion::flight_custom_version() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.info_server.AutopilotVersion.flight_custom_version)
+  return _internal_flight_custom_version();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void AutopilotVersion::set_flight_sw_git_hash(ArgT0&& arg0, ArgT... args) {
+void AutopilotVersion::set_flight_custom_version(ArgT0&& arg0, ArgT... args) {
  
- flight_sw_git_hash_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:mavsdk.rpc.info_server.AutopilotVersion.flight_sw_git_hash)
+ flight_custom_version_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.info_server.AutopilotVersion.flight_custom_version)
 }
-inline std::string* AutopilotVersion::mutable_flight_sw_git_hash() {
-  std::string* _s = _internal_mutable_flight_sw_git_hash();
-  // @@protoc_insertion_point(field_mutable:mavsdk.rpc.info_server.AutopilotVersion.flight_sw_git_hash)
+inline std::string* AutopilotVersion::mutable_flight_custom_version() {
+  std::string* _s = _internal_mutable_flight_custom_version();
+  // @@protoc_insertion_point(field_mutable:mavsdk.rpc.info_server.AutopilotVersion.flight_custom_version)
   return _s;
 }
-inline const std::string& AutopilotVersion::_internal_flight_sw_git_hash() const {
-  return flight_sw_git_hash_.Get();
+inline const std::string& AutopilotVersion::_internal_flight_custom_version() const {
+  return flight_custom_version_.Get();
 }
-inline void AutopilotVersion::_internal_set_flight_sw_git_hash(const std::string& value) {
+inline void AutopilotVersion::_internal_set_flight_custom_version(const std::string& value) {
   
-  flight_sw_git_hash_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+  flight_custom_version_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
 }
-inline std::string* AutopilotVersion::_internal_mutable_flight_sw_git_hash() {
+inline std::string* AutopilotVersion::_internal_mutable_flight_custom_version() {
   
-  return flight_sw_git_hash_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+  return flight_custom_version_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
 }
-inline std::string* AutopilotVersion::release_flight_sw_git_hash() {
-  // @@protoc_insertion_point(field_release:mavsdk.rpc.info_server.AutopilotVersion.flight_sw_git_hash)
-  return flight_sw_git_hash_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+inline std::string* AutopilotVersion::release_flight_custom_version() {
+  // @@protoc_insertion_point(field_release:mavsdk.rpc.info_server.AutopilotVersion.flight_custom_version)
+  return flight_custom_version_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
 }
-inline void AutopilotVersion::set_allocated_flight_sw_git_hash(std::string* flight_sw_git_hash) {
-  if (flight_sw_git_hash != nullptr) {
+inline void AutopilotVersion::set_allocated_flight_custom_version(std::string* flight_custom_version) {
+  if (flight_custom_version != nullptr) {
     
   } else {
     
   }
-  flight_sw_git_hash_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), flight_sw_git_hash,
+  flight_custom_version_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), flight_custom_version,
       GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set_allocated:mavsdk.rpc.info_server.AutopilotVersion.flight_sw_git_hash)
+  // @@protoc_insertion_point(field_set_allocated:mavsdk.rpc.info_server.AutopilotVersion.flight_custom_version)
 }
 
-// string os_sw_git_hash = 11;
-inline void AutopilotVersion::clear_os_sw_git_hash() {
-  os_sw_git_hash_.ClearToEmpty();
+// string middleware_custom_version = 7;
+inline void AutopilotVersion::clear_middleware_custom_version() {
+  middleware_custom_version_.ClearToEmpty();
 }
-inline const std::string& AutopilotVersion::os_sw_git_hash() const {
-  // @@protoc_insertion_point(field_get:mavsdk.rpc.info_server.AutopilotVersion.os_sw_git_hash)
-  return _internal_os_sw_git_hash();
+inline const std::string& AutopilotVersion::middleware_custom_version() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.info_server.AutopilotVersion.middleware_custom_version)
+  return _internal_middleware_custom_version();
 }
 template <typename ArgT0, typename... ArgT>
 inline PROTOBUF_ALWAYS_INLINE
-void AutopilotVersion::set_os_sw_git_hash(ArgT0&& arg0, ArgT... args) {
+void AutopilotVersion::set_middleware_custom_version(ArgT0&& arg0, ArgT... args) {
  
- os_sw_git_hash_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:mavsdk.rpc.info_server.AutopilotVersion.os_sw_git_hash)
+ middleware_custom_version_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.info_server.AutopilotVersion.middleware_custom_version)
 }
-inline std::string* AutopilotVersion::mutable_os_sw_git_hash() {
-  std::string* _s = _internal_mutable_os_sw_git_hash();
-  // @@protoc_insertion_point(field_mutable:mavsdk.rpc.info_server.AutopilotVersion.os_sw_git_hash)
+inline std::string* AutopilotVersion::mutable_middleware_custom_version() {
+  std::string* _s = _internal_mutable_middleware_custom_version();
+  // @@protoc_insertion_point(field_mutable:mavsdk.rpc.info_server.AutopilotVersion.middleware_custom_version)
   return _s;
 }
-inline const std::string& AutopilotVersion::_internal_os_sw_git_hash() const {
-  return os_sw_git_hash_.Get();
+inline const std::string& AutopilotVersion::_internal_middleware_custom_version() const {
+  return middleware_custom_version_.Get();
 }
-inline void AutopilotVersion::_internal_set_os_sw_git_hash(const std::string& value) {
+inline void AutopilotVersion::_internal_set_middleware_custom_version(const std::string& value) {
   
-  os_sw_git_hash_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+  middleware_custom_version_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
 }
-inline std::string* AutopilotVersion::_internal_mutable_os_sw_git_hash() {
+inline std::string* AutopilotVersion::_internal_mutable_middleware_custom_version() {
   
-  return os_sw_git_hash_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+  return middleware_custom_version_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
 }
-inline std::string* AutopilotVersion::release_os_sw_git_hash() {
-  // @@protoc_insertion_point(field_release:mavsdk.rpc.info_server.AutopilotVersion.os_sw_git_hash)
-  return os_sw_git_hash_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+inline std::string* AutopilotVersion::release_middleware_custom_version() {
+  // @@protoc_insertion_point(field_release:mavsdk.rpc.info_server.AutopilotVersion.middleware_custom_version)
+  return middleware_custom_version_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
 }
-inline void AutopilotVersion::set_allocated_os_sw_git_hash(std::string* os_sw_git_hash) {
-  if (os_sw_git_hash != nullptr) {
+inline void AutopilotVersion::set_allocated_middleware_custom_version(std::string* middleware_custom_version) {
+  if (middleware_custom_version != nullptr) {
     
   } else {
     
   }
-  os_sw_git_hash_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), os_sw_git_hash,
+  middleware_custom_version_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), middleware_custom_version,
       GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set_allocated:mavsdk.rpc.info_server.AutopilotVersion.os_sw_git_hash)
+  // @@protoc_insertion_point(field_set_allocated:mavsdk.rpc.info_server.AutopilotVersion.middleware_custom_version)
+}
+
+// string os_custom_version = 8;
+inline void AutopilotVersion::clear_os_custom_version() {
+  os_custom_version_.ClearToEmpty();
+}
+inline const std::string& AutopilotVersion::os_custom_version() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.info_server.AutopilotVersion.os_custom_version)
+  return _internal_os_custom_version();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void AutopilotVersion::set_os_custom_version(ArgT0&& arg0, ArgT... args) {
+ 
+ os_custom_version_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.info_server.AutopilotVersion.os_custom_version)
+}
+inline std::string* AutopilotVersion::mutable_os_custom_version() {
+  std::string* _s = _internal_mutable_os_custom_version();
+  // @@protoc_insertion_point(field_mutable:mavsdk.rpc.info_server.AutopilotVersion.os_custom_version)
+  return _s;
+}
+inline const std::string& AutopilotVersion::_internal_os_custom_version() const {
+  return os_custom_version_.Get();
+}
+inline void AutopilotVersion::_internal_set_os_custom_version(const std::string& value) {
+  
+  os_custom_version_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* AutopilotVersion::_internal_mutable_os_custom_version() {
+  
+  return os_custom_version_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* AutopilotVersion::release_os_custom_version() {
+  // @@protoc_insertion_point(field_release:mavsdk.rpc.info_server.AutopilotVersion.os_custom_version)
+  return os_custom_version_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void AutopilotVersion::set_allocated_os_custom_version(std::string* os_custom_version) {
+  if (os_custom_version != nullptr) {
+    
+  } else {
+    
+  }
+  os_custom_version_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), os_custom_version,
+      GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set_allocated:mavsdk.rpc.info_server.AutopilotVersion.os_custom_version)
+}
+
+// uint32 vendor_id = 9;
+inline void AutopilotVersion::clear_vendor_id() {
+  vendor_id_ = 0u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 AutopilotVersion::_internal_vendor_id() const {
+  return vendor_id_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 AutopilotVersion::vendor_id() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.info_server.AutopilotVersion.vendor_id)
+  return _internal_vendor_id();
+}
+inline void AutopilotVersion::_internal_set_vendor_id(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  
+  vendor_id_ = value;
+}
+inline void AutopilotVersion::set_vendor_id(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_vendor_id(value);
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.info_server.AutopilotVersion.vendor_id)
+}
+
+// uint32 product_id = 10;
+inline void AutopilotVersion::clear_product_id() {
+  product_id_ = 0u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 AutopilotVersion::_internal_product_id() const {
+  return product_id_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 AutopilotVersion::product_id() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.info_server.AutopilotVersion.product_id)
+  return _internal_product_id();
+}
+inline void AutopilotVersion::_internal_set_product_id(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  
+  product_id_ = value;
+}
+inline void AutopilotVersion::set_product_id(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_product_id(value);
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.info_server.AutopilotVersion.product_id)
+}
+
+// uint64 uid = 11;
+inline void AutopilotVersion::clear_uid() {
+  uid_ = uint64_t{0u};
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 AutopilotVersion::_internal_uid() const {
+  return uid_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint64 AutopilotVersion::uid() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.info_server.AutopilotVersion.uid)
+  return _internal_uid();
+}
+inline void AutopilotVersion::_internal_set_uid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  
+  uid_ = value;
+}
+inline void AutopilotVersion::set_uid(::PROTOBUF_NAMESPACE_ID::uint64 value) {
+  _internal_set_uid(value);
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.info_server.AutopilotVersion.uid)
+}
+
+// string uid2 = 12;
+inline void AutopilotVersion::clear_uid2() {
+  uid2_.ClearToEmpty();
+}
+inline const std::string& AutopilotVersion::uid2() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.info_server.AutopilotVersion.uid2)
+  return _internal_uid2();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void AutopilotVersion::set_uid2(ArgT0&& arg0, ArgT... args) {
+ 
+ uid2_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.info_server.AutopilotVersion.uid2)
+}
+inline std::string* AutopilotVersion::mutable_uid2() {
+  std::string* _s = _internal_mutable_uid2();
+  // @@protoc_insertion_point(field_mutable:mavsdk.rpc.info_server.AutopilotVersion.uid2)
+  return _s;
+}
+inline const std::string& AutopilotVersion::_internal_uid2() const {
+  return uid2_.Get();
+}
+inline void AutopilotVersion::_internal_set_uid2(const std::string& value) {
+  
+  uid2_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* AutopilotVersion::_internal_mutable_uid2() {
+  
+  return uid2_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* AutopilotVersion::release_uid2() {
+  // @@protoc_insertion_point(field_release:mavsdk.rpc.info_server.AutopilotVersion.uid2)
+  return uid2_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void AutopilotVersion::set_allocated_uid2(std::string* uid2) {
+  if (uid2 != nullptr) {
+    
+  } else {
+    
+  }
+  uid2_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), uid2,
+      GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set_allocated:mavsdk.rpc.info_server.AutopilotVersion.uid2)
 }
 
 // -------------------------------------------------------------------

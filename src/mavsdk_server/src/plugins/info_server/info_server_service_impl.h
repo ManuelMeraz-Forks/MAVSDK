@@ -79,27 +79,29 @@ public:
     {
         auto rpc_obj = std::make_unique<rpc::info_server::AutopilotVersion>();
 
-        rpc_obj->set_flight_sw_major(autopilot_version.flight_sw_major);
+        rpc_obj->set_capabilities(autopilot_version.capabilities);
 
-        rpc_obj->set_flight_sw_minor(autopilot_version.flight_sw_minor);
+        rpc_obj->set_flight_sw_version(autopilot_version.flight_sw_version);
 
-        rpc_obj->set_flight_sw_patch(autopilot_version.flight_sw_patch);
+        rpc_obj->set_middleware_sw_version(autopilot_version.middleware_sw_version);
 
-        rpc_obj->set_flight_sw_vendor_major(autopilot_version.flight_sw_vendor_major);
+        rpc_obj->set_os_sw_version(autopilot_version.os_sw_version);
 
-        rpc_obj->set_flight_sw_vendor_minor(autopilot_version.flight_sw_vendor_minor);
+        rpc_obj->set_board_version(autopilot_version.board_version);
 
-        rpc_obj->set_flight_sw_vendor_patch(autopilot_version.flight_sw_vendor_patch);
+        rpc_obj->set_flight_custom_version(autopilot_version.flight_custom_version);
 
-        rpc_obj->set_os_sw_major(autopilot_version.os_sw_major);
+        rpc_obj->set_middleware_custom_version(autopilot_version.middleware_custom_version);
 
-        rpc_obj->set_os_sw_minor(autopilot_version.os_sw_minor);
+        rpc_obj->set_os_custom_version(autopilot_version.os_custom_version);
 
-        rpc_obj->set_os_sw_patch(autopilot_version.os_sw_patch);
+        rpc_obj->set_vendor_id(autopilot_version.vendor_id);
 
-        rpc_obj->set_flight_sw_git_hash(autopilot_version.flight_sw_git_hash);
+        rpc_obj->set_product_id(autopilot_version.product_id);
 
-        rpc_obj->set_os_sw_git_hash(autopilot_version.os_sw_git_hash);
+        rpc_obj->set_uid(autopilot_version.uid);
+
+        rpc_obj->set_uid2(autopilot_version.uid2);
 
         return rpc_obj;
     }
@@ -109,27 +111,29 @@ public:
     {
         mavsdk::InfoServer::AutopilotVersion obj;
 
-        obj.flight_sw_major = autopilot_version.flight_sw_major();
+        obj.capabilities = autopilot_version.capabilities();
 
-        obj.flight_sw_minor = autopilot_version.flight_sw_minor();
+        obj.flight_sw_version = autopilot_version.flight_sw_version();
 
-        obj.flight_sw_patch = autopilot_version.flight_sw_patch();
+        obj.middleware_sw_version = autopilot_version.middleware_sw_version();
 
-        obj.flight_sw_vendor_major = autopilot_version.flight_sw_vendor_major();
+        obj.os_sw_version = autopilot_version.os_sw_version();
 
-        obj.flight_sw_vendor_minor = autopilot_version.flight_sw_vendor_minor();
+        obj.board_version = autopilot_version.board_version();
 
-        obj.flight_sw_vendor_patch = autopilot_version.flight_sw_vendor_patch();
+        obj.flight_custom_version = autopilot_version.flight_custom_version();
 
-        obj.os_sw_major = autopilot_version.os_sw_major();
+        obj.middleware_custom_version = autopilot_version.middleware_custom_version();
 
-        obj.os_sw_minor = autopilot_version.os_sw_minor();
+        obj.os_custom_version = autopilot_version.os_custom_version();
 
-        obj.os_sw_patch = autopilot_version.os_sw_patch();
+        obj.vendor_id = autopilot_version.vendor_id();
 
-        obj.flight_sw_git_hash = autopilot_version.flight_sw_git_hash();
+        obj.product_id = autopilot_version.product_id();
 
-        obj.os_sw_git_hash = autopilot_version.os_sw_git_hash();
+        obj.uid = autopilot_version.uid();
+
+        obj.uid2 = autopilot_version.uid2();
 
         return obj;
     }

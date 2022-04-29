@@ -60,11 +60,11 @@ public:
      * @brief Mavlink version information.
      */
     struct ProtocolVersion {
-        int32_t version{}; /**< @brief Currently active MAVLink version number * 100: v1.0 is 100,
-                              v2.0 is 200, etc. */
-        int32_t min_version{}; /**< @brief Minimum MAVLink version supported */
-        int32_t max_version{}; /**< @brief Maximum MAVLink version supported (set to the same value
-                                  as version by default) */
+        uint32_t version{}; /**< @brief Currently active MAVLink version number * 100: v1.0 is 100,
+                               v2.0 is 200, etc. */
+        uint32_t min_version{}; /**< @brief Minimum MAVLink version supported */
+        uint32_t max_version{}; /**< @brief Maximum MAVLink version supported (set to the same value
+                                   as version by default) */
         std::string spec_version_hash{}; /**< @brief The first 8 bytes (not characters printed in
                                             hex!) of the git hash. */
         std::string library_version_hash{}; /**< @brief The first 8 bytes (not characters printed in
@@ -91,17 +91,33 @@ public:
      * @brief Autopilot version information.
      */
     struct AutopilotVersion {
-        int32_t flight_sw_major{}; /**< @brief Flight software major version */
-        int32_t flight_sw_minor{}; /**< @brief Flight software minor version */
-        int32_t flight_sw_patch{}; /**< @brief Flight software patch version */
-        int32_t flight_sw_vendor_major{}; /**< @brief Flight software vendor major version */
-        int32_t flight_sw_vendor_minor{}; /**< @brief Flight software vendor minor version */
-        int32_t flight_sw_vendor_patch{}; /**< @brief Flight software vendor patch version */
-        int32_t os_sw_major{}; /**< @brief Operating system software major version */
-        int32_t os_sw_minor{}; /**< @brief Operating system software minor version */
-        int32_t os_sw_patch{}; /**< @brief Operating system software patch version */
-        std::string flight_sw_git_hash{}; /**< @brief Flight software git hash */
-        std::string os_sw_git_hash{}; /**< @brief Operating system software git hash */
+        uint64_t capabilities{}; /**< @brief MAV_PROTOCOL_CAPABILITYBitmap of capabilities */
+        uint32_t flight_sw_version{}; /**< @brief Firmware version number */
+        uint32_t middleware_sw_version{}; /**< @brief Middleware version number */
+        uint32_t os_sw_version{}; /**< @brief Operating system version number */
+        uint32_t
+            board_version{}; /**< @brief HW / board version (last 8 bits should be silicon ID, if
+                                any). The first 16 bits of this field specify
+                                https://github.com/PX4/PX4-Bootloader/blob/master/board_types.txt */
+        std::string
+            flight_custom_version{}; /**< @brief Custom version field, commonly the first 8 bytes of
+                                        the git hash. This is not an unique identifier, but should
+                                        allow to identify the commit using the main version number
+                                        even for very large code bases. */
+        std::string
+            middleware_custom_version{}; /**< @brief Custom version field, commonly the first 8
+                                            bytes of the git hash. This is not an unique identifier,
+                                            but should allow to identify the commit using the main
+                                            version number even for very large code bases. */
+        std::string os_custom_version{}; /**< @brief Custom version field, commonly the first 8
+                                            bytes of the git hash. This is not an unique identifier,
+                                            but should allow to identify the commit using the main
+                                            version number even for very large code bases. */
+        uint32_t vendor_id{}; /**< @brief ID of the board vendor */
+        uint32_t product_id{}; /**< @brief ID of the product */
+        uint64_t uid{}; /**< @brief UID if provided by hardware (see uid2) */
+        std::string uid2{}; /**< @brief UID if provided by hardware (supersedes the uid field. If
+                               this is non-zero, use this field, otherwise use uid) */
     };
 
     /**
