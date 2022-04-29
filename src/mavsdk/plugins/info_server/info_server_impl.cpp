@@ -129,7 +129,7 @@ void InfoServerImpl::send_autopilot_version() const
         _autopilot_version.uid,
         reinterpret_cast<const uint8_t*>(_autopilot_version.uid2.data()));
 
-        _parent->send_message(msg);
+    _parent->send_message(msg);
 }
 
 } // namespace mavsdk

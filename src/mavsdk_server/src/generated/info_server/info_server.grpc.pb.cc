@@ -26,6 +26,8 @@ namespace info_server {
 static const char* InfoServerService_method_names[] = {
   "/mavsdk.rpc.info_server.InfoServerService/ProvideAutopilotVersion",
   "/mavsdk.rpc.info_server.InfoServerService/ProvideProtocolVersion",
+  "/mavsdk.rpc.info_server.InfoServerService/SetAutopilotVersion",
+  "/mavsdk.rpc.info_server.InfoServerService/SetProtocolVersion",
 };
 
 std::unique_ptr< InfoServerService::Stub> InfoServerService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -37,6 +39,8 @@ std::unique_ptr< InfoServerService::Stub> InfoServerService::NewStub(const std::
 InfoServerService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
   : channel_(channel), rpcmethod_ProvideAutopilotVersion_(InfoServerService_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_ProvideProtocolVersion_(InfoServerService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_SetAutopilotVersion_(InfoServerService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_SetProtocolVersion_(InfoServerService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status InfoServerService::Stub::ProvideAutopilotVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest& request, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse* response) {
@@ -85,6 +89,52 @@ void InfoServerService::Stub::async::ProvideProtocolVersion(::grpc::ClientContex
   return result;
 }
 
+::grpc::Status InfoServerService::Stub::SetAutopilotVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::SetAutopilotVersionRequest& request, ::mavsdk::rpc::info_server::SetAutopilotVersionResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::mavsdk::rpc::info_server::SetAutopilotVersionRequest, ::mavsdk::rpc::info_server::SetAutopilotVersionResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_SetAutopilotVersion_, context, request, response);
+}
+
+void InfoServerService::Stub::async::SetAutopilotVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::SetAutopilotVersionRequest* request, ::mavsdk::rpc::info_server::SetAutopilotVersionResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::mavsdk::rpc::info_server::SetAutopilotVersionRequest, ::mavsdk::rpc::info_server::SetAutopilotVersionResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SetAutopilotVersion_, context, request, response, std::move(f));
+}
+
+void InfoServerService::Stub::async::SetAutopilotVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::SetAutopilotVersionRequest* request, ::mavsdk::rpc::info_server::SetAutopilotVersionResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SetAutopilotVersion_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::SetAutopilotVersionResponse>* InfoServerService::Stub::PrepareAsyncSetAutopilotVersionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::SetAutopilotVersionRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::mavsdk::rpc::info_server::SetAutopilotVersionResponse, ::mavsdk::rpc::info_server::SetAutopilotVersionRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_SetAutopilotVersion_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::SetAutopilotVersionResponse>* InfoServerService::Stub::AsyncSetAutopilotVersionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::SetAutopilotVersionRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncSetAutopilotVersionRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status InfoServerService::Stub::SetProtocolVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::SetProtocolVersionRequest& request, ::mavsdk::rpc::info_server::SetProtocolVersionResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::mavsdk::rpc::info_server::SetProtocolVersionRequest, ::mavsdk::rpc::info_server::SetProtocolVersionResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_SetProtocolVersion_, context, request, response);
+}
+
+void InfoServerService::Stub::async::SetProtocolVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::SetProtocolVersionRequest* request, ::mavsdk::rpc::info_server::SetProtocolVersionResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::mavsdk::rpc::info_server::SetProtocolVersionRequest, ::mavsdk::rpc::info_server::SetProtocolVersionResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SetProtocolVersion_, context, request, response, std::move(f));
+}
+
+void InfoServerService::Stub::async::SetProtocolVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::SetProtocolVersionRequest* request, ::mavsdk::rpc::info_server::SetProtocolVersionResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SetProtocolVersion_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::SetProtocolVersionResponse>* InfoServerService::Stub::PrepareAsyncSetProtocolVersionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::SetProtocolVersionRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::mavsdk::rpc::info_server::SetProtocolVersionResponse, ::mavsdk::rpc::info_server::SetProtocolVersionRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_SetProtocolVersion_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::SetProtocolVersionResponse>* InfoServerService::Stub::AsyncSetProtocolVersionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::SetProtocolVersionRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncSetProtocolVersionRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 InfoServerService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       InfoServerService_method_names[0],
@@ -106,6 +156,26 @@ InfoServerService::Service::Service() {
              ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse* resp) {
                return service->ProvideProtocolVersion(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      InfoServerService_method_names[2],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< InfoServerService::Service, ::mavsdk::rpc::info_server::SetAutopilotVersionRequest, ::mavsdk::rpc::info_server::SetAutopilotVersionResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](InfoServerService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::mavsdk::rpc::info_server::SetAutopilotVersionRequest* req,
+             ::mavsdk::rpc::info_server::SetAutopilotVersionResponse* resp) {
+               return service->SetAutopilotVersion(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      InfoServerService_method_names[3],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< InfoServerService::Service, ::mavsdk::rpc::info_server::SetProtocolVersionRequest, ::mavsdk::rpc::info_server::SetProtocolVersionResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](InfoServerService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::mavsdk::rpc::info_server::SetProtocolVersionRequest* req,
+             ::mavsdk::rpc::info_server::SetProtocolVersionResponse* resp) {
+               return service->SetProtocolVersion(ctx, req, resp);
+             }, this)));
 }
 
 InfoServerService::Service::~Service() {
@@ -119,6 +189,20 @@ InfoServerService::Service::~Service() {
 }
 
 ::grpc::Status InfoServerService::Service::ProvideProtocolVersion(::grpc::ServerContext* context, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest* request, ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status InfoServerService::Service::SetAutopilotVersion(::grpc::ServerContext* context, const ::mavsdk::rpc::info_server::SetAutopilotVersionRequest* request, ::mavsdk::rpc::info_server::SetAutopilotVersionResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status InfoServerService::Service::SetProtocolVersion(::grpc::ServerContext* context, const ::mavsdk::rpc::info_server::SetProtocolVersionRequest* request, ::mavsdk::rpc::info_server::SetProtocolVersionResponse* response) {
   (void) context;
   (void) request;
   (void) response;

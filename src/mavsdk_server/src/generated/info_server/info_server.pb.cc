@@ -67,6 +67,54 @@ struct ProvideAutopilotVersionResponseDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT ProvideAutopilotVersionResponseDefaultTypeInternal _ProvideAutopilotVersionResponse_default_instance_;
+constexpr SetAutopilotVersionRequest::SetAutopilotVersionRequest(
+  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+  : autopilot_version_info_(nullptr){}
+struct SetAutopilotVersionRequestDefaultTypeInternal {
+  constexpr SetAutopilotVersionRequestDefaultTypeInternal()
+    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  ~SetAutopilotVersionRequestDefaultTypeInternal() {}
+  union {
+    SetAutopilotVersionRequest _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT SetAutopilotVersionRequestDefaultTypeInternal _SetAutopilotVersionRequest_default_instance_;
+constexpr SetAutopilotVersionResponse::SetAutopilotVersionResponse(
+  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+  : info_result_(nullptr){}
+struct SetAutopilotVersionResponseDefaultTypeInternal {
+  constexpr SetAutopilotVersionResponseDefaultTypeInternal()
+    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  ~SetAutopilotVersionResponseDefaultTypeInternal() {}
+  union {
+    SetAutopilotVersionResponse _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT SetAutopilotVersionResponseDefaultTypeInternal _SetAutopilotVersionResponse_default_instance_;
+constexpr SetProtocolVersionRequest::SetProtocolVersionRequest(
+  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+  : protocol_version_info_(nullptr){}
+struct SetProtocolVersionRequestDefaultTypeInternal {
+  constexpr SetProtocolVersionRequestDefaultTypeInternal()
+    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  ~SetProtocolVersionRequestDefaultTypeInternal() {}
+  union {
+    SetProtocolVersionRequest _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT SetProtocolVersionRequestDefaultTypeInternal _SetProtocolVersionRequest_default_instance_;
+constexpr SetProtocolVersionResponse::SetProtocolVersionResponse(
+  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+  : info_result_(nullptr){}
+struct SetProtocolVersionResponseDefaultTypeInternal {
+  constexpr SetProtocolVersionResponseDefaultTypeInternal()
+    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  ~SetProtocolVersionResponseDefaultTypeInternal() {}
+  union {
+    SetProtocolVersionResponse _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT SetProtocolVersionResponseDefaultTypeInternal _SetProtocolVersionResponse_default_instance_;
 constexpr ProtocolVersion::ProtocolVersion(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : spec_version_hash_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
@@ -123,7 +171,7 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT InfoResultDefaultTypeInternal _
 }  // namespace info_server
 }  // namespace rpc
 }  // namespace mavsdk
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_info_5fserver_2finfo_5fserver_2eproto[7];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_info_5fserver_2finfo_5fserver_2eproto[11];
 static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_info_5fserver_2finfo_5fserver_2eproto[1];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_info_5fserver_2finfo_5fserver_2eproto = nullptr;
 
@@ -152,6 +200,30 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_info_5fserver_2finfo_5fserver_
   ~0u,  // no _weak_field_map_
   PROTOBUF_FIELD_OFFSET(::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse, info_result_),
   PROTOBUF_FIELD_OFFSET(::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse, protocol_version_info_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::mavsdk::rpc::info_server::SetAutopilotVersionRequest, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::mavsdk::rpc::info_server::SetAutopilotVersionRequest, autopilot_version_info_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::mavsdk::rpc::info_server::SetAutopilotVersionResponse, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::mavsdk::rpc::info_server::SetAutopilotVersionResponse, info_result_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::mavsdk::rpc::info_server::SetProtocolVersionRequest, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::mavsdk::rpc::info_server::SetProtocolVersionRequest, protocol_version_info_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::mavsdk::rpc::info_server::SetProtocolVersionResponse, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::mavsdk::rpc::info_server::SetProtocolVersionResponse, info_result_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::mavsdk::rpc::info_server::ProtocolVersion, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -192,9 +264,13 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 5, -1, sizeof(::mavsdk::rpc::info_server::ProvideProtocolVersionResponse)},
   { 12, -1, sizeof(::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest)},
   { 17, -1, sizeof(::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse)},
-  { 24, -1, sizeof(::mavsdk::rpc::info_server::ProtocolVersion)},
-  { 34, -1, sizeof(::mavsdk::rpc::info_server::AutopilotVersion)},
-  { 51, -1, sizeof(::mavsdk::rpc::info_server::InfoResult)},
+  { 24, -1, sizeof(::mavsdk::rpc::info_server::SetAutopilotVersionRequest)},
+  { 30, -1, sizeof(::mavsdk::rpc::info_server::SetAutopilotVersionResponse)},
+  { 36, -1, sizeof(::mavsdk::rpc::info_server::SetProtocolVersionRequest)},
+  { 42, -1, sizeof(::mavsdk::rpc::info_server::SetProtocolVersionResponse)},
+  { 48, -1, sizeof(::mavsdk::rpc::info_server::ProtocolVersion)},
+  { 58, -1, sizeof(::mavsdk::rpc::info_server::AutopilotVersion)},
+  { 75, -1, sizeof(::mavsdk::rpc::info_server::InfoResult)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -202,6 +278,10 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::mavsdk::rpc::info_server::_ProvideProtocolVersionResponse_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::mavsdk::rpc::info_server::_ProvideAutopilotVersionRequest_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::mavsdk::rpc::info_server::_ProvideAutopilotVersionResponse_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::mavsdk::rpc::info_server::_SetAutopilotVersionRequest_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::mavsdk::rpc::info_server::_SetAutopilotVersionResponse_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::mavsdk::rpc::info_server::_SetProtocolVersionRequest_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::mavsdk::rpc::info_server::_SetProtocolVersionResponse_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::mavsdk::rpc::info_server::_ProtocolVersion_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::mavsdk::rpc::info_server::_AutopilotVersion_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::mavsdk::rpc::info_server::_InfoResult_default_instance_),
@@ -219,41 +299,57 @@ const char descriptor_table_protodef_info_5fserver_2finfo_5fserver_2eproto[] PRO
   "AutopilotVersionResponse\0227\n\013info_result\030"
   "\001 \001(\0132\".mavsdk.rpc.info_server.InfoResul"
   "t\022G\n\025protocol_version_info\030\002 \001(\0132(.mavsd"
-  "k.rpc.info_server.AutopilotVersion\"\205\001\n\017P"
-  "rotocolVersion\022\017\n\007version\030\001 \001(\r\022\023\n\013min_v"
-  "ersion\030\002 \001(\r\022\023\n\013max_version\030\003 \001(\r\022\031\n\021spe"
-  "c_version_hash\030\004 \001(\t\022\034\n\024library_version_"
-  "hash\030\005 \001(\t\"\257\002\n\020AutopilotVersion\022\024\n\014capab"
-  "ilities\030\001 \001(\004\022\031\n\021flight_sw_version\030\002 \001(\r"
-  "\022\035\n\025middleware_sw_version\030\003 \001(\r\022\025\n\ros_sw"
-  "_version\030\004 \001(\r\022\025\n\rboard_version\030\005 \001(\r\022\035\n"
-  "\025flight_custom_version\030\006 \001(\t\022!\n\031middlewa"
-  "re_custom_version\030\007 \001(\t\022\031\n\021os_custom_ver"
-  "sion\030\010 \001(\t\022\021\n\tvendor_id\030\t \001(\r\022\022\n\nproduct"
-  "_id\030\n \001(\r\022\013\n\003uid\030\013 \001(\004\022\014\n\004uid2\030\014 \001(\t\"\314\001\n"
-  "\nInfoResult\0229\n\006result\030\001 \001(\0162).mavsdk.rpc"
-  ".info_server.InfoResult.Result\022\022\n\nresult"
-  "_str\030\002 \001(\t\"o\n\006Result\022\022\n\016RESULT_UNKNOWN\020\000"
-  "\022\022\n\016RESULT_SUCCESS\020\001\022\'\n#RESULT_INFORMATI"
-  "ON_NOT_RECEIVED_YET\020\002\022\024\n\020RESULT_NO_SYSTE"
-  "M\020\0032\266\002\n\021InfoServerService\022\220\001\n\027ProvideAut"
-  "opilotVersion\0226.mavsdk.rpc.info_server.P"
-  "rovideAutopilotVersionRequest\0327.mavsdk.r"
-  "pc.info_server.ProvideAutopilotVersionRe"
-  "sponse\"\004\200\265\030\001\022\215\001\n\026ProvideProtocolVersion\022"
-  "5.mavsdk.rpc.info_server.ProvideProtocol"
-  "VersionRequest\0326.mavsdk.rpc.info_server."
-  "ProvideProtocolVersionResponse\"\004\200\265\030\001B8\n\025"
-  "io.mavsdk.info_serverB\037ComponentInformat"
-  "ionServerProtob\006proto3"
+  "k.rpc.info_server.AutopilotVersion\"f\n\032Se"
+  "tAutopilotVersionRequest\022H\n\026autopilot_ve"
+  "rsion_info\030\001 \001(\0132(.mavsdk.rpc.info_serve"
+  "r.AutopilotVersion\"V\n\033SetAutopilotVersio"
+  "nResponse\0227\n\013info_result\030\001 \001(\0132\".mavsdk."
+  "rpc.info_server.InfoResult\"c\n\031SetProtoco"
+  "lVersionRequest\022F\n\025protocol_version_info"
+  "\030\001 \001(\0132\'.mavsdk.rpc.info_server.Protocol"
+  "Version\"U\n\032SetProtocolVersionResponse\0227\n"
+  "\013info_result\030\001 \001(\0132\".mavsdk.rpc.info_ser"
+  "ver.InfoResult\"\205\001\n\017ProtocolVersion\022\017\n\007ve"
+  "rsion\030\001 \001(\r\022\023\n\013min_version\030\002 \001(\r\022\023\n\013max_"
+  "version\030\003 \001(\r\022\031\n\021spec_version_hash\030\004 \001(\t"
+  "\022\034\n\024library_version_hash\030\005 \001(\t\"\257\002\n\020Autop"
+  "ilotVersion\022\024\n\014capabilities\030\001 \001(\004\022\031\n\021fli"
+  "ght_sw_version\030\002 \001(\r\022\035\n\025middleware_sw_ve"
+  "rsion\030\003 \001(\r\022\025\n\ros_sw_version\030\004 \001(\r\022\025\n\rbo"
+  "ard_version\030\005 \001(\r\022\035\n\025flight_custom_versi"
+  "on\030\006 \001(\t\022!\n\031middleware_custom_version\030\007 "
+  "\001(\t\022\031\n\021os_custom_version\030\010 \001(\t\022\021\n\tvendor"
+  "_id\030\t \001(\r\022\022\n\nproduct_id\030\n \001(\r\022\013\n\003uid\030\013 \001"
+  "(\004\022\014\n\004uid2\030\014 \001(\t\"\314\001\n\nInfoResult\0229\n\006resul"
+  "t\030\001 \001(\0162).mavsdk.rpc.info_server.InfoRes"
+  "ult.Result\022\022\n\nresult_str\030\002 \001(\t\"o\n\006Result"
+  "\022\022\n\016RESULT_UNKNOWN\020\000\022\022\n\016RESULT_SUCCESS\020\001"
+  "\022\'\n#RESULT_INFORMATION_NOT_RECEIVED_YET\020"
+  "\002\022\024\n\020RESULT_NO_SYSTEM\020\0032\301\004\n\021InfoServerSe"
+  "rvice\022\220\001\n\027ProvideAutopilotVersion\0226.mavs"
+  "dk.rpc.info_server.ProvideAutopilotVersi"
+  "onRequest\0327.mavsdk.rpc.info_server.Provi"
+  "deAutopilotVersionResponse\"\004\200\265\030\001\022\215\001\n\026Pro"
+  "videProtocolVersion\0225.mavsdk.rpc.info_se"
+  "rver.ProvideProtocolVersionRequest\0326.mav"
+  "sdk.rpc.info_server.ProvideProtocolVersi"
+  "onResponse\"\004\200\265\030\001\022\204\001\n\023SetAutopilotVersion"
+  "\0222.mavsdk.rpc.info_server.SetAutopilotVe"
+  "rsionRequest\0323.mavsdk.rpc.info_server.Se"
+  "tAutopilotVersionResponse\"\004\200\265\030\001\022\201\001\n\022SetP"
+  "rotocolVersion\0221.mavsdk.rpc.info_server."
+  "SetProtocolVersionRequest\0322.mavsdk.rpc.i"
+  "nfo_server.SetProtocolVersionResponse\"\004\200"
+  "\265\030\001B8\n\025io.mavsdk.info_serverB\037ComponentI"
+  "nformationServerProtob\006proto3"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_info_5fserver_2finfo_5fserver_2eproto_deps[1] = {
   &::descriptor_table_mavsdk_5foptions_2eproto,
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_info_5fserver_2finfo_5fserver_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_info_5fserver_2finfo_5fserver_2eproto = {
-  false, false, 1502, descriptor_table_protodef_info_5fserver_2finfo_5fserver_2eproto, "info_server/info_server.proto", 
-  &descriptor_table_info_5fserver_2finfo_5fserver_2eproto_once, descriptor_table_info_5fserver_2finfo_5fserver_2eproto_deps, 1, 7,
+  false, false, 2149, descriptor_table_protodef_info_5fserver_2finfo_5fserver_2eproto, "info_server/info_server.proto", 
+  &descriptor_table_info_5fserver_2finfo_5fserver_2eproto_once, descriptor_table_info_5fserver_2finfo_5fserver_2eproto_deps, 1, 11,
   schemas, file_default_instances, TableStruct_info_5fserver_2finfo_5fserver_2eproto::offsets,
   file_level_metadata_info_5fserver_2finfo_5fserver_2eproto, file_level_enum_descriptors_info_5fserver_2finfo_5fserver_2eproto, file_level_service_descriptors_info_5fserver_2finfo_5fserver_2eproto,
 };
@@ -1096,6 +1192,806 @@ void ProvideAutopilotVersionResponse::InternalSwap(ProvideAutopilotVersionRespon
 
 // ===================================================================
 
+class SetAutopilotVersionRequest::_Internal {
+ public:
+  static const ::mavsdk::rpc::info_server::AutopilotVersion& autopilot_version_info(const SetAutopilotVersionRequest* msg);
+};
+
+const ::mavsdk::rpc::info_server::AutopilotVersion&
+SetAutopilotVersionRequest::_Internal::autopilot_version_info(const SetAutopilotVersionRequest* msg) {
+  return *msg->autopilot_version_info_;
+}
+SetAutopilotVersionRequest::SetAutopilotVersionRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor();
+  if (!is_message_owned) {
+    RegisterArenaDtor(arena);
+  }
+  // @@protoc_insertion_point(arena_constructor:mavsdk.rpc.info_server.SetAutopilotVersionRequest)
+}
+SetAutopilotVersionRequest::SetAutopilotVersionRequest(const SetAutopilotVersionRequest& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_autopilot_version_info()) {
+    autopilot_version_info_ = new ::mavsdk::rpc::info_server::AutopilotVersion(*from.autopilot_version_info_);
+  } else {
+    autopilot_version_info_ = nullptr;
+  }
+  // @@protoc_insertion_point(copy_constructor:mavsdk.rpc.info_server.SetAutopilotVersionRequest)
+}
+
+inline void SetAutopilotVersionRequest::SharedCtor() {
+autopilot_version_info_ = nullptr;
+}
+
+SetAutopilotVersionRequest::~SetAutopilotVersionRequest() {
+  // @@protoc_insertion_point(destructor:mavsdk.rpc.info_server.SetAutopilotVersionRequest)
+  if (GetArenaForAllocation() != nullptr) return;
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+inline void SetAutopilotVersionRequest::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete autopilot_version_info_;
+}
+
+void SetAutopilotVersionRequest::ArenaDtor(void* object) {
+  SetAutopilotVersionRequest* _this = reinterpret_cast< SetAutopilotVersionRequest* >(object);
+  (void)_this;
+}
+void SetAutopilotVersionRequest::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void SetAutopilotVersionRequest::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void SetAutopilotVersionRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:mavsdk.rpc.info_server.SetAutopilotVersionRequest)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  if (GetArenaForAllocation() == nullptr && autopilot_version_info_ != nullptr) {
+    delete autopilot_version_info_;
+  }
+  autopilot_version_info_ = nullptr;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* SetAutopilotVersionRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // .mavsdk.rpc.info_server.AutopilotVersion autopilot_version_info = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          ptr = ctx->ParseMessage(_internal_mutable_autopilot_version_info(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag == 0) || ((tag & 7) == 4)) {
+          CHK_(ptr);
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* SetAutopilotVersionRequest::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:mavsdk.rpc.info_server.SetAutopilotVersionRequest)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .mavsdk.rpc.info_server.AutopilotVersion autopilot_version_info = 1;
+  if (this->_internal_has_autopilot_version_info()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        1, _Internal::autopilot_version_info(this), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:mavsdk.rpc.info_server.SetAutopilotVersionRequest)
+  return target;
+}
+
+size_t SetAutopilotVersionRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:mavsdk.rpc.info_server.SetAutopilotVersionRequest)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .mavsdk.rpc.info_server.AutopilotVersion autopilot_version_info = 1;
+  if (this->_internal_has_autopilot_version_info()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *autopilot_version_info_);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData SetAutopilotVersionRequest::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    SetAutopilotVersionRequest::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*SetAutopilotVersionRequest::GetClassData() const { return &_class_data_; }
+
+void SetAutopilotVersionRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message*to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message&from) {
+  static_cast<SetAutopilotVersionRequest *>(to)->MergeFrom(
+      static_cast<const SetAutopilotVersionRequest &>(from));
+}
+
+
+void SetAutopilotVersionRequest::MergeFrom(const SetAutopilotVersionRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:mavsdk.rpc.info_server.SetAutopilotVersionRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_has_autopilot_version_info()) {
+    _internal_mutable_autopilot_version_info()->::mavsdk::rpc::info_server::AutopilotVersion::MergeFrom(from._internal_autopilot_version_info());
+  }
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void SetAutopilotVersionRequest::CopyFrom(const SetAutopilotVersionRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:mavsdk.rpc.info_server.SetAutopilotVersionRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool SetAutopilotVersionRequest::IsInitialized() const {
+  return true;
+}
+
+void SetAutopilotVersionRequest::InternalSwap(SetAutopilotVersionRequest* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(autopilot_version_info_, other->autopilot_version_info_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata SetAutopilotVersionRequest::GetMetadata() const {
+  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+      &descriptor_table_info_5fserver_2finfo_5fserver_2eproto_getter, &descriptor_table_info_5fserver_2finfo_5fserver_2eproto_once,
+      file_level_metadata_info_5fserver_2finfo_5fserver_2eproto[4]);
+}
+
+// ===================================================================
+
+class SetAutopilotVersionResponse::_Internal {
+ public:
+  static const ::mavsdk::rpc::info_server::InfoResult& info_result(const SetAutopilotVersionResponse* msg);
+};
+
+const ::mavsdk::rpc::info_server::InfoResult&
+SetAutopilotVersionResponse::_Internal::info_result(const SetAutopilotVersionResponse* msg) {
+  return *msg->info_result_;
+}
+SetAutopilotVersionResponse::SetAutopilotVersionResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor();
+  if (!is_message_owned) {
+    RegisterArenaDtor(arena);
+  }
+  // @@protoc_insertion_point(arena_constructor:mavsdk.rpc.info_server.SetAutopilotVersionResponse)
+}
+SetAutopilotVersionResponse::SetAutopilotVersionResponse(const SetAutopilotVersionResponse& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_info_result()) {
+    info_result_ = new ::mavsdk::rpc::info_server::InfoResult(*from.info_result_);
+  } else {
+    info_result_ = nullptr;
+  }
+  // @@protoc_insertion_point(copy_constructor:mavsdk.rpc.info_server.SetAutopilotVersionResponse)
+}
+
+inline void SetAutopilotVersionResponse::SharedCtor() {
+info_result_ = nullptr;
+}
+
+SetAutopilotVersionResponse::~SetAutopilotVersionResponse() {
+  // @@protoc_insertion_point(destructor:mavsdk.rpc.info_server.SetAutopilotVersionResponse)
+  if (GetArenaForAllocation() != nullptr) return;
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+inline void SetAutopilotVersionResponse::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete info_result_;
+}
+
+void SetAutopilotVersionResponse::ArenaDtor(void* object) {
+  SetAutopilotVersionResponse* _this = reinterpret_cast< SetAutopilotVersionResponse* >(object);
+  (void)_this;
+}
+void SetAutopilotVersionResponse::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void SetAutopilotVersionResponse::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void SetAutopilotVersionResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:mavsdk.rpc.info_server.SetAutopilotVersionResponse)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  if (GetArenaForAllocation() == nullptr && info_result_ != nullptr) {
+    delete info_result_;
+  }
+  info_result_ = nullptr;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* SetAutopilotVersionResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // .mavsdk.rpc.info_server.InfoResult info_result = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          ptr = ctx->ParseMessage(_internal_mutable_info_result(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag == 0) || ((tag & 7) == 4)) {
+          CHK_(ptr);
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* SetAutopilotVersionResponse::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:mavsdk.rpc.info_server.SetAutopilotVersionResponse)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .mavsdk.rpc.info_server.InfoResult info_result = 1;
+  if (this->_internal_has_info_result()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        1, _Internal::info_result(this), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:mavsdk.rpc.info_server.SetAutopilotVersionResponse)
+  return target;
+}
+
+size_t SetAutopilotVersionResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:mavsdk.rpc.info_server.SetAutopilotVersionResponse)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .mavsdk.rpc.info_server.InfoResult info_result = 1;
+  if (this->_internal_has_info_result()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *info_result_);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData SetAutopilotVersionResponse::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    SetAutopilotVersionResponse::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*SetAutopilotVersionResponse::GetClassData() const { return &_class_data_; }
+
+void SetAutopilotVersionResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message*to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message&from) {
+  static_cast<SetAutopilotVersionResponse *>(to)->MergeFrom(
+      static_cast<const SetAutopilotVersionResponse &>(from));
+}
+
+
+void SetAutopilotVersionResponse::MergeFrom(const SetAutopilotVersionResponse& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:mavsdk.rpc.info_server.SetAutopilotVersionResponse)
+  GOOGLE_DCHECK_NE(&from, this);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_has_info_result()) {
+    _internal_mutable_info_result()->::mavsdk::rpc::info_server::InfoResult::MergeFrom(from._internal_info_result());
+  }
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void SetAutopilotVersionResponse::CopyFrom(const SetAutopilotVersionResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:mavsdk.rpc.info_server.SetAutopilotVersionResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool SetAutopilotVersionResponse::IsInitialized() const {
+  return true;
+}
+
+void SetAutopilotVersionResponse::InternalSwap(SetAutopilotVersionResponse* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(info_result_, other->info_result_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata SetAutopilotVersionResponse::GetMetadata() const {
+  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+      &descriptor_table_info_5fserver_2finfo_5fserver_2eproto_getter, &descriptor_table_info_5fserver_2finfo_5fserver_2eproto_once,
+      file_level_metadata_info_5fserver_2finfo_5fserver_2eproto[5]);
+}
+
+// ===================================================================
+
+class SetProtocolVersionRequest::_Internal {
+ public:
+  static const ::mavsdk::rpc::info_server::ProtocolVersion& protocol_version_info(const SetProtocolVersionRequest* msg);
+};
+
+const ::mavsdk::rpc::info_server::ProtocolVersion&
+SetProtocolVersionRequest::_Internal::protocol_version_info(const SetProtocolVersionRequest* msg) {
+  return *msg->protocol_version_info_;
+}
+SetProtocolVersionRequest::SetProtocolVersionRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor();
+  if (!is_message_owned) {
+    RegisterArenaDtor(arena);
+  }
+  // @@protoc_insertion_point(arena_constructor:mavsdk.rpc.info_server.SetProtocolVersionRequest)
+}
+SetProtocolVersionRequest::SetProtocolVersionRequest(const SetProtocolVersionRequest& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_protocol_version_info()) {
+    protocol_version_info_ = new ::mavsdk::rpc::info_server::ProtocolVersion(*from.protocol_version_info_);
+  } else {
+    protocol_version_info_ = nullptr;
+  }
+  // @@protoc_insertion_point(copy_constructor:mavsdk.rpc.info_server.SetProtocolVersionRequest)
+}
+
+inline void SetProtocolVersionRequest::SharedCtor() {
+protocol_version_info_ = nullptr;
+}
+
+SetProtocolVersionRequest::~SetProtocolVersionRequest() {
+  // @@protoc_insertion_point(destructor:mavsdk.rpc.info_server.SetProtocolVersionRequest)
+  if (GetArenaForAllocation() != nullptr) return;
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+inline void SetProtocolVersionRequest::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete protocol_version_info_;
+}
+
+void SetProtocolVersionRequest::ArenaDtor(void* object) {
+  SetProtocolVersionRequest* _this = reinterpret_cast< SetProtocolVersionRequest* >(object);
+  (void)_this;
+}
+void SetProtocolVersionRequest::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void SetProtocolVersionRequest::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void SetProtocolVersionRequest::Clear() {
+// @@protoc_insertion_point(message_clear_start:mavsdk.rpc.info_server.SetProtocolVersionRequest)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  if (GetArenaForAllocation() == nullptr && protocol_version_info_ != nullptr) {
+    delete protocol_version_info_;
+  }
+  protocol_version_info_ = nullptr;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* SetProtocolVersionRequest::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // .mavsdk.rpc.info_server.ProtocolVersion protocol_version_info = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          ptr = ctx->ParseMessage(_internal_mutable_protocol_version_info(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag == 0) || ((tag & 7) == 4)) {
+          CHK_(ptr);
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* SetProtocolVersionRequest::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:mavsdk.rpc.info_server.SetProtocolVersionRequest)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .mavsdk.rpc.info_server.ProtocolVersion protocol_version_info = 1;
+  if (this->_internal_has_protocol_version_info()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        1, _Internal::protocol_version_info(this), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:mavsdk.rpc.info_server.SetProtocolVersionRequest)
+  return target;
+}
+
+size_t SetProtocolVersionRequest::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:mavsdk.rpc.info_server.SetProtocolVersionRequest)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .mavsdk.rpc.info_server.ProtocolVersion protocol_version_info = 1;
+  if (this->_internal_has_protocol_version_info()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *protocol_version_info_);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData SetProtocolVersionRequest::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    SetProtocolVersionRequest::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*SetProtocolVersionRequest::GetClassData() const { return &_class_data_; }
+
+void SetProtocolVersionRequest::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message*to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message&from) {
+  static_cast<SetProtocolVersionRequest *>(to)->MergeFrom(
+      static_cast<const SetProtocolVersionRequest &>(from));
+}
+
+
+void SetProtocolVersionRequest::MergeFrom(const SetProtocolVersionRequest& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:mavsdk.rpc.info_server.SetProtocolVersionRequest)
+  GOOGLE_DCHECK_NE(&from, this);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_has_protocol_version_info()) {
+    _internal_mutable_protocol_version_info()->::mavsdk::rpc::info_server::ProtocolVersion::MergeFrom(from._internal_protocol_version_info());
+  }
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void SetProtocolVersionRequest::CopyFrom(const SetProtocolVersionRequest& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:mavsdk.rpc.info_server.SetProtocolVersionRequest)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool SetProtocolVersionRequest::IsInitialized() const {
+  return true;
+}
+
+void SetProtocolVersionRequest::InternalSwap(SetProtocolVersionRequest* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(protocol_version_info_, other->protocol_version_info_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata SetProtocolVersionRequest::GetMetadata() const {
+  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+      &descriptor_table_info_5fserver_2finfo_5fserver_2eproto_getter, &descriptor_table_info_5fserver_2finfo_5fserver_2eproto_once,
+      file_level_metadata_info_5fserver_2finfo_5fserver_2eproto[6]);
+}
+
+// ===================================================================
+
+class SetProtocolVersionResponse::_Internal {
+ public:
+  static const ::mavsdk::rpc::info_server::InfoResult& info_result(const SetProtocolVersionResponse* msg);
+};
+
+const ::mavsdk::rpc::info_server::InfoResult&
+SetProtocolVersionResponse::_Internal::info_result(const SetProtocolVersionResponse* msg) {
+  return *msg->info_result_;
+}
+SetProtocolVersionResponse::SetProtocolVersionResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor();
+  if (!is_message_owned) {
+    RegisterArenaDtor(arena);
+  }
+  // @@protoc_insertion_point(arena_constructor:mavsdk.rpc.info_server.SetProtocolVersionResponse)
+}
+SetProtocolVersionResponse::SetProtocolVersionResponse(const SetProtocolVersionResponse& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_info_result()) {
+    info_result_ = new ::mavsdk::rpc::info_server::InfoResult(*from.info_result_);
+  } else {
+    info_result_ = nullptr;
+  }
+  // @@protoc_insertion_point(copy_constructor:mavsdk.rpc.info_server.SetProtocolVersionResponse)
+}
+
+inline void SetProtocolVersionResponse::SharedCtor() {
+info_result_ = nullptr;
+}
+
+SetProtocolVersionResponse::~SetProtocolVersionResponse() {
+  // @@protoc_insertion_point(destructor:mavsdk.rpc.info_server.SetProtocolVersionResponse)
+  if (GetArenaForAllocation() != nullptr) return;
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+inline void SetProtocolVersionResponse::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete info_result_;
+}
+
+void SetProtocolVersionResponse::ArenaDtor(void* object) {
+  SetProtocolVersionResponse* _this = reinterpret_cast< SetProtocolVersionResponse* >(object);
+  (void)_this;
+}
+void SetProtocolVersionResponse::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void SetProtocolVersionResponse::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void SetProtocolVersionResponse::Clear() {
+// @@protoc_insertion_point(message_clear_start:mavsdk.rpc.info_server.SetProtocolVersionResponse)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  if (GetArenaForAllocation() == nullptr && info_result_ != nullptr) {
+    delete info_result_;
+  }
+  info_result_ = nullptr;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* SetProtocolVersionResponse::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // .mavsdk.rpc.info_server.InfoResult info_result = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
+          ptr = ctx->ParseMessage(_internal_mutable_info_result(), ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag == 0) || ((tag & 7) == 4)) {
+          CHK_(ptr);
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* SetProtocolVersionResponse::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:mavsdk.rpc.info_server.SetProtocolVersionResponse)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .mavsdk.rpc.info_server.InfoResult info_result = 1;
+  if (this->_internal_has_info_result()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        1, _Internal::info_result(this), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:mavsdk.rpc.info_server.SetProtocolVersionResponse)
+  return target;
+}
+
+size_t SetProtocolVersionResponse::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:mavsdk.rpc.info_server.SetProtocolVersionResponse)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .mavsdk.rpc.info_server.InfoResult info_result = 1;
+  if (this->_internal_has_info_result()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *info_result_);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData SetProtocolVersionResponse::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    SetProtocolVersionResponse::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*SetProtocolVersionResponse::GetClassData() const { return &_class_data_; }
+
+void SetProtocolVersionResponse::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message*to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message&from) {
+  static_cast<SetProtocolVersionResponse *>(to)->MergeFrom(
+      static_cast<const SetProtocolVersionResponse &>(from));
+}
+
+
+void SetProtocolVersionResponse::MergeFrom(const SetProtocolVersionResponse& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:mavsdk.rpc.info_server.SetProtocolVersionResponse)
+  GOOGLE_DCHECK_NE(&from, this);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_has_info_result()) {
+    _internal_mutable_info_result()->::mavsdk::rpc::info_server::InfoResult::MergeFrom(from._internal_info_result());
+  }
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void SetProtocolVersionResponse::CopyFrom(const SetProtocolVersionResponse& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:mavsdk.rpc.info_server.SetProtocolVersionResponse)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool SetProtocolVersionResponse::IsInitialized() const {
+  return true;
+}
+
+void SetProtocolVersionResponse::InternalSwap(SetProtocolVersionResponse* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(info_result_, other->info_result_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata SetProtocolVersionResponse::GetMetadata() const {
+  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+      &descriptor_table_info_5fserver_2finfo_5fserver_2eproto_getter, &descriptor_table_info_5fserver_2finfo_5fserver_2eproto_once,
+      file_level_metadata_info_5fserver_2finfo_5fserver_2eproto[7]);
+}
+
+// ===================================================================
+
 class ProtocolVersion::_Internal {
  public:
 };
@@ -1418,7 +2314,7 @@ void ProtocolVersion::InternalSwap(ProtocolVersion* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata ProtocolVersion::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_info_5fserver_2finfo_5fserver_2eproto_getter, &descriptor_table_info_5fserver_2finfo_5fserver_2eproto_once,
-      file_level_metadata_info_5fserver_2finfo_5fserver_2eproto[4]);
+      file_level_metadata_info_5fserver_2finfo_5fserver_2eproto[8]);
 }
 
 // ===================================================================
@@ -1944,7 +2840,7 @@ void AutopilotVersion::InternalSwap(AutopilotVersion* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata AutopilotVersion::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_info_5fserver_2finfo_5fserver_2eproto_getter, &descriptor_table_info_5fserver_2finfo_5fserver_2eproto_once,
-      file_level_metadata_info_5fserver_2finfo_5fserver_2eproto[5]);
+      file_level_metadata_info_5fserver_2finfo_5fserver_2eproto[9]);
 }
 
 // ===================================================================
@@ -2172,7 +3068,7 @@ void InfoResult::InternalSwap(InfoResult* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata InfoResult::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_info_5fserver_2finfo_5fserver_2eproto_getter, &descriptor_table_info_5fserver_2finfo_5fserver_2eproto_once,
-      file_level_metadata_info_5fserver_2finfo_5fserver_2eproto[6]);
+      file_level_metadata_info_5fserver_2finfo_5fserver_2eproto[10]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -2191,6 +3087,18 @@ template<> PROTOBUF_NOINLINE ::mavsdk::rpc::info_server::ProvideAutopilotVersion
 }
 template<> PROTOBUF_NOINLINE ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse* Arena::CreateMaybeMessage< ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse >(Arena* arena) {
   return Arena::CreateMessageInternal< ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse >(arena);
+}
+template<> PROTOBUF_NOINLINE ::mavsdk::rpc::info_server::SetAutopilotVersionRequest* Arena::CreateMaybeMessage< ::mavsdk::rpc::info_server::SetAutopilotVersionRequest >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::mavsdk::rpc::info_server::SetAutopilotVersionRequest >(arena);
+}
+template<> PROTOBUF_NOINLINE ::mavsdk::rpc::info_server::SetAutopilotVersionResponse* Arena::CreateMaybeMessage< ::mavsdk::rpc::info_server::SetAutopilotVersionResponse >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::mavsdk::rpc::info_server::SetAutopilotVersionResponse >(arena);
+}
+template<> PROTOBUF_NOINLINE ::mavsdk::rpc::info_server::SetProtocolVersionRequest* Arena::CreateMaybeMessage< ::mavsdk::rpc::info_server::SetProtocolVersionRequest >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::mavsdk::rpc::info_server::SetProtocolVersionRequest >(arena);
+}
+template<> PROTOBUF_NOINLINE ::mavsdk::rpc::info_server::SetProtocolVersionResponse* Arena::CreateMaybeMessage< ::mavsdk::rpc::info_server::SetProtocolVersionResponse >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::mavsdk::rpc::info_server::SetProtocolVersionResponse >(arena);
 }
 template<> PROTOBUF_NOINLINE ::mavsdk::rpc::info_server::ProtocolVersion* Arena::CreateMaybeMessage< ::mavsdk::rpc::info_server::ProtocolVersion >(Arena* arena) {
   return Arena::CreateMessageInternal< ::mavsdk::rpc::info_server::ProtocolVersion >(arena);

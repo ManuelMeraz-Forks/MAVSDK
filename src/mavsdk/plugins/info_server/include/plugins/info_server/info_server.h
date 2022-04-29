@@ -177,6 +177,24 @@ public:
     std::pair<Result, InfoServer::ProtocolVersion> provide_protocol_version() const;
 
     /**
+     * @brief Set autopilot version of the system.
+     *
+     * This function is blocking.
+     *
+     * @return Result of request.
+     */
+    Result set_autopilot_version(AutopilotVersion autopilot_version_info) const;
+
+    /**
+     * @brief Set protocol version of the system.
+     *
+     * This function is blocking.
+     *
+     * @return Result of request.
+     */
+    Result set_protocol_version(ProtocolVersion protocol_version_info) const;
+
+    /**
      * @brief Copy constructor.
      */
     InfoServer(const InfoServer& other);

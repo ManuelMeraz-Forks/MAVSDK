@@ -36,6 +36,16 @@ InfoServer::provide_protocol_version() const
     return _impl->provide_protocol_version();
 }
 
+InfoServer::Result InfoServer::set_autopilot_version(AutopilotVersion autopilot_version_info) const
+{
+    return _impl->set_autopilot_version(autopilot_version_info);
+}
+
+InfoServer::Result InfoServer::set_protocol_version(ProtocolVersion protocol_version_info) const
+{
+    return _impl->set_protocol_version(protocol_version_info);
+}
+
 bool operator==(const InfoServer::ProtocolVersion& lhs, const InfoServer::ProtocolVersion& rhs)
 {
     return (rhs.version == lhs.version) && (rhs.min_version == lhs.min_version) &&

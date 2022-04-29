@@ -226,6 +226,64 @@ public:
         return grpc::Status::OK;
     }
 
+    grpc::Status SetAutopilotVersion(
+        grpc::ServerContext* /* context */,
+        const rpc::info_server::SetAutopilotVersionRequest* request,
+        rpc::info_server::SetAutopilotVersionResponse* response) override
+    {
+        if (_lazy_plugin.maybe_plugin() == nullptr) {
+            if (response != nullptr) {
+                auto result = mavsdk::InfoServer::Result::NoSystem;
+                fillResponseWithResult(response, result);
+            }
+
+            return grpc::Status::OK;
+        }
+
+        if (request == nullptr) {
+            LogWarn() << "SetAutopilotVersion sent with a null request! Ignoring...";
+            return grpc::Status::OK;
+        }
+
+        auto result = _lazy_plugin.maybe_plugin()->set_autopilot_version(
+            translateFromRpcAutopilotVersion(request->autopilot_version_info()));
+
+        if (response != nullptr) {
+            fillResponseWithResult(response, result);
+        }
+
+        return grpc::Status::OK;
+    }
+
+    grpc::Status SetProtocolVersion(
+        grpc::ServerContext* /* context */,
+        const rpc::info_server::SetProtocolVersionRequest* request,
+        rpc::info_server::SetProtocolVersionResponse* response) override
+    {
+        if (_lazy_plugin.maybe_plugin() == nullptr) {
+            if (response != nullptr) {
+                auto result = mavsdk::InfoServer::Result::NoSystem;
+                fillResponseWithResult(response, result);
+            }
+
+            return grpc::Status::OK;
+        }
+
+        if (request == nullptr) {
+            LogWarn() << "SetProtocolVersion sent with a null request! Ignoring...";
+            return grpc::Status::OK;
+        }
+
+        auto result = _lazy_plugin.maybe_plugin()->set_protocol_version(
+            translateFromRpcProtocolVersion(request->protocol_version_info()));
+
+        if (response != nullptr) {
+            fillResponseWithResult(response, result);
+        }
+
+        return grpc::Status::OK;
+    }
+
     void stop()
     {
         _stopped.store(true);
