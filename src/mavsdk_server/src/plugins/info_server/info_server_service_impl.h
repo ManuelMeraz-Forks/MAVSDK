@@ -138,6 +138,44 @@ public:
         return obj;
     }
 
+    static std::unique_ptr<rpc::info_server::ComponentInformation>
+    translateToRpcComponentInformation(
+        const mavsdk::InfoServer::ComponentInformation& component_information)
+    {
+        auto rpc_obj = std::make_unique<rpc::info_server::ComponentInformation>();
+
+        rpc_obj->set_time_boot_ms(component_information.time_boot_ms);
+
+        rpc_obj->set_general_metadata_file_crc(component_information.general_metadata_file_crc);
+
+        rpc_obj->set_general_metadata_uri(component_information.general_metadata_uri);
+
+        rpc_obj->set_peripherals_metadata_file_crc(
+            component_information.peripherals_metadata_file_crc);
+
+        rpc_obj->set_peripherals_metadata_uri(component_information.peripherals_metadata_uri);
+
+        return rpc_obj;
+    }
+
+    static mavsdk::InfoServer::ComponentInformation translateFromRpcComponentInformation(
+        const rpc::info_server::ComponentInformation& component_information)
+    {
+        mavsdk::InfoServer::ComponentInformation obj;
+
+        obj.time_boot_ms = component_information.time_boot_ms();
+
+        obj.general_metadata_file_crc = component_information.general_metadata_file_crc();
+
+        obj.general_metadata_uri = component_information.general_metadata_uri();
+
+        obj.peripherals_metadata_file_crc = component_information.peripherals_metadata_file_crc();
+
+        obj.peripherals_metadata_uri = component_information.peripherals_metadata_uri();
+
+        return obj;
+    }
+
     static rpc::info_server::InfoResult::Result
     translateToRpcResult(const mavsdk::InfoServer::Result& result)
     {
@@ -226,6 +264,32 @@ public:
         return grpc::Status::OK;
     }
 
+    grpc::Status ProvideComponentInformation(
+        grpc::ServerContext* /* context */,
+        const rpc::info_server::ProvideComponentInformationRequest* /* request */,
+        rpc::info_server::ProvideComponentInformationResponse* response) override
+    {
+        if (_lazy_plugin.maybe_plugin() == nullptr) {
+            if (response != nullptr) {
+                auto result = mavsdk::InfoServer::Result::NoSystem;
+                fillResponseWithResult(response, result);
+            }
+
+            return grpc::Status::OK;
+        }
+
+        auto result = _lazy_plugin.maybe_plugin()->provide_component_information();
+
+        if (response != nullptr) {
+            fillResponseWithResult(response, result.first);
+
+            response->set_allocated_component_information_info(
+                translateToRpcComponentInformation(result.second).release());
+        }
+
+        return grpc::Status::OK;
+    }
+
     grpc::Status SetAutopilotVersion(
         grpc::ServerContext* /* context */,
         const rpc::info_server::SetAutopilotVersionRequest* request,
@@ -276,6 +340,35 @@ public:
 
         auto result = _lazy_plugin.maybe_plugin()->set_protocol_version(
             translateFromRpcProtocolVersion(request->protocol_version_info()));
+
+        if (response != nullptr) {
+            fillResponseWithResult(response, result);
+        }
+
+        return grpc::Status::OK;
+    }
+
+    grpc::Status SetComponentInformation(
+        grpc::ServerContext* /* context */,
+        const rpc::info_server::SetComponentInformationRequest* request,
+        rpc::info_server::SetComponentInformationResponse* response) override
+    {
+        if (_lazy_plugin.maybe_plugin() == nullptr) {
+            if (response != nullptr) {
+                auto result = mavsdk::InfoServer::Result::NoSystem;
+                fillResponseWithResult(response, result);
+            }
+
+            return grpc::Status::OK;
+        }
+
+        if (request == nullptr) {
+            LogWarn() << "SetComponentInformation sent with a null request! Ignoring...";
+            return grpc::Status::OK;
+        }
+
+        auto result = _lazy_plugin.maybe_plugin()->set_component_information(
+            translateFromRpcComponentInformation(request->component_information_info()));
 
         if (response != nullptr) {
             fillResponseWithResult(response, result);

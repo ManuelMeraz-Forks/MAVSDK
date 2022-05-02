@@ -137,6 +137,49 @@ public:
     operator<<(std::ostream& str, InfoServer::AutopilotVersion const& autopilot_version);
 
     /**
+     * @brief Component information.
+     */
+    struct ComponentInformation {
+        uint32_t time_boot_ms{}; /**< @brief ms	Timestamp (time since system boot). */
+        uint32_t general_metadata_file_crc{}; /**< @brief CRC32 of the general metadata file
+                                                 (general_metadata_uri). */
+        std::string
+            general_metadata_uri{}; /**< @brief MAVLink FTP URI for the general metadata file
+                                       (COMP_METADATA_TYPE_GENERAL), which may be compressed with
+                                       xz. The file contains general component metadata, and may
+                                       contain URI links for additional metadata (see
+                                       COMP_METADATA_TYPE). The information is static from boot, and
+                                       may be generated at compile time. The string needs to be zero
+                                       terminated. */
+        uint32_t peripherals_metadata_file_crc{}; /**< @brief CRC32 of peripherals metadata file
+                                                     (peripherals_metadata_uri). */
+        std::string
+            peripherals_metadata_uri{}; /**< @brief (Optional) MAVLink FTP URI for the peripherals
+                                           metadata file (COMP_METADATA_TYPE_PERIPHERALS), which may
+                                           be compressed with xz. This contains data about "attached
+                                           components" such as UAVCAN nodes. The peripherals are in
+                                           a separate file because the information must be generated
+                                           dynamically at runtime. The string needs to be zero
+                                           terminated. */
+    };
+
+    /**
+     * @brief Equal operator to compare two `InfoServer::ComponentInformation` objects.
+     *
+     * @return `true` if items are equal.
+     */
+    friend bool operator==(
+        const InfoServer::ComponentInformation& lhs, const InfoServer::ComponentInformation& rhs);
+
+    /**
+     * @brief Stream operator to print information about a `InfoServer::ComponentInformation`.
+     *
+     * @return A reference to the stream.
+     */
+    friend std::ostream&
+    operator<<(std::ostream& str, InfoServer::ComponentInformation const& component_information);
+
+    /**
      * @brief Possible results returned for info requests.
      */
     enum class Result {
@@ -177,6 +220,15 @@ public:
     std::pair<Result, InfoServer::ProtocolVersion> provide_protocol_version() const;
 
     /**
+     * @brief Provide protocol version of the system.
+     *
+     * This function is blocking.
+     *
+     * @return Result of request.
+     */
+    std::pair<Result, InfoServer::ComponentInformation> provide_component_information() const;
+
+    /**
      * @brief Set autopilot version of the system.
      *
      * This function is blocking.
@@ -193,6 +245,15 @@ public:
      * @return Result of request.
      */
     Result set_protocol_version(ProtocolVersion protocol_version_info) const;
+
+    /**
+     * @brief Set protocol version of the system.
+     *
+     * This function is blocking.
+     *
+     * @return Result of request.
+     */
+    Result set_component_information(ComponentInformation component_information_info) const;
 
     /**
      * @brief Copy constructor.

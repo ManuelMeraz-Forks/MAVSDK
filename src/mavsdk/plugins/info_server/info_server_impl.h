@@ -21,20 +21,26 @@ public:
 
     std::pair<InfoServer::Result, InfoServer::ProtocolVersion> provide_protocol_version();
 
-    InfoServer::Result set_autopilot_version(const InfoServer::AutopilotVersion &);
-    InfoServer::Result set_protocol_version(const InfoServer::ProtocolVersion &);
+    std::pair<InfoServer::Result, InfoServer::ComponentInformation> provide_component_information();
+
+    InfoServer::Result set_autopilot_version(const InfoServer::AutopilotVersion&);
+    InfoServer::Result set_protocol_version(const InfoServer::ProtocolVersion&);
+    InfoServer::Result set_component_information(const InfoServer::ComponentInformation&);
 
 private:
     mavlink_message_t
     process_command_request_message(const MavlinkCommandReceiver::CommandLong& command);
     mavlink_message_t
-    process_command_request_autopilot_version(
-        const MavlinkCommandReceiver::CommandLong& command);
+    process_command_request_autopilot_version(const MavlinkCommandReceiver::CommandLong& command);
     mavlink_message_t
     process_command_request_protocol_version(const MavlinkCommandReceiver::CommandLong& command);
 
     void send_protocol_version() const;
     void send_autopilot_version() const;
+    void send_component_information() const;
+
+    InfoServer::ComponentInformation _component_information{};
+    mutable std::mutex _component_information_mutex{};
 
     InfoServer::ProtocolVersion _protocol_version{};
     mutable std::mutex _protocol_version_mutex{};

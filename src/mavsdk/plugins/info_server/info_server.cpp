@@ -11,6 +11,7 @@ namespace mavsdk {
 
 using ProtocolVersion = InfoServer::ProtocolVersion;
 using AutopilotVersion = InfoServer::AutopilotVersion;
+using ComponentInformation = InfoServer::ComponentInformation;
 
 InfoServer::InfoServer(System& system) :
     PluginBase(),
@@ -36,6 +37,12 @@ InfoServer::provide_protocol_version() const
     return _impl->provide_protocol_version();
 }
 
+std::pair<InfoServer::Result, InfoServer::ComponentInformation>
+InfoServer::provide_component_information() const
+{
+    return _impl->provide_component_information();
+}
+
 InfoServer::Result InfoServer::set_autopilot_version(AutopilotVersion autopilot_version_info) const
 {
     return _impl->set_autopilot_version(autopilot_version_info);
@@ -44,6 +51,12 @@ InfoServer::Result InfoServer::set_autopilot_version(AutopilotVersion autopilot_
 InfoServer::Result InfoServer::set_protocol_version(ProtocolVersion protocol_version_info) const
 {
     return _impl->set_protocol_version(protocol_version_info);
+}
+
+InfoServer::Result
+InfoServer::set_component_information(ComponentInformation component_information_info) const
+{
+    return _impl->set_component_information(component_information_info);
 }
 
 bool operator==(const InfoServer::ProtocolVersion& lhs, const InfoServer::ProtocolVersion& rhs)
@@ -95,6 +108,33 @@ std::ostream& operator<<(std::ostream& str, InfoServer::AutopilotVersion const& 
     str << "    product_id: " << autopilot_version.product_id << '\n';
     str << "    uid: " << autopilot_version.uid << '\n';
     str << "    uid2: " << autopilot_version.uid2 << '\n';
+    str << '}';
+    return str;
+}
+
+bool operator==(
+    const InfoServer::ComponentInformation& lhs, const InfoServer::ComponentInformation& rhs)
+{
+    return (rhs.time_boot_ms == lhs.time_boot_ms) &&
+           (rhs.general_metadata_file_crc == lhs.general_metadata_file_crc) &&
+           (rhs.general_metadata_uri == lhs.general_metadata_uri) &&
+           (rhs.peripherals_metadata_file_crc == lhs.peripherals_metadata_file_crc) &&
+           (rhs.peripherals_metadata_uri == lhs.peripherals_metadata_uri);
+}
+
+std::ostream&
+operator<<(std::ostream& str, InfoServer::ComponentInformation const& component_information)
+{
+    str << std::setprecision(15);
+    str << "component_information:" << '\n' << "{\n";
+    str << "    time_boot_ms: " << component_information.time_boot_ms << '\n';
+    str << "    general_metadata_file_crc: " << component_information.general_metadata_file_crc
+        << '\n';
+    str << "    general_metadata_uri: " << component_information.general_metadata_uri << '\n';
+    str << "    peripherals_metadata_file_crc: "
+        << component_information.peripherals_metadata_file_crc << '\n';
+    str << "    peripherals_metadata_uri: " << component_information.peripherals_metadata_uri
+        << '\n';
     str << '}';
     return str;
 }

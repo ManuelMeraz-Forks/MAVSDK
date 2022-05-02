@@ -73,6 +73,11 @@ InfoServerImpl::process_command_request_message(const MavlinkCommandReceiver::Co
         return _parent->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_ACCEPTED);
     }
 
+    if (msg_id == MAVLINK_MSG_ID_COMPONENT_INFORMATION) {
+        send_component_information();
+        return _parent->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_ACCEPTED);
+    }
+
     return _parent->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_DENIED);
 }
 
@@ -133,17 +138,51 @@ void InfoServerImpl::send_autopilot_version() const
     _parent->send_message(msg);
 }
 
-InfoServer::Result InfoServerImpl::set_autopilot_version(const InfoServer::AutopilotVersion& autopilot_version)
+void InfoServerImpl::send_component_information() const
+{
+    std::lock_guard<std::mutex> lock(_component_information_mutex);
+
+    mavlink_message_t msg;
+    mavlink_msg_component_information_pack(
+        _parent->get_own_system_id(),
+        _parent->get_own_component_id(),
+        &msg,
+        _component_information.time_boot_ms,
+        _component_information.general_metadata_file_crc,
+        reinterpret_cast<const char*>(_component_information.general_metadata_uri.data()),
+        _component_information.peripherals_metadata_file_crc,
+        reinterpret_cast<const char*>(_component_information.peripherals_metadata_uri.data()));
+
+    _parent->send_message(msg);
+}
+
+InfoServer::Result
+InfoServerImpl::set_autopilot_version(const InfoServer::AutopilotVersion& autopilot_version)
 {
     std::lock_guard<std::mutex> lock(_autopilot_version_mutex);
     _autopilot_version = autopilot_version;
     return InfoServer::Result::Success;
 }
 
-InfoServer::Result InfoServerImpl::set_protocol_version(const InfoServer::ProtocolVersion& protocol_version)
+InfoServer::Result
+InfoServerImpl::set_protocol_version(const InfoServer::ProtocolVersion& protocol_version)
 {
     std::lock_guard<std::mutex> lock(_protocol_version_mutex);
     _protocol_version = protocol_version;
+    return InfoServer::Result::Success;
+}
+std::pair<InfoServer::Result, InfoServer::ComponentInformation>
+
+InfoServerImpl::provide_component_information()
+{
+    return {InfoServer::Result::Success, _component_information};
+}
+
+InfoServer::Result InfoServerImpl::set_component_information(
+    const InfoServer::ComponentInformation& component_information)
+{
+    std::lock_guard<std::mutex> lock(_component_information_mutex);
+    _component_information = component_information;
     return InfoServer::Result::Success;
 }
 

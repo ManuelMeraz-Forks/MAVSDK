@@ -26,8 +26,10 @@ namespace info_server {
 static const char* InfoServerService_method_names[] = {
   "/mavsdk.rpc.info_server.InfoServerService/ProvideAutopilotVersion",
   "/mavsdk.rpc.info_server.InfoServerService/ProvideProtocolVersion",
+  "/mavsdk.rpc.info_server.InfoServerService/ProvideComponentInformation",
   "/mavsdk.rpc.info_server.InfoServerService/SetAutopilotVersion",
   "/mavsdk.rpc.info_server.InfoServerService/SetProtocolVersion",
+  "/mavsdk.rpc.info_server.InfoServerService/SetComponentInformation",
 };
 
 std::unique_ptr< InfoServerService::Stub> InfoServerService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -39,8 +41,10 @@ std::unique_ptr< InfoServerService::Stub> InfoServerService::NewStub(const std::
 InfoServerService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
   : channel_(channel), rpcmethod_ProvideAutopilotVersion_(InfoServerService_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_ProvideProtocolVersion_(InfoServerService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_SetAutopilotVersion_(InfoServerService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_SetProtocolVersion_(InfoServerService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ProvideComponentInformation_(InfoServerService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_SetAutopilotVersion_(InfoServerService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_SetProtocolVersion_(InfoServerService_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_SetComponentInformation_(InfoServerService_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status InfoServerService::Stub::ProvideAutopilotVersion(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideAutopilotVersionRequest& request, ::mavsdk::rpc::info_server::ProvideAutopilotVersionResponse* response) {
@@ -85,6 +89,29 @@ void InfoServerService::Stub::async::ProvideProtocolVersion(::grpc::ClientContex
 ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideProtocolVersionResponse>* InfoServerService::Stub::AsyncProvideProtocolVersionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideProtocolVersionRequest& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncProvideProtocolVersionRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status InfoServerService::Stub::ProvideComponentInformation(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideComponentInformationRequest& request, ::mavsdk::rpc::info_server::ProvideComponentInformationResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::mavsdk::rpc::info_server::ProvideComponentInformationRequest, ::mavsdk::rpc::info_server::ProvideComponentInformationResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_ProvideComponentInformation_, context, request, response);
+}
+
+void InfoServerService::Stub::async::ProvideComponentInformation(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideComponentInformationRequest* request, ::mavsdk::rpc::info_server::ProvideComponentInformationResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::mavsdk::rpc::info_server::ProvideComponentInformationRequest, ::mavsdk::rpc::info_server::ProvideComponentInformationResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ProvideComponentInformation_, context, request, response, std::move(f));
+}
+
+void InfoServerService::Stub::async::ProvideComponentInformation(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideComponentInformationRequest* request, ::mavsdk::rpc::info_server::ProvideComponentInformationResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ProvideComponentInformation_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideComponentInformationResponse>* InfoServerService::Stub::PrepareAsyncProvideComponentInformationRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideComponentInformationRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::mavsdk::rpc::info_server::ProvideComponentInformationResponse, ::mavsdk::rpc::info_server::ProvideComponentInformationRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_ProvideComponentInformation_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::ProvideComponentInformationResponse>* InfoServerService::Stub::AsyncProvideComponentInformationRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::ProvideComponentInformationRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncProvideComponentInformationRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -135,6 +162,29 @@ void InfoServerService::Stub::async::SetProtocolVersion(::grpc::ClientContext* c
   return result;
 }
 
+::grpc::Status InfoServerService::Stub::SetComponentInformation(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::SetComponentInformationRequest& request, ::mavsdk::rpc::info_server::SetComponentInformationResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::mavsdk::rpc::info_server::SetComponentInformationRequest, ::mavsdk::rpc::info_server::SetComponentInformationResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_SetComponentInformation_, context, request, response);
+}
+
+void InfoServerService::Stub::async::SetComponentInformation(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::SetComponentInformationRequest* request, ::mavsdk::rpc::info_server::SetComponentInformationResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::mavsdk::rpc::info_server::SetComponentInformationRequest, ::mavsdk::rpc::info_server::SetComponentInformationResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SetComponentInformation_, context, request, response, std::move(f));
+}
+
+void InfoServerService::Stub::async::SetComponentInformation(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::SetComponentInformationRequest* request, ::mavsdk::rpc::info_server::SetComponentInformationResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SetComponentInformation_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::SetComponentInformationResponse>* InfoServerService::Stub::PrepareAsyncSetComponentInformationRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::SetComponentInformationRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::mavsdk::rpc::info_server::SetComponentInformationResponse, ::mavsdk::rpc::info_server::SetComponentInformationRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_SetComponentInformation_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::info_server::SetComponentInformationResponse>* InfoServerService::Stub::AsyncSetComponentInformationRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::info_server::SetComponentInformationRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncSetComponentInformationRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 InfoServerService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       InfoServerService_method_names[0],
@@ -159,6 +209,16 @@ InfoServerService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       InfoServerService_method_names[2],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< InfoServerService::Service, ::mavsdk::rpc::info_server::ProvideComponentInformationRequest, ::mavsdk::rpc::info_server::ProvideComponentInformationResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](InfoServerService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::mavsdk::rpc::info_server::ProvideComponentInformationRequest* req,
+             ::mavsdk::rpc::info_server::ProvideComponentInformationResponse* resp) {
+               return service->ProvideComponentInformation(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      InfoServerService_method_names[3],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InfoServerService::Service, ::mavsdk::rpc::info_server::SetAutopilotVersionRequest, ::mavsdk::rpc::info_server::SetAutopilotVersionResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InfoServerService::Service* service,
              ::grpc::ServerContext* ctx,
@@ -167,7 +227,7 @@ InfoServerService::Service::Service() {
                return service->SetAutopilotVersion(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      InfoServerService_method_names[3],
+      InfoServerService_method_names[4],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< InfoServerService::Service, ::mavsdk::rpc::info_server::SetProtocolVersionRequest, ::mavsdk::rpc::info_server::SetProtocolVersionResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](InfoServerService::Service* service,
@@ -175,6 +235,16 @@ InfoServerService::Service::Service() {
              const ::mavsdk::rpc::info_server::SetProtocolVersionRequest* req,
              ::mavsdk::rpc::info_server::SetProtocolVersionResponse* resp) {
                return service->SetProtocolVersion(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      InfoServerService_method_names[5],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< InfoServerService::Service, ::mavsdk::rpc::info_server::SetComponentInformationRequest, ::mavsdk::rpc::info_server::SetComponentInformationResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](InfoServerService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::mavsdk::rpc::info_server::SetComponentInformationRequest* req,
+             ::mavsdk::rpc::info_server::SetComponentInformationResponse* resp) {
+               return service->SetComponentInformation(ctx, req, resp);
              }, this)));
 }
 
@@ -195,6 +265,13 @@ InfoServerService::Service::~Service() {
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
+::grpc::Status InfoServerService::Service::ProvideComponentInformation(::grpc::ServerContext* context, const ::mavsdk::rpc::info_server::ProvideComponentInformationRequest* request, ::mavsdk::rpc::info_server::ProvideComponentInformationResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
 ::grpc::Status InfoServerService::Service::SetAutopilotVersion(::grpc::ServerContext* context, const ::mavsdk::rpc::info_server::SetAutopilotVersionRequest* request, ::mavsdk::rpc::info_server::SetAutopilotVersionResponse* response) {
   (void) context;
   (void) request;
@@ -203,6 +280,13 @@ InfoServerService::Service::~Service() {
 }
 
 ::grpc::Status InfoServerService::Service::SetProtocolVersion(::grpc::ServerContext* context, const ::mavsdk::rpc::info_server::SetProtocolVersionRequest* request, ::mavsdk::rpc::info_server::SetProtocolVersionResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status InfoServerService::Service::SetComponentInformation(::grpc::ServerContext* context, const ::mavsdk::rpc::info_server::SetComponentInformationRequest* request, ::mavsdk::rpc::info_server::SetComponentInformationResponse* response) {
   (void) context;
   (void) request;
   (void) response;
