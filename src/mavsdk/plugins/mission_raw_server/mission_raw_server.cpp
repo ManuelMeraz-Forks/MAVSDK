@@ -164,5 +164,4 @@ std::ostream& operator<<(std::ostream& str, MissionRawServer::Result const& resu
             return str << "Unknown";
     }
 }
-
 } // namespace mavsdk

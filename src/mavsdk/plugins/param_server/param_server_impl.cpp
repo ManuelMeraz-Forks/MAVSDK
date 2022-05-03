@@ -31,9 +31,9 @@ std::pair<ParamServer::Result, int32_t> ParamServerImpl::retrieve_param_int(std:
 
     if (result.first == MAVLinkParameters::Result::Success) {
         return {ParamServer::Result::Success, result.second};
-    } else {
-        return {ParamServer::Result::NotFound, -1};
     }
+
+    return {ParamServer::Result::NotFound, -1};
 }
 
 ParamServer::Result ParamServerImpl::provide_param_int(std::string name, int32_t value)

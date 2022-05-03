@@ -154,7 +154,7 @@ void MissionRawServerImpl::init()
             _target_component = message.compid;
             mavlink_mission_count_t count;
             mavlink_msg_mission_count_decode(&message, &count);
-            _mission_count = count.count;
+            _mission_download_count = count.count;
 
             // We need to queue this on a different thread or it will deadlock
             add_task([this]() {
@@ -172,7 +172,7 @@ void MissionRawServerImpl::init()
 
                 _last_download = _parent->mission_transfer().receive_incoming_items_async(
                     MAV_MISSION_TYPE_MISSION,
-                    _mission_count,
+                    _mission_download_count,
                     _target_component,
                     [this](
                         MAVLinkMissionTransfer::Result result,
@@ -185,7 +185,7 @@ void MissionRawServerImpl::init()
                                 _incoming_mission_callback(converted_result, {converted_items});
                             }
 
-                            _mission_completed = false;
+                            _mission_download_completed = false;
                             set_current_seq(0);
                         });
                     });
@@ -260,6 +260,38 @@ void MissionRawServerImpl::init()
             _parent->send_message(ack_message);
         },
         this);
+
+    _parent->register_mavlink_message_handler(
+        MAVLINK_MSG_ID_MISSION_REQUEST_LIST,
+        [this](const mavlink_message_t& message) {
+            LogDebug() << "Receive Mission Request List in Server";
+
+            // Decode the request_list
+            _target_component = message.compid;
+            mavlink_mission_request_list_t request_list;
+            mavlink_msg_mission_request_list_decode(&message, &request_list);
+            auto mission_type = request_list.mission_type;
+
+            // We need to queue this on a different thread or it will deadlock
+            add_task([this, mission_type]() {
+                // Mission Upload In Progress
+                if (_last_upload.lock()) {
+                    _parent->call_user_callback([this]() {
+                        if (_incoming_mission_callback) {
+                            MissionRawServer::MissionPlan mission_plan{};
+                            _incoming_mission_callback(
+                                MissionRawServer::Result::Busy, mission_plan);
+                        }
+                    });
+                    return;
+                }
+
+                _last_upload = _parent->mission_transfer().upload_items_async(
+                    mission_type, _current_mission, [this](MAVLinkMissionTransfer::Result result) {
+                    });
+            });
+        },
+        this);
 }
 
 void MissionRawServerImpl::deinit()
@@ -322,7 +354,7 @@ void MissionRawServerImpl::set_current_item_complete()
     _parent->send_message(mission_reached);
 
     if (_current_seq + 1 == _current_mission.size()) {
-        _mission_completed = true;
+        _mission_download_completed = true;
     }
     // This will publish 0 - N mission current
     // mission_current mission.size() is end of mission!

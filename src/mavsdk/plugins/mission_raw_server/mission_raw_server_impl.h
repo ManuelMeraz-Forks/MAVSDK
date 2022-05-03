@@ -32,8 +32,11 @@ private:
     MissionRawServer::ClearAllCallback _clear_all_callback{nullptr};
     std::thread _thread_mission;
     std::atomic<int> _target_component;
-    std::atomic<int> _mission_count;
-    std::atomic<bool> _mission_completed;
+    std::atomic<int> _mission_download_count;
+    std::atomic<bool> _mission_download_completed;
+
+    std::atomic<int> _mission_upload_count;
+    std::atomic<bool> _mission_upload_completed;
 
     std::queue<std::function<void()>> _work_queue;
     std::condition_variable _wait_for_new_task;
@@ -44,6 +47,7 @@ private:
     std::size_t _current_seq;
 
     std::weak_ptr<MAVLinkMissionTransfer::WorkItem> _last_download{};
+    std::weak_ptr<MAVLinkMissionTransfer::WorkItem> _last_upload{};
 
     void set_current_seq(std::size_t seq);
 
