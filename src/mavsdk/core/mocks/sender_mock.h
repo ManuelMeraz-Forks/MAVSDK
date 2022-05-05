@@ -10,6 +10,7 @@ public:
     MOCK_METHOD(bool, send_message, (mavlink_message_t&), (override));
     MOCK_METHOD(uint8_t, get_own_system_id, (), (const, override));
     MOCK_METHOD(uint8_t, get_own_component_id, (), (const, override));
+    MOCK_METHOD(uint8_t, get_component_id, (), (const, override));
     MOCK_METHOD(uint8_t, get_system_id, (), (const, override));
     MOCK_METHOD(Autopilot, autopilot, (), (const, override));
 };
