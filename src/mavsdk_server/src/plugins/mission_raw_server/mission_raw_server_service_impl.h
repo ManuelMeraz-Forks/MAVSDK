@@ -240,6 +240,25 @@ public:
         }
     }
 
+    grpc::Status SetMissionType(
+        grpc::ServerContext* /* context */,
+        const rpc::mission_raw_server::SetMissionTypeRequest* request,
+        rpc::mission_raw_server::SetMissionTypeResponse* /* response */) override
+    {
+        if (_lazy_plugin.maybe_plugin() == nullptr) {
+            return grpc::Status::OK;
+        }
+
+        if (request == nullptr) {
+            LogWarn() << "SetMissionType sent with a null request! Ignoring...";
+            return grpc::Status::OK;
+        }
+
+        _lazy_plugin.maybe_plugin()->set_mission_type(request->mission_type());
+
+        return grpc::Status::OK;
+    }
+
     grpc::Status SubscribeIncomingMission(
         grpc::ServerContext* /* context */,
         const mavsdk::rpc::mission_raw_server::SubscribeIncomingMissionRequest* /* request */,

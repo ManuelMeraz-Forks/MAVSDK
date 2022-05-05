@@ -48,7 +48,7 @@ struct TableStruct_mission_5fraw_5fserver_2fmission_5fraw_5fserver_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[12]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[14]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -85,6 +85,12 @@ extern SetCurrentItemCompleteRequestDefaultTypeInternal _SetCurrentItemCompleteR
 class SetCurrentItemCompleteResponse;
 struct SetCurrentItemCompleteResponseDefaultTypeInternal;
 extern SetCurrentItemCompleteResponseDefaultTypeInternal _SetCurrentItemCompleteResponse_default_instance_;
+class SetMissionTypeRequest;
+struct SetMissionTypeRequestDefaultTypeInternal;
+extern SetMissionTypeRequestDefaultTypeInternal _SetMissionTypeRequest_default_instance_;
+class SetMissionTypeResponse;
+struct SetMissionTypeResponseDefaultTypeInternal;
+extern SetMissionTypeResponseDefaultTypeInternal _SetMissionTypeResponse_default_instance_;
 class SubscribeClearAllRequest;
 struct SubscribeClearAllRequestDefaultTypeInternal;
 extern SubscribeClearAllRequestDefaultTypeInternal _SubscribeClearAllRequest_default_instance_;
@@ -107,6 +113,8 @@ template<> ::mavsdk::rpc::mission_raw_server::MissionProgress* Arena::CreateMayb
 template<> ::mavsdk::rpc::mission_raw_server::MissionRawServerResult* Arena::CreateMaybeMessage<::mavsdk::rpc::mission_raw_server::MissionRawServerResult>(Arena*);
 template<> ::mavsdk::rpc::mission_raw_server::SetCurrentItemCompleteRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::mission_raw_server::SetCurrentItemCompleteRequest>(Arena*);
 template<> ::mavsdk::rpc::mission_raw_server::SetCurrentItemCompleteResponse* Arena::CreateMaybeMessage<::mavsdk::rpc::mission_raw_server::SetCurrentItemCompleteResponse>(Arena*);
+template<> ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest>(Arena*);
+template<> ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse* Arena::CreateMaybeMessage<::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse>(Arena*);
 template<> ::mavsdk::rpc::mission_raw_server::SubscribeClearAllRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::mission_raw_server::SubscribeClearAllRequest>(Arena*);
 template<> ::mavsdk::rpc::mission_raw_server::SubscribeCurrentItemChangedRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::mission_raw_server::SubscribeCurrentItemChangedRequest>(Arena*);
 template<> ::mavsdk::rpc::mission_raw_server::SubscribeIncomingMissionRequest* Arena::CreateMaybeMessage<::mavsdk::rpc::mission_raw_server::SubscribeIncomingMissionRequest>(Arena*);
@@ -1238,6 +1246,271 @@ class SetCurrentItemCompleteResponse final :
 };
 // -------------------------------------------------------------------
 
+class SetMissionTypeRequest final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mavsdk.rpc.mission_raw_server.SetMissionTypeRequest) */ {
+ public:
+  inline SetMissionTypeRequest() : SetMissionTypeRequest(nullptr) {}
+  ~SetMissionTypeRequest() override;
+  explicit constexpr SetMissionTypeRequest(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SetMissionTypeRequest(const SetMissionTypeRequest& from);
+  SetMissionTypeRequest(SetMissionTypeRequest&& from) noexcept
+    : SetMissionTypeRequest() {
+    *this = ::std::move(from);
+  }
+
+  inline SetMissionTypeRequest& operator=(const SetMissionTypeRequest& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SetMissionTypeRequest& operator=(SetMissionTypeRequest&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SetMissionTypeRequest& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SetMissionTypeRequest* internal_default_instance() {
+    return reinterpret_cast<const SetMissionTypeRequest*>(
+               &_SetMissionTypeRequest_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    8;
+
+  friend void swap(SetMissionTypeRequest& a, SetMissionTypeRequest& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SetMissionTypeRequest* other) {
+    if (other == this) return;
+    if (GetOwningArena() == other->GetOwningArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SetMissionTypeRequest* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline SetMissionTypeRequest* New() const final {
+    return new SetMissionTypeRequest();
+  }
+
+  SetMissionTypeRequest* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<SetMissionTypeRequest>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SetMissionTypeRequest& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const SetMissionTypeRequest& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message*to, const ::PROTOBUF_NAMESPACE_ID::Message&from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SetMissionTypeRequest* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "mavsdk.rpc.mission_raw_server.SetMissionTypeRequest";
+  }
+  protected:
+  explicit SetMissionTypeRequest(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kMissionTypeFieldNumber = 1,
+  };
+  // uint32 mission_type = 1;
+  void clear_mission_type();
+  ::PROTOBUF_NAMESPACE_ID::uint32 mission_type() const;
+  void set_mission_type(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::uint32 _internal_mission_type() const;
+  void _internal_set_mission_type(::PROTOBUF_NAMESPACE_ID::uint32 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:mavsdk.rpc.mission_raw_server.SetMissionTypeRequest)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::uint32 mission_type_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mission_5fraw_5fserver_2fmission_5fraw_5fserver_2eproto;
+};
+// -------------------------------------------------------------------
+
+class SetMissionTypeResponse final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mavsdk.rpc.mission_raw_server.SetMissionTypeResponse) */ {
+ public:
+  inline SetMissionTypeResponse() : SetMissionTypeResponse(nullptr) {}
+  ~SetMissionTypeResponse() override;
+  explicit constexpr SetMissionTypeResponse(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SetMissionTypeResponse(const SetMissionTypeResponse& from);
+  SetMissionTypeResponse(SetMissionTypeResponse&& from) noexcept
+    : SetMissionTypeResponse() {
+    *this = ::std::move(from);
+  }
+
+  inline SetMissionTypeResponse& operator=(const SetMissionTypeResponse& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SetMissionTypeResponse& operator=(SetMissionTypeResponse&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SetMissionTypeResponse& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SetMissionTypeResponse* internal_default_instance() {
+    return reinterpret_cast<const SetMissionTypeResponse*>(
+               &_SetMissionTypeResponse_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    9;
+
+  friend void swap(SetMissionTypeResponse& a, SetMissionTypeResponse& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SetMissionTypeResponse* other) {
+    if (other == this) return;
+    if (GetOwningArena() == other->GetOwningArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SetMissionTypeResponse* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline SetMissionTypeResponse* New() const final {
+    return new SetMissionTypeResponse();
+  }
+
+  SetMissionTypeResponse* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<SetMissionTypeResponse>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SetMissionTypeResponse& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const SetMissionTypeResponse& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message*to, const ::PROTOBUF_NAMESPACE_ID::Message&from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SetMissionTypeResponse* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "mavsdk.rpc.mission_raw_server.SetMissionTypeResponse";
+  }
+  protected:
+  explicit SetMissionTypeResponse(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:mavsdk.rpc.mission_raw_server.SetMissionTypeResponse)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_mission_5fraw_5fserver_2fmission_5fraw_5fserver_2eproto;
+};
+// -------------------------------------------------------------------
+
 class MissionItem final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:mavsdk.rpc.mission_raw_server.MissionItem) */ {
  public:
@@ -1282,7 +1555,7 @@ class MissionItem final :
                &_MissionItem_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    8;
+    10;
 
   friend void swap(MissionItem& a, MissionItem& b) {
     a.Swap(&b);
@@ -1553,7 +1826,7 @@ class MissionPlan final :
                &_MissionPlan_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    9;
+    11;
 
   friend void swap(MissionPlan& a, MissionPlan& b) {
     a.Swap(&b);
@@ -1701,7 +1974,7 @@ class MissionProgress final :
                &_MissionProgress_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    10;
+    12;
 
   friend void swap(MissionProgress& a, MissionProgress& b) {
     a.Swap(&b);
@@ -1851,7 +2124,7 @@ class MissionRawServerResult final :
                &_MissionRawServerResult_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    11;
+    13;
 
   friend void swap(MissionRawServerResult& a, MissionRawServerResult& b) {
     a.Swap(&b);
@@ -2343,6 +2616,34 @@ inline void ClearAllResponse::set_clear_type(::PROTOBUF_NAMESPACE_ID::uint32 val
 
 // -------------------------------------------------------------------
 
+// SetMissionTypeRequest
+
+// uint32 mission_type = 1;
+inline void SetMissionTypeRequest::clear_mission_type() {
+  mission_type_ = 0u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 SetMissionTypeRequest::_internal_mission_type() const {
+  return mission_type_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::uint32 SetMissionTypeRequest::mission_type() const {
+  // @@protoc_insertion_point(field_get:mavsdk.rpc.mission_raw_server.SetMissionTypeRequest.mission_type)
+  return _internal_mission_type();
+}
+inline void SetMissionTypeRequest::_internal_set_mission_type(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  
+  mission_type_ = value;
+}
+inline void SetMissionTypeRequest::set_mission_type(::PROTOBUF_NAMESPACE_ID::uint32 value) {
+  _internal_set_mission_type(value);
+  // @@protoc_insertion_point(field_set:mavsdk.rpc.mission_raw_server.SetMissionTypeRequest.mission_type)
+}
+
+// -------------------------------------------------------------------
+
+// SetMissionTypeResponse
+
+// -------------------------------------------------------------------
+
 // MissionItem
 
 // uint32 seq = 1;
@@ -2766,6 +3067,10 @@ inline void MissionRawServerResult::set_allocated_result_str(std::string* result
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -32,6 +32,35 @@ public:
     [[nodiscard]] virtual Autopilot autopilot() const = 0;
 };
 
+// struct ItemInt;
+//
+// class Items {
+// public:
+//    [[nodiscard]] bool empty() const
+//    {
+//        return std::all_of(std::cbegin(_all_items), std::cend(_all_items), [](auto& items) {
+//            return items.empt();
+//        });
+//    }
+//
+//    std::vector<ItemInt>& operator[](MAV_MISSION_TYPE mission_type)
+//    {
+//        if (mission_type >= MAV_MISSION_TYPE_ALL)
+//        {
+//            return _mission_items;
+//        }
+//        return *_all_items[mission_type];
+//    }
+//
+// private:
+//    std::vector<ItemInt> _mission_items{};
+//    std::vector<ItemInt> _geofence_items{};
+//    std::vector<ItemInt> _rally_items{};
+//
+//    std::array<std::vector<ItemInt>*, MAV_MISSION_TYPE::MAV_MISSION_TYPE_ALL> _all_items{
+//        &_mission_items, &_geofence_items, &_rally_items};
+//};
+
 class MAVLinkMissionTransfer {
 public:
     enum class Result {
@@ -81,6 +110,7 @@ public:
     using ResultCallback = std::function<void(Result result)>;
     using ResultAndItemsCallback = std::function<void(Result result, std::vector<ItemInt> items)>;
     using ProgressCallback = std::function<void(float progress)>;
+    using Items = std::vector<ItemInt>;
 
     class WorkItem {
     public:
@@ -154,9 +184,7 @@ public:
             SendItems,
         } _step{Step::SendCount};
 
-        std::vector<ItemInt> _mission_items{};
-        std::vector<ItemInt> _geofence_items{};
-        std::vector<ItemInt> _rally_items{};
+        std::vector<ItemInt> _items{};
 
         ResultCallback _callback{nullptr};
         ProgressCallback _progress_callback{nullptr};
