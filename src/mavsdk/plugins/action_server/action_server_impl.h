@@ -33,6 +33,8 @@ public:
 
     ActionServer::Result set_allow_takeoff(bool allow_takeoff);
 
+    ActionServer::Result set_allow_land(bool allow_land);
+
     ActionServer::Result set_armable(bool armable, bool force_armable);
 
     ActionServer::Result set_disarmable(bool disarmable, bool force_disarmable);
@@ -46,6 +48,7 @@ private:
     ActionServer::ArmDisarmCallback _arm_disarm_callback{nullptr};
     ActionServer::FlightModeChangeCallback _flight_mode_change_callback{nullptr};
     ActionServer::TakeoffCallback _takeoff_callback{nullptr};
+    ActionServer::LandCallback _land_callback{nullptr};
 
     std::mutex _callback_mutex;
 
@@ -54,6 +57,7 @@ private:
     std::atomic<bool> _disarmable = false;
     std::atomic<bool> _force_disarmable = false;
     std::atomic<bool> _allow_takeoff = false;
+    std::atomic<bool> _allow_land = false;
 
     union px4_custom_mode {
         struct {
