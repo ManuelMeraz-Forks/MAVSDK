@@ -202,7 +202,7 @@ void MissionRawServerImpl::init()
             mavlink_mission_set_current_t set_current;
             mavlink_msg_mission_set_current_decode(&message, &set_current);
 
-            if (_current_mission.size() == 0) {
+            if (_current_mission.empty()) {
                 mavlink_message_t status_message;
                 mavlink_msg_statustext_pack(
                     _parent->get_own_system_id(),
@@ -278,6 +278,7 @@ void MissionRawServerImpl::init()
                 if (_last_upload.lock()) {
                     _parent->call_user_callback([this]() {
                         if (_incoming_mission_callback) {
+                            LogDebug() << "Misison raw server busy";
                             MissionRawServer::MissionPlan mission_plan{};
                             _incoming_mission_callback(
                                 MissionRawServer::Result::Busy, mission_plan);
@@ -286,8 +287,11 @@ void MissionRawServerImpl::init()
                     return;
                 }
 
-                _last_upload = _parent->mission_transfer().upload_items_async(
+              LogDebug() << "Mission Type: " << mission_type << " Mission Size: " << _current_mission.size();
+
+              _last_upload = _parent->mission_transfer().upload_items_async(
                     mission_type, _current_mission, [this](MAVLinkMissionTransfer::Result result) {
+                        LogDebug() << "Result of mission upload: " << static_cast<int>(result);
                     });
             });
         },

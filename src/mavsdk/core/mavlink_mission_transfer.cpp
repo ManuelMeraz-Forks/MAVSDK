@@ -198,7 +198,7 @@ MAVLinkMissionTransfer::UploadWorkItem::UploadWorkItem(
     ProgressCallback progress_callback,
     bool debugging) :
     WorkItem(sender, message_handler, timeout_handler, type, timeout_s, debugging),
-    _items(items),
+    _mission_items(items),
     _callback(callback),
     _progress_callback(progress_callback)
 {
@@ -232,13 +232,17 @@ void MAVLinkMissionTransfer::UploadWorkItem::start()
     std::lock_guard<std::mutex> lock(_mutex);
 
     _started = true;
-    if (_items.size() == 0) {
+
+    // We always want to send mission count even if our mission size is zero
+    send_count();
+
+    if (_mission_items.empty()) {
         callback_and_reset(Result::NoMissionAvailable);
         return;
     }
 
     int count = 0;
-    for (const auto& item : _items) {
+    for (const auto& item : _mission_items) {
         if (count++ != item.seq) {
             callback_and_reset(Result::InvalidSequence);
             return;
@@ -246,7 +250,8 @@ void MAVLinkMissionTransfer::UploadWorkItem::start()
     }
 
     int num_currents = 0;
-    std::for_each(_items.cbegin(), _items.cend(), [&num_currents](const ItemInt& item) {
+    std::for_each(
+        _mission_items.cbegin(), _mission_items.cend(), [&num_currents](const ItemInt& item) {
         num_currents += item.current;
     });
     if (num_currents != 1) {
@@ -254,7 +259,7 @@ void MAVLinkMissionTransfer::UploadWorkItem::start()
         return;
     }
 
-    if (std::any_of(_items.cbegin(), _items.cend(), [this](const ItemInt& item) {
+    if (std::any_of(_mission_items.cbegin(), _mission_items.cend(), [this](const ItemInt& item) {
             return item.mission_type != _type;
         })) {
         callback_and_reset(Result::MissionTypeNotConsistent);
@@ -268,8 +273,6 @@ void MAVLinkMissionTransfer::UploadWorkItem::start()
     _timeout_handler.add([this]() { process_timeout(); }, _timeout_s, &_cookie);
 
     _next_sequence = 0;
-
-    send_count();
 }
 
 void MAVLinkMissionTransfer::UploadWorkItem::cancel()
@@ -288,8 +291,8 @@ void MAVLinkMissionTransfer::UploadWorkItem::send_count()
         _sender.get_own_component_id(),
         &message,
         _sender.get_system_id(),
-        MAV_COMP_ID_AUTOPILOT1,
-        _items.size(),
+        _sender.get_component_id(),
+        _mission_items.size(),
         _type);
 
     if (!_sender.send_message(message)) {
@@ -299,7 +302,7 @@ void MAVLinkMissionTransfer::UploadWorkItem::send_count()
     }
 
     if (_debugging) {
-        LogDebug() << "Sending send_count, count: " << _items.size()
+        LogDebug() << "Sending send_count, count: " << _mission_items.size()
                    << ", retries: " << _retries_done;
     }
 
@@ -314,7 +317,7 @@ void MAVLinkMissionTransfer::UploadWorkItem::send_cancel_and_finish()
         _sender.get_own_component_id(),
         &message,
         _sender.get_system_id(),
-        MAV_COMP_ID_AUTOPILOT1,
+        _sender.get_component_id(),
         MAV_MISSION_OPERATION_CANCELLED,
         _type);
 
@@ -359,7 +362,7 @@ void MAVLinkMissionTransfer::UploadWorkItem::process_mission_request(
             _sender.get_own_component_id(),
             &message,
             _sender.get_system_id(),
-            MAV_COMP_ID_AUTOPILOT1,
+            _sender.get_component_id(),
             MAV_MISSION_UNSUPPORTED,
             _type);
 
@@ -412,14 +415,14 @@ void MAVLinkMissionTransfer::UploadWorkItem::process_mission_request_int(
     _next_sequence = request_int.seq;
 
     // We add in a step for the final ack, so plus one.
-    update_progress(static_cast<float>(_next_sequence + 1) / static_cast<float>(_items.size() + 1));
+    update_progress(static_cast<float>(_next_sequence + 1) / static_cast<float>(_mission_items.size() + 1));
 
     send_mission_item();
 }
 
 void MAVLinkMissionTransfer::UploadWorkItem::send_mission_item()
 {
-    if (_next_sequence >= _items.size()) {
+    if (_next_sequence >= _mission_items.size()) {
         LogErr() << "send_mission_item: sequence out of bounds";
         return;
     }
@@ -430,19 +433,19 @@ void MAVLinkMissionTransfer::UploadWorkItem::send_mission_item()
         _sender.get_own_component_id(),
         &message,
         _sender.get_system_id(),
-        MAV_COMP_ID_AUTOPILOT1,
+        _sender.get_component_id(),
         _next_sequence,
-        _items[_next_sequence].frame,
-        _items[_next_sequence].command,
-        _items[_next_sequence].current,
-        _items[_next_sequence].autocontinue,
-        _items[_next_sequence].param1,
-        _items[_next_sequence].param2,
-        _items[_next_sequence].param3,
-        _items[_next_sequence].param4,
-        _items[_next_sequence].x,
-        _items[_next_sequence].y,
-        _items[_next_sequence].z,
+        _mission_items[_next_sequence].frame,
+        _mission_items[_next_sequence].command,
+        _mission_items[_next_sequence].current,
+        _mission_items[_next_sequence].autocontinue,
+        _mission_items[_next_sequence].param1,
+        _mission_items[_next_sequence].param2,
+        _mission_items[_next_sequence].param3,
+        _mission_items[_next_sequence].param4,
+        _mission_items[_next_sequence].x,
+        _mission_items[_next_sequence].y,
+        _mission_items[_next_sequence].z,
         _type);
 
     if (_debugging) {
@@ -515,7 +518,7 @@ void MAVLinkMissionTransfer::UploadWorkItem::process_mission_ack(const mavlink_m
             return;
     }
 
-    if (_next_sequence == _items.size()) {
+    if (_next_sequence == _mission_items.size()) {
         update_progress(1.0f);
         callback_and_reset(Result::Success);
     } else {
@@ -631,7 +634,7 @@ void MAVLinkMissionTransfer::DownloadWorkItem::request_list()
         _sender.get_own_component_id(),
         &message,
         _sender.get_system_id(),
-        MAV_COMP_ID_AUTOPILOT1,
+        _sender.get_component_id(),
         _type);
 
     if (!_sender.send_message(message)) {
@@ -651,7 +654,7 @@ void MAVLinkMissionTransfer::DownloadWorkItem::request_item()
         _sender.get_own_component_id(),
         &message,
         _sender.get_system_id(),
-        MAV_COMP_ID_AUTOPILOT1,
+        _sender.get_component_id(),
         _next_sequence,
         _type);
 
@@ -672,7 +675,7 @@ void MAVLinkMissionTransfer::DownloadWorkItem::send_ack_and_finish()
         _sender.get_own_component_id(),
         &message,
         _sender.get_system_id(),
-        MAV_COMP_ID_AUTOPILOT1,
+        _sender.get_component_id(),
         MAV_MISSION_ACCEPTED,
         _type);
 
@@ -693,7 +696,7 @@ void MAVLinkMissionTransfer::DownloadWorkItem::send_cancel_and_finish()
         _sender.get_own_component_id(),
         &message,
         _sender.get_system_id(),
-        MAV_COMP_ID_AUTOPILOT1,
+        _sender.get_component_id(),
         MAV_MISSION_OPERATION_CANCELLED,
         _type);
 
@@ -1046,7 +1049,7 @@ void MAVLinkMissionTransfer::ClearWorkItem::send_clear()
         _sender.get_own_component_id(),
         &message,
         _sender.get_system_id(),
-        MAV_COMP_ID_AUTOPILOT1,
+        _sender.get_component_id(),
         _type);
 
     if (!_sender.send_message(message)) {
@@ -1200,7 +1203,7 @@ void MAVLinkMissionTransfer::SetCurrentWorkItem::send_current_mission_item()
         _sender.get_own_component_id(),
         &message,
         _sender.get_system_id(),
-        MAV_COMP_ID_AUTOPILOT1,
+        _sender.get_component_id(),
         _current);
 
     if (!_sender.send_message(message)) {

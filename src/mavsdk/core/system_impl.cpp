@@ -644,6 +644,11 @@ uint8_t SystemImpl::get_system_id() const
     return _target_address.system_id;
 }
 
+uint8_t SystemImpl::get_component_id() const
+{
+    return _target_address.component_id;
+}
+
 std::vector<uint8_t> SystemImpl::component_ids() const
 {
     return std::vector<uint8_t>{_components.begin(), _components.end()};
@@ -1521,5 +1526,4 @@ uint32_t SystemImpl::get_custom_mode() const
 {
     return _parent.get_custom_mode();
 }
-
 } // namespace mavsdk

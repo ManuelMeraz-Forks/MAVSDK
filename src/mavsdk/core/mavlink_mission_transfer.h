@@ -28,6 +28,7 @@ public:
     [[nodiscard]] virtual uint8_t get_own_system_id() const = 0;
     [[nodiscard]] virtual uint8_t get_own_component_id() const = 0;
     [[nodiscard]] virtual uint8_t get_system_id() const = 0;
+    [[nodiscard]] virtual uint8_t get_component_id() const = 0;
     [[nodiscard]] virtual Autopilot autopilot() const = 0;
 };
 
@@ -153,7 +154,10 @@ public:
             SendItems,
         } _step{Step::SendCount};
 
-        std::vector<ItemInt> _items{};
+        std::vector<ItemInt> _mission_items{};
+        std::vector<ItemInt> _geofence_items{};
+        std::vector<ItemInt> _rally_items{};
+
         ResultCallback _callback{nullptr};
         ProgressCallback _progress_callback{nullptr};
         std::size_t _next_sequence{0};
