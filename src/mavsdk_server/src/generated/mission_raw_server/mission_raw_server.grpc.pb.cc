@@ -24,6 +24,7 @@ namespace rpc {
 namespace mission_raw_server {
 
 static const char* MissionRawServerService_method_names[] = {
+  "/mavsdk.rpc.mission_raw_server.MissionRawServerService/SetMissionType",
   "/mavsdk.rpc.mission_raw_server.MissionRawServerService/SubscribeIncomingMission",
   "/mavsdk.rpc.mission_raw_server.MissionRawServerService/SubscribeCurrentItemChanged",
   "/mavsdk.rpc.mission_raw_server.MissionRawServerService/SetCurrentItemComplete",
@@ -37,11 +38,35 @@ std::unique_ptr< MissionRawServerService::Stub> MissionRawServerService::NewStub
 }
 
 MissionRawServerService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
-  : channel_(channel), rpcmethod_SubscribeIncomingMission_(MissionRawServerService_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
-  , rpcmethod_SubscribeCurrentItemChanged_(MissionRawServerService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
-  , rpcmethod_SetCurrentItemComplete_(MissionRawServerService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_SubscribeClearAll_(MissionRawServerService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
+  : channel_(channel), rpcmethod_SetMissionType_(MissionRawServerService_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_SubscribeIncomingMission_(MissionRawServerService_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
+  , rpcmethod_SubscribeCurrentItemChanged_(MissionRawServerService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
+  , rpcmethod_SetCurrentItemComplete_(MissionRawServerService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_SubscribeClearAll_(MissionRawServerService_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   {}
+
+::grpc::Status MissionRawServerService::Stub::SetMissionType(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest& request, ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest, ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_SetMissionType_, context, request, response);
+}
+
+void MissionRawServerService::Stub::async::SetMissionType(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest* request, ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest, ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SetMissionType_, context, request, response, std::move(f));
+}
+
+void MissionRawServerService::Stub::async::SetMissionType(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest* request, ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SetMissionType_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse>* MissionRawServerService::Stub::PrepareAsyncSetMissionTypeRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse, ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_SetMissionType_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse>* MissionRawServerService::Stub::AsyncSetMissionTypeRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncSetMissionTypeRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
 
 ::grpc::ClientReader< ::mavsdk::rpc::mission_raw_server::IncomingMissionResponse>* MissionRawServerService::Stub::SubscribeIncomingMissionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SubscribeIncomingMissionRequest& request) {
   return ::grpc::internal::ClientReaderFactory< ::mavsdk::rpc::mission_raw_server::IncomingMissionResponse>::Create(channel_.get(), rpcmethod_SubscribeIncomingMission_, context, request);
@@ -117,6 +142,16 @@ void MissionRawServerService::Stub::async::SubscribeClearAll(::grpc::ClientConte
 MissionRawServerService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       MissionRawServerService_method_names[0],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< MissionRawServerService::Service, ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest, ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](MissionRawServerService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest* req,
+             ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse* resp) {
+               return service->SetMissionType(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      MissionRawServerService_method_names[1],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
       new ::grpc::internal::ServerStreamingHandler< MissionRawServerService::Service, ::mavsdk::rpc::mission_raw_server::SubscribeIncomingMissionRequest, ::mavsdk::rpc::mission_raw_server::IncomingMissionResponse>(
           [](MissionRawServerService::Service* service,
@@ -126,7 +161,7 @@ MissionRawServerService::Service::Service() {
                return service->SubscribeIncomingMission(ctx, req, writer);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      MissionRawServerService_method_names[1],
+      MissionRawServerService_method_names[2],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
       new ::grpc::internal::ServerStreamingHandler< MissionRawServerService::Service, ::mavsdk::rpc::mission_raw_server::SubscribeCurrentItemChangedRequest, ::mavsdk::rpc::mission_raw_server::CurrentItemChangedResponse>(
           [](MissionRawServerService::Service* service,
@@ -136,7 +171,7 @@ MissionRawServerService::Service::Service() {
                return service->SubscribeCurrentItemChanged(ctx, req, writer);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      MissionRawServerService_method_names[2],
+      MissionRawServerService_method_names[3],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< MissionRawServerService::Service, ::mavsdk::rpc::mission_raw_server::SetCurrentItemCompleteRequest, ::mavsdk::rpc::mission_raw_server::SetCurrentItemCompleteResponse, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](MissionRawServerService::Service* service,
@@ -146,7 +181,7 @@ MissionRawServerService::Service::Service() {
                return service->SetCurrentItemComplete(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      MissionRawServerService_method_names[3],
+      MissionRawServerService_method_names[4],
       ::grpc::internal::RpcMethod::SERVER_STREAMING,
       new ::grpc::internal::ServerStreamingHandler< MissionRawServerService::Service, ::mavsdk::rpc::mission_raw_server::SubscribeClearAllRequest, ::mavsdk::rpc::mission_raw_server::ClearAllResponse>(
           [](MissionRawServerService::Service* service,
@@ -158,6 +193,13 @@ MissionRawServerService::Service::Service() {
 }
 
 MissionRawServerService::Service::~Service() {
+}
+
+::grpc::Status MissionRawServerService::Service::SetMissionType(::grpc::ServerContext* context, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest* request, ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 
 ::grpc::Status MissionRawServerService::Service::SubscribeIncomingMission(::grpc::ServerContext* context, const ::mavsdk::rpc::mission_raw_server::SubscribeIncomingMissionRequest* request, ::grpc::ServerWriter< ::mavsdk::rpc::mission_raw_server::IncomingMissionResponse>* writer) {

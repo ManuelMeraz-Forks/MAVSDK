@@ -21,12 +21,14 @@ public:
     void subscribe_current_item_changed(MissionRawServer::CurrentItemChangedCallback callback);
     void subscribe_clear_all(MissionRawServer::ClearAllCallback callback);
     void set_current_item_complete();
+    void set_mission_type(uint32_t mission_type);
 
     MissionRawServer::MissionPlan incoming_mission() const;
     MissionRawServer::MissionItem current_item_changed() const;
     uint32_t clear_all() const;
 
 private:
+    void send_mission_ack(const mavlink_mission_count_t& count) const;
     MissionRawServer::IncomingMissionCallback _incoming_mission_callback{nullptr};
     MissionRawServer::CurrentItemChangedCallback _current_item_changed_callback{nullptr};
     MissionRawServer::ClearAllCallback _clear_all_callback{nullptr};
@@ -34,17 +36,22 @@ private:
     std::atomic<int> _target_component;
     std::atomic<int> _mission_download_count;
     std::atomic<bool> _mission_download_completed;
-
     std::atomic<int> _mission_upload_count;
-    std::atomic<bool> _mission_upload_completed;
+    std::atomic<uint32_t> _mission_type{MAV_MISSION_TYPE::MAV_MISSION_TYPE_MISSION};
 
     std::queue<std::function<void()>> _work_queue;
     std::condition_variable _wait_for_new_task;
     std::mutex _work_mutex;
     std::atomic<bool> _stop_work_thread = false;
 
-    std::vector<MAVLinkMissionTransfer::ItemInt> _current_mission;
-    std::size_t _current_seq;
+    std::vector<MAVLinkMissionTransfer::ItemInt> _current_mission_items;
+    std::size_t _current_mission_seq;
+
+    std::vector<MAVLinkMissionTransfer::ItemInt> _current_geofence_items;
+    std::size_t _current_geofence_seq;
+
+    std::vector<MAVLinkMissionTransfer::ItemInt> _current_rally_items;
+    std::size_t _current_rally_seq;
 
     std::weak_ptr<MAVLinkMissionTransfer::WorkItem> _last_download{};
     std::weak_ptr<MAVLinkMissionTransfer::WorkItem> _last_upload{};

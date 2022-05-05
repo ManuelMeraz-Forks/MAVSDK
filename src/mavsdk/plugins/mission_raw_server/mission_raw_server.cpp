@@ -26,6 +26,11 @@ MissionRawServer::MissionRawServer(std::shared_ptr<System> system) :
 
 MissionRawServer::~MissionRawServer() {}
 
+void MissionRawServer::set_mission_type(uint32_t mission_type) const
+{
+    _impl->set_mission_type(mission_type);
+}
+
 void MissionRawServer::subscribe_incoming_mission(IncomingMissionCallback callback)
 {
     _impl->subscribe_incoming_mission(callback);
@@ -164,4 +169,5 @@ std::ostream& operator<<(std::ostream& str, MissionRawServer::Result const& resu
             return str << "Unknown";
     }
 }
+
 } // namespace mavsdk

@@ -177,6 +177,16 @@ public:
     using ResultCallback = std::function<void(Result)>;
 
     /**
+     * @brief Set Mission Type. Each Mission Raw Server will be responsible for either mission,
+     * geofence, or rally items. Default is mission type.
+     *
+     * This function is blocking.
+     *
+     * @return Result of request.
+     */
+    void set_mission_type(uint32_t mission_type) const;
+
+    /**
      * @brief Callback type for subscribe_incoming_mission.
      */
 

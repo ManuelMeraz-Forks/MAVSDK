@@ -12,6 +12,7 @@ public:
     MOCK_METHOD(uint8_t, get_own_component_id, (), (const, override));
     MOCK_METHOD(uint8_t, get_component_id, (), (const, override));
     MOCK_METHOD(uint8_t, get_system_id, (), (const, override));
+    MOCK_METHOD(uint8_t, get_component_id, (), (const, override));
     MOCK_METHOD(Autopilot, autopilot, (), (const, override));
 };
 

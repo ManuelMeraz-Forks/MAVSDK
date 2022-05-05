@@ -40,6 +40,16 @@ class MissionRawServerService final {
    public:
     virtual ~StubInterface() {}
     //
+    //  Set Mission Type. Each Mission Raw Server will be responsible for either mission, geofence, or rally items.
+    //  Default is mission type.
+    virtual ::grpc::Status SetMissionType(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest& request, ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse>> AsyncSetMissionType(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse>>(AsyncSetMissionTypeRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse>> PrepareAsyncSetMissionType(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse>>(PrepareAsyncSetMissionTypeRaw(context, request, cq));
+    }
+    //
     // Subscribe to when a new mission is uploaded (asynchronous).
     std::unique_ptr< ::grpc::ClientReaderInterface< ::mavsdk::rpc::mission_raw_server::IncomingMissionResponse>> SubscribeIncomingMission(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SubscribeIncomingMissionRequest& request) {
       return std::unique_ptr< ::grpc::ClientReaderInterface< ::mavsdk::rpc::mission_raw_server::IncomingMissionResponse>>(SubscribeIncomingMissionRaw(context, request));
@@ -85,6 +95,11 @@ class MissionRawServerService final {
      public:
       virtual ~async_interface() {}
       //
+      //  Set Mission Type. Each Mission Raw Server will be responsible for either mission, geofence, or rally items.
+      //  Default is mission type.
+      virtual void SetMissionType(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest* request, ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void SetMissionType(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest* request, ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      //
       // Subscribe to when a new mission is uploaded (asynchronous).
       virtual void SubscribeIncomingMission(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SubscribeIncomingMissionRequest* request, ::grpc::ClientReadReactor< ::mavsdk::rpc::mission_raw_server::IncomingMissionResponse>* reactor) = 0;
       //
@@ -102,6 +117,8 @@ class MissionRawServerService final {
     virtual class async_interface* async() { return nullptr; }
     class async_interface* experimental_async() { return async(); }
   private:
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse>* AsyncSetMissionTypeRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse>* PrepareAsyncSetMissionTypeRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientReaderInterface< ::mavsdk::rpc::mission_raw_server::IncomingMissionResponse>* SubscribeIncomingMissionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SubscribeIncomingMissionRequest& request) = 0;
     virtual ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::mission_raw_server::IncomingMissionResponse>* AsyncSubscribeIncomingMissionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SubscribeIncomingMissionRequest& request, ::grpc::CompletionQueue* cq, void* tag) = 0;
     virtual ::grpc::ClientAsyncReaderInterface< ::mavsdk::rpc::mission_raw_server::IncomingMissionResponse>* PrepareAsyncSubscribeIncomingMissionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SubscribeIncomingMissionRequest& request, ::grpc::CompletionQueue* cq) = 0;
@@ -117,6 +134,13 @@ class MissionRawServerService final {
   class Stub final : public StubInterface {
    public:
     Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
+    ::grpc::Status SetMissionType(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest& request, ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse>> AsyncSetMissionType(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse>>(AsyncSetMissionTypeRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse>> PrepareAsyncSetMissionType(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse>>(PrepareAsyncSetMissionTypeRaw(context, request, cq));
+    }
     std::unique_ptr< ::grpc::ClientReader< ::mavsdk::rpc::mission_raw_server::IncomingMissionResponse>> SubscribeIncomingMission(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SubscribeIncomingMissionRequest& request) {
       return std::unique_ptr< ::grpc::ClientReader< ::mavsdk::rpc::mission_raw_server::IncomingMissionResponse>>(SubscribeIncomingMissionRaw(context, request));
     }
@@ -154,6 +178,8 @@ class MissionRawServerService final {
     class async final :
       public StubInterface::async_interface {
      public:
+      void SetMissionType(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest* request, ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse* response, std::function<void(::grpc::Status)>) override;
+      void SetMissionType(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest* request, ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse* response, ::grpc::ClientUnaryReactor* reactor) override;
       void SubscribeIncomingMission(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SubscribeIncomingMissionRequest* request, ::grpc::ClientReadReactor< ::mavsdk::rpc::mission_raw_server::IncomingMissionResponse>* reactor) override;
       void SubscribeCurrentItemChanged(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SubscribeCurrentItemChangedRequest* request, ::grpc::ClientReadReactor< ::mavsdk::rpc::mission_raw_server::CurrentItemChangedResponse>* reactor) override;
       void SetCurrentItemComplete(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SetCurrentItemCompleteRequest* request, ::mavsdk::rpc::mission_raw_server::SetCurrentItemCompleteResponse* response, std::function<void(::grpc::Status)>) override;
@@ -170,6 +196,8 @@ class MissionRawServerService final {
    private:
     std::shared_ptr< ::grpc::ChannelInterface> channel_;
     class async async_stub_{this};
+    ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse>* AsyncSetMissionTypeRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse>* PrepareAsyncSetMissionTypeRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientReader< ::mavsdk::rpc::mission_raw_server::IncomingMissionResponse>* SubscribeIncomingMissionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SubscribeIncomingMissionRequest& request) override;
     ::grpc::ClientAsyncReader< ::mavsdk::rpc::mission_raw_server::IncomingMissionResponse>* AsyncSubscribeIncomingMissionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SubscribeIncomingMissionRequest& request, ::grpc::CompletionQueue* cq, void* tag) override;
     ::grpc::ClientAsyncReader< ::mavsdk::rpc::mission_raw_server::IncomingMissionResponse>* PrepareAsyncSubscribeIncomingMissionRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SubscribeIncomingMissionRequest& request, ::grpc::CompletionQueue* cq) override;
@@ -181,6 +209,7 @@ class MissionRawServerService final {
     ::grpc::ClientReader< ::mavsdk::rpc::mission_raw_server::ClearAllResponse>* SubscribeClearAllRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SubscribeClearAllRequest& request) override;
     ::grpc::ClientAsyncReader< ::mavsdk::rpc::mission_raw_server::ClearAllResponse>* AsyncSubscribeClearAllRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SubscribeClearAllRequest& request, ::grpc::CompletionQueue* cq, void* tag) override;
     ::grpc::ClientAsyncReader< ::mavsdk::rpc::mission_raw_server::ClearAllResponse>* PrepareAsyncSubscribeClearAllRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::mission_raw_server::SubscribeClearAllRequest& request, ::grpc::CompletionQueue* cq) override;
+    const ::grpc::internal::RpcMethod rpcmethod_SetMissionType_;
     const ::grpc::internal::RpcMethod rpcmethod_SubscribeIncomingMission_;
     const ::grpc::internal::RpcMethod rpcmethod_SubscribeCurrentItemChanged_;
     const ::grpc::internal::RpcMethod rpcmethod_SetCurrentItemComplete_;
@@ -192,6 +221,10 @@ class MissionRawServerService final {
    public:
     Service();
     virtual ~Service();
+    //
+    //  Set Mission Type. Each Mission Raw Server will be responsible for either mission, geofence, or rally items.
+    //  Default is mission type.
+    virtual ::grpc::Status SetMissionType(::grpc::ServerContext* context, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest* request, ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse* response);
     //
     // Subscribe to when a new mission is uploaded (asynchronous).
     virtual ::grpc::Status SubscribeIncomingMission(::grpc::ServerContext* context, const ::mavsdk::rpc::mission_raw_server::SubscribeIncomingMissionRequest* request, ::grpc::ServerWriter< ::mavsdk::rpc::mission_raw_server::IncomingMissionResponse>* writer);
@@ -206,12 +239,32 @@ class MissionRawServerService final {
     virtual ::grpc::Status SubscribeClearAll(::grpc::ServerContext* context, const ::mavsdk::rpc::mission_raw_server::SubscribeClearAllRequest* request, ::grpc::ServerWriter< ::mavsdk::rpc::mission_raw_server::ClearAllResponse>* writer);
   };
   template <class BaseClass>
+  class WithAsyncMethod_SetMissionType : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_SetMissionType() {
+      ::grpc::Service::MarkMethodAsync(0);
+    }
+    ~WithAsyncMethod_SetMissionType() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetMissionType(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest* /*request*/, ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSetMissionType(::grpc::ServerContext* context, ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest* request, ::grpc::ServerAsyncResponseWriter< ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithAsyncMethod_SubscribeIncomingMission : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_SubscribeIncomingMission() {
-      ::grpc::Service::MarkMethodAsync(0);
+      ::grpc::Service::MarkMethodAsync(1);
     }
     ~WithAsyncMethod_SubscribeIncomingMission() override {
       BaseClassMustBeDerivedFromService(this);
@@ -222,7 +275,7 @@ class MissionRawServerService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestSubscribeIncomingMission(::grpc::ServerContext* context, ::mavsdk::rpc::mission_raw_server::SubscribeIncomingMissionRequest* request, ::grpc::ServerAsyncWriter< ::mavsdk::rpc::mission_raw_server::IncomingMissionResponse>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncServerStreaming(0, context, request, writer, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncServerStreaming(1, context, request, writer, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -231,7 +284,7 @@ class MissionRawServerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_SubscribeCurrentItemChanged() {
-      ::grpc::Service::MarkMethodAsync(1);
+      ::grpc::Service::MarkMethodAsync(2);
     }
     ~WithAsyncMethod_SubscribeCurrentItemChanged() override {
       BaseClassMustBeDerivedFromService(this);
@@ -242,7 +295,7 @@ class MissionRawServerService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestSubscribeCurrentItemChanged(::grpc::ServerContext* context, ::mavsdk::rpc::mission_raw_server::SubscribeCurrentItemChangedRequest* request, ::grpc::ServerAsyncWriter< ::mavsdk::rpc::mission_raw_server::CurrentItemChangedResponse>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncServerStreaming(1, context, request, writer, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncServerStreaming(2, context, request, writer, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -251,7 +304,7 @@ class MissionRawServerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_SetCurrentItemComplete() {
-      ::grpc::Service::MarkMethodAsync(2);
+      ::grpc::Service::MarkMethodAsync(3);
     }
     ~WithAsyncMethod_SetCurrentItemComplete() override {
       BaseClassMustBeDerivedFromService(this);
@@ -262,7 +315,7 @@ class MissionRawServerService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestSetCurrentItemComplete(::grpc::ServerContext* context, ::mavsdk::rpc::mission_raw_server::SetCurrentItemCompleteRequest* request, ::grpc::ServerAsyncResponseWriter< ::mavsdk::rpc::mission_raw_server::SetCurrentItemCompleteResponse>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -271,7 +324,7 @@ class MissionRawServerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_SubscribeClearAll() {
-      ::grpc::Service::MarkMethodAsync(3);
+      ::grpc::Service::MarkMethodAsync(4);
     }
     ~WithAsyncMethod_SubscribeClearAll() override {
       BaseClassMustBeDerivedFromService(this);
@@ -282,17 +335,44 @@ class MissionRawServerService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestSubscribeClearAll(::grpc::ServerContext* context, ::mavsdk::rpc::mission_raw_server::SubscribeClearAllRequest* request, ::grpc::ServerAsyncWriter< ::mavsdk::rpc::mission_raw_server::ClearAllResponse>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncServerStreaming(3, context, request, writer, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncServerStreaming(4, context, request, writer, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_SubscribeIncomingMission<WithAsyncMethod_SubscribeCurrentItemChanged<WithAsyncMethod_SetCurrentItemComplete<WithAsyncMethod_SubscribeClearAll<Service > > > > AsyncService;
+  typedef WithAsyncMethod_SetMissionType<WithAsyncMethod_SubscribeIncomingMission<WithAsyncMethod_SubscribeCurrentItemChanged<WithAsyncMethod_SetCurrentItemComplete<WithAsyncMethod_SubscribeClearAll<Service > > > > > AsyncService;
+  template <class BaseClass>
+  class WithCallbackMethod_SetMissionType : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_SetMissionType() {
+      ::grpc::Service::MarkMethodCallback(0,
+          new ::grpc::internal::CallbackUnaryHandler< ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest, ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest* request, ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse* response) { return this->SetMissionType(context, request, response); }));}
+    void SetMessageAllocatorFor_SetMissionType(
+        ::grpc::MessageAllocator< ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest, ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(0);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest, ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_SetMissionType() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetMissionType(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest* /*request*/, ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* SetMissionType(
+      ::grpc::CallbackServerContext* /*context*/, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest* /*request*/, ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse* /*response*/)  { return nullptr; }
+  };
   template <class BaseClass>
   class WithCallbackMethod_SubscribeIncomingMission : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_SubscribeIncomingMission() {
-      ::grpc::Service::MarkMethodCallback(0,
+      ::grpc::Service::MarkMethodCallback(1,
           new ::grpc::internal::CallbackServerStreamingHandler< ::mavsdk::rpc::mission_raw_server::SubscribeIncomingMissionRequest, ::mavsdk::rpc::mission_raw_server::IncomingMissionResponse>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::mavsdk::rpc::mission_raw_server::SubscribeIncomingMissionRequest* request) { return this->SubscribeIncomingMission(context, request); }));
@@ -314,7 +394,7 @@ class MissionRawServerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_SubscribeCurrentItemChanged() {
-      ::grpc::Service::MarkMethodCallback(1,
+      ::grpc::Service::MarkMethodCallback(2,
           new ::grpc::internal::CallbackServerStreamingHandler< ::mavsdk::rpc::mission_raw_server::SubscribeCurrentItemChangedRequest, ::mavsdk::rpc::mission_raw_server::CurrentItemChangedResponse>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::mavsdk::rpc::mission_raw_server::SubscribeCurrentItemChangedRequest* request) { return this->SubscribeCurrentItemChanged(context, request); }));
@@ -336,13 +416,13 @@ class MissionRawServerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_SetCurrentItemComplete() {
-      ::grpc::Service::MarkMethodCallback(2,
+      ::grpc::Service::MarkMethodCallback(3,
           new ::grpc::internal::CallbackUnaryHandler< ::mavsdk::rpc::mission_raw_server::SetCurrentItemCompleteRequest, ::mavsdk::rpc::mission_raw_server::SetCurrentItemCompleteResponse>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::mavsdk::rpc::mission_raw_server::SetCurrentItemCompleteRequest* request, ::mavsdk::rpc::mission_raw_server::SetCurrentItemCompleteResponse* response) { return this->SetCurrentItemComplete(context, request, response); }));}
     void SetMessageAllocatorFor_SetCurrentItemComplete(
         ::grpc::MessageAllocator< ::mavsdk::rpc::mission_raw_server::SetCurrentItemCompleteRequest, ::mavsdk::rpc::mission_raw_server::SetCurrentItemCompleteResponse>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(2);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(3);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::mavsdk::rpc::mission_raw_server::SetCurrentItemCompleteRequest, ::mavsdk::rpc::mission_raw_server::SetCurrentItemCompleteResponse>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -363,7 +443,7 @@ class MissionRawServerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_SubscribeClearAll() {
-      ::grpc::Service::MarkMethodCallback(3,
+      ::grpc::Service::MarkMethodCallback(4,
           new ::grpc::internal::CallbackServerStreamingHandler< ::mavsdk::rpc::mission_raw_server::SubscribeClearAllRequest, ::mavsdk::rpc::mission_raw_server::ClearAllResponse>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::mavsdk::rpc::mission_raw_server::SubscribeClearAllRequest* request) { return this->SubscribeClearAll(context, request); }));
@@ -379,15 +459,32 @@ class MissionRawServerService final {
     virtual ::grpc::ServerWriteReactor< ::mavsdk::rpc::mission_raw_server::ClearAllResponse>* SubscribeClearAll(
       ::grpc::CallbackServerContext* /*context*/, const ::mavsdk::rpc::mission_raw_server::SubscribeClearAllRequest* /*request*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_SubscribeIncomingMission<WithCallbackMethod_SubscribeCurrentItemChanged<WithCallbackMethod_SetCurrentItemComplete<WithCallbackMethod_SubscribeClearAll<Service > > > > CallbackService;
+  typedef WithCallbackMethod_SetMissionType<WithCallbackMethod_SubscribeIncomingMission<WithCallbackMethod_SubscribeCurrentItemChanged<WithCallbackMethod_SetCurrentItemComplete<WithCallbackMethod_SubscribeClearAll<Service > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
+  template <class BaseClass>
+  class WithGenericMethod_SetMissionType : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_SetMissionType() {
+      ::grpc::Service::MarkMethodGeneric(0);
+    }
+    ~WithGenericMethod_SetMissionType() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetMissionType(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest* /*request*/, ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
   template <class BaseClass>
   class WithGenericMethod_SubscribeIncomingMission : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_SubscribeIncomingMission() {
-      ::grpc::Service::MarkMethodGeneric(0);
+      ::grpc::Service::MarkMethodGeneric(1);
     }
     ~WithGenericMethod_SubscribeIncomingMission() override {
       BaseClassMustBeDerivedFromService(this);
@@ -404,7 +501,7 @@ class MissionRawServerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_SubscribeCurrentItemChanged() {
-      ::grpc::Service::MarkMethodGeneric(1);
+      ::grpc::Service::MarkMethodGeneric(2);
     }
     ~WithGenericMethod_SubscribeCurrentItemChanged() override {
       BaseClassMustBeDerivedFromService(this);
@@ -421,7 +518,7 @@ class MissionRawServerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_SetCurrentItemComplete() {
-      ::grpc::Service::MarkMethodGeneric(2);
+      ::grpc::Service::MarkMethodGeneric(3);
     }
     ~WithGenericMethod_SetCurrentItemComplete() override {
       BaseClassMustBeDerivedFromService(this);
@@ -438,7 +535,7 @@ class MissionRawServerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_SubscribeClearAll() {
-      ::grpc::Service::MarkMethodGeneric(3);
+      ::grpc::Service::MarkMethodGeneric(4);
     }
     ~WithGenericMethod_SubscribeClearAll() override {
       BaseClassMustBeDerivedFromService(this);
@@ -450,12 +547,32 @@ class MissionRawServerService final {
     }
   };
   template <class BaseClass>
+  class WithRawMethod_SetMissionType : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_SetMissionType() {
+      ::grpc::Service::MarkMethodRaw(0);
+    }
+    ~WithRawMethod_SetMissionType() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetMissionType(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest* /*request*/, ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSetMissionType(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithRawMethod_SubscribeIncomingMission : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_SubscribeIncomingMission() {
-      ::grpc::Service::MarkMethodRaw(0);
+      ::grpc::Service::MarkMethodRaw(1);
     }
     ~WithRawMethod_SubscribeIncomingMission() override {
       BaseClassMustBeDerivedFromService(this);
@@ -466,7 +583,7 @@ class MissionRawServerService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestSubscribeIncomingMission(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncWriter< ::grpc::ByteBuffer>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncServerStreaming(0, context, request, writer, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncServerStreaming(1, context, request, writer, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -475,7 +592,7 @@ class MissionRawServerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_SubscribeCurrentItemChanged() {
-      ::grpc::Service::MarkMethodRaw(1);
+      ::grpc::Service::MarkMethodRaw(2);
     }
     ~WithRawMethod_SubscribeCurrentItemChanged() override {
       BaseClassMustBeDerivedFromService(this);
@@ -486,7 +603,7 @@ class MissionRawServerService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestSubscribeCurrentItemChanged(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncWriter< ::grpc::ByteBuffer>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncServerStreaming(1, context, request, writer, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncServerStreaming(2, context, request, writer, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -495,7 +612,7 @@ class MissionRawServerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_SetCurrentItemComplete() {
-      ::grpc::Service::MarkMethodRaw(2);
+      ::grpc::Service::MarkMethodRaw(3);
     }
     ~WithRawMethod_SetCurrentItemComplete() override {
       BaseClassMustBeDerivedFromService(this);
@@ -506,7 +623,7 @@ class MissionRawServerService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestSetCurrentItemComplete(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -515,7 +632,7 @@ class MissionRawServerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_SubscribeClearAll() {
-      ::grpc::Service::MarkMethodRaw(3);
+      ::grpc::Service::MarkMethodRaw(4);
     }
     ~WithRawMethod_SubscribeClearAll() override {
       BaseClassMustBeDerivedFromService(this);
@@ -526,8 +643,30 @@ class MissionRawServerService final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestSubscribeClearAll(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncWriter< ::grpc::ByteBuffer>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncServerStreaming(3, context, request, writer, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncServerStreaming(4, context, request, writer, new_call_cq, notification_cq, tag);
     }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_SetMissionType : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_SetMissionType() {
+      ::grpc::Service::MarkMethodRawCallback(0,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->SetMissionType(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_SetMissionType() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetMissionType(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest* /*request*/, ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* SetMissionType(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
   class WithRawCallbackMethod_SubscribeIncomingMission : public BaseClass {
@@ -535,7 +674,7 @@ class MissionRawServerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_SubscribeIncomingMission() {
-      ::grpc::Service::MarkMethodRawCallback(0,
+      ::grpc::Service::MarkMethodRawCallback(1,
           new ::grpc::internal::CallbackServerStreamingHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const::grpc::ByteBuffer* request) { return this->SubscribeIncomingMission(context, request); }));
@@ -557,7 +696,7 @@ class MissionRawServerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_SubscribeCurrentItemChanged() {
-      ::grpc::Service::MarkMethodRawCallback(1,
+      ::grpc::Service::MarkMethodRawCallback(2,
           new ::grpc::internal::CallbackServerStreamingHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const::grpc::ByteBuffer* request) { return this->SubscribeCurrentItemChanged(context, request); }));
@@ -579,7 +718,7 @@ class MissionRawServerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_SetCurrentItemComplete() {
-      ::grpc::Service::MarkMethodRawCallback(2,
+      ::grpc::Service::MarkMethodRawCallback(3,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->SetCurrentItemComplete(context, request, response); }));
@@ -601,7 +740,7 @@ class MissionRawServerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_SubscribeClearAll() {
-      ::grpc::Service::MarkMethodRawCallback(3,
+      ::grpc::Service::MarkMethodRawCallback(4,
           new ::grpc::internal::CallbackServerStreamingHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const::grpc::ByteBuffer* request) { return this->SubscribeClearAll(context, request); }));
@@ -618,12 +757,39 @@ class MissionRawServerService final {
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithStreamedUnaryMethod_SetMissionType : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_SetMissionType() {
+      ::grpc::Service::MarkMethodStreamed(0,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest, ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest, ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse>* streamer) {
+                       return this->StreamedSetMissionType(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_SetMissionType() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status SetMissionType(::grpc::ServerContext* /*context*/, const ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest* /*request*/, ::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedSetMissionType(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::mavsdk::rpc::mission_raw_server::SetMissionTypeRequest,::mavsdk::rpc::mission_raw_server::SetMissionTypeResponse>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
   class WithStreamedUnaryMethod_SetCurrentItemComplete : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_SetCurrentItemComplete() {
-      ::grpc::Service::MarkMethodStreamed(2,
+      ::grpc::Service::MarkMethodStreamed(3,
         new ::grpc::internal::StreamedUnaryHandler<
           ::mavsdk::rpc::mission_raw_server::SetCurrentItemCompleteRequest, ::mavsdk::rpc::mission_raw_server::SetCurrentItemCompleteResponse>(
             [this](::grpc::ServerContext* context,
@@ -644,14 +810,14 @@ class MissionRawServerService final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedSetCurrentItemComplete(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::mavsdk::rpc::mission_raw_server::SetCurrentItemCompleteRequest,::mavsdk::rpc::mission_raw_server::SetCurrentItemCompleteResponse>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_SetCurrentItemComplete<Service > StreamedUnaryService;
+  typedef WithStreamedUnaryMethod_SetMissionType<WithStreamedUnaryMethod_SetCurrentItemComplete<Service > > StreamedUnaryService;
   template <class BaseClass>
   class WithSplitStreamingMethod_SubscribeIncomingMission : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithSplitStreamingMethod_SubscribeIncomingMission() {
-      ::grpc::Service::MarkMethodStreamed(0,
+      ::grpc::Service::MarkMethodStreamed(1,
         new ::grpc::internal::SplitServerStreamingHandler<
           ::mavsdk::rpc::mission_raw_server::SubscribeIncomingMissionRequest, ::mavsdk::rpc::mission_raw_server::IncomingMissionResponse>(
             [this](::grpc::ServerContext* context,
@@ -678,7 +844,7 @@ class MissionRawServerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithSplitStreamingMethod_SubscribeCurrentItemChanged() {
-      ::grpc::Service::MarkMethodStreamed(1,
+      ::grpc::Service::MarkMethodStreamed(2,
         new ::grpc::internal::SplitServerStreamingHandler<
           ::mavsdk::rpc::mission_raw_server::SubscribeCurrentItemChangedRequest, ::mavsdk::rpc::mission_raw_server::CurrentItemChangedResponse>(
             [this](::grpc::ServerContext* context,
@@ -705,7 +871,7 @@ class MissionRawServerService final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithSplitStreamingMethod_SubscribeClearAll() {
-      ::grpc::Service::MarkMethodStreamed(3,
+      ::grpc::Service::MarkMethodStreamed(4,
         new ::grpc::internal::SplitServerStreamingHandler<
           ::mavsdk::rpc::mission_raw_server::SubscribeClearAllRequest, ::mavsdk::rpc::mission_raw_server::ClearAllResponse>(
             [this](::grpc::ServerContext* context,
@@ -727,7 +893,7 @@ class MissionRawServerService final {
     virtual ::grpc::Status StreamedSubscribeClearAll(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::mavsdk::rpc::mission_raw_server::SubscribeClearAllRequest,::mavsdk::rpc::mission_raw_server::ClearAllResponse>* server_split_streamer) = 0;
   };
   typedef WithSplitStreamingMethod_SubscribeIncomingMission<WithSplitStreamingMethod_SubscribeCurrentItemChanged<WithSplitStreamingMethod_SubscribeClearAll<Service > > > SplitStreamedService;
-  typedef WithSplitStreamingMethod_SubscribeIncomingMission<WithSplitStreamingMethod_SubscribeCurrentItemChanged<WithStreamedUnaryMethod_SetCurrentItemComplete<WithSplitStreamingMethod_SubscribeClearAll<Service > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_SetMissionType<WithSplitStreamingMethod_SubscribeIncomingMission<WithSplitStreamingMethod_SubscribeCurrentItemChanged<WithStreamedUnaryMethod_SetCurrentItemComplete<WithSplitStreamingMethod_SubscribeClearAll<Service > > > > > StreamedService;
 };
 
 }  // namespace mission_raw_server
