@@ -50,6 +50,16 @@ ParamServer::AllParams ParamServer::retrieve_all_params() const
     return _impl->retrieve_all_params();
 }
 
+void ParamServer::subscribe_param_int_changed(ParamIntChangedCallback callback)
+{
+    _impl->subscribe_param_int_changed(callback);
+}
+
+void ParamServer::subscribe_param_float_changed(ParamFloatChangedCallback callback)
+{
+    _impl->subscribe_param_float_changed(callback);
+}
+
 bool operator==(const ParamServer::IntParam& lhs, const ParamServer::IntParam& rhs)
 {
     return (rhs.name == lhs.name) && (rhs.value == lhs.value);

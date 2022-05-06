@@ -202,6 +202,28 @@ public:
     ParamServer::AllParams retrieve_all_params() const;
 
     /**
+     * @brief Callback type for subscribe_param_int_changed.
+     */
+
+    using ParamIntChangedCallback = std::function<void(IntParam)>;
+
+    /**
+     * @brief Register callback to know when QGroundControl changed parameter
+     */
+    void subscribe_param_int_changed(ParamIntChangedCallback callback);
+
+    /**
+     * @brief Callback type for subscribe_param_float_changed.
+     */
+
+    using ParamFloatChangedCallback = std::function<void(FloatParam)>;
+
+    /**
+     * @brief Register callback to know when QGroundControl changed parameter
+     */
+    void subscribe_param_float_changed(ParamFloatChangedCallback callback);
+
+    /**
      * @brief Copy constructor.
      */
     ParamServer(const ParamServer& other);

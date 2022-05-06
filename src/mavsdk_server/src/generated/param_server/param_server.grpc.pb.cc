@@ -29,6 +29,8 @@ static const char* ParamServerService_method_names[] = {
   "/mavsdk.rpc.param_server.ParamServerService/RetrieveParamFloat",
   "/mavsdk.rpc.param_server.ParamServerService/ProvideParamFloat",
   "/mavsdk.rpc.param_server.ParamServerService/RetrieveAllParams",
+  "/mavsdk.rpc.param_server.ParamServerService/SubscribeParamIntChanged",
+  "/mavsdk.rpc.param_server.ParamServerService/SubscribeParamFloatChanged",
 };
 
 std::unique_ptr< ParamServerService::Stub> ParamServerService::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -43,6 +45,8 @@ ParamServerService::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>&
   , rpcmethod_RetrieveParamFloat_(ParamServerService_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_ProvideParamFloat_(ParamServerService_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_RetrieveAllParams_(ParamServerService_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_SubscribeParamIntChanged_(ParamServerService_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
+  , rpcmethod_SubscribeParamFloatChanged_(ParamServerService_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   {}
 
 ::grpc::Status ParamServerService::Stub::RetrieveParamInt(::grpc::ClientContext* context, const ::mavsdk::rpc::param_server::RetrieveParamIntRequest& request, ::mavsdk::rpc::param_server::RetrieveParamIntResponse* response) {
@@ -160,6 +164,38 @@ void ParamServerService::Stub::async::RetrieveAllParams(::grpc::ClientContext* c
   return result;
 }
 
+::grpc::ClientReader< ::mavsdk::rpc::param_server::SubscribeParamIntChangedResponse>* ParamServerService::Stub::SubscribeParamIntChangedRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::param_server::SubscribeParamIntChangedRequest& request) {
+  return ::grpc::internal::ClientReaderFactory< ::mavsdk::rpc::param_server::SubscribeParamIntChangedResponse>::Create(channel_.get(), rpcmethod_SubscribeParamIntChanged_, context, request);
+}
+
+void ParamServerService::Stub::async::SubscribeParamIntChanged(::grpc::ClientContext* context, const ::mavsdk::rpc::param_server::SubscribeParamIntChangedRequest* request, ::grpc::ClientReadReactor< ::mavsdk::rpc::param_server::SubscribeParamIntChangedResponse>* reactor) {
+  ::grpc::internal::ClientCallbackReaderFactory< ::mavsdk::rpc::param_server::SubscribeParamIntChangedResponse>::Create(stub_->channel_.get(), stub_->rpcmethod_SubscribeParamIntChanged_, context, request, reactor);
+}
+
+::grpc::ClientAsyncReader< ::mavsdk::rpc::param_server::SubscribeParamIntChangedResponse>* ParamServerService::Stub::AsyncSubscribeParamIntChangedRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::param_server::SubscribeParamIntChangedRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::mavsdk::rpc::param_server::SubscribeParamIntChangedResponse>::Create(channel_.get(), cq, rpcmethod_SubscribeParamIntChanged_, context, request, true, tag);
+}
+
+::grpc::ClientAsyncReader< ::mavsdk::rpc::param_server::SubscribeParamIntChangedResponse>* ParamServerService::Stub::PrepareAsyncSubscribeParamIntChangedRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::param_server::SubscribeParamIntChangedRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::mavsdk::rpc::param_server::SubscribeParamIntChangedResponse>::Create(channel_.get(), cq, rpcmethod_SubscribeParamIntChanged_, context, request, false, nullptr);
+}
+
+::grpc::ClientReader< ::mavsdk::rpc::param_server::SubscribeParamFloatChangedResponse>* ParamServerService::Stub::SubscribeParamFloatChangedRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::param_server::SubscribeParamFloatChangedRequest& request) {
+  return ::grpc::internal::ClientReaderFactory< ::mavsdk::rpc::param_server::SubscribeParamFloatChangedResponse>::Create(channel_.get(), rpcmethod_SubscribeParamFloatChanged_, context, request);
+}
+
+void ParamServerService::Stub::async::SubscribeParamFloatChanged(::grpc::ClientContext* context, const ::mavsdk::rpc::param_server::SubscribeParamFloatChangedRequest* request, ::grpc::ClientReadReactor< ::mavsdk::rpc::param_server::SubscribeParamFloatChangedResponse>* reactor) {
+  ::grpc::internal::ClientCallbackReaderFactory< ::mavsdk::rpc::param_server::SubscribeParamFloatChangedResponse>::Create(stub_->channel_.get(), stub_->rpcmethod_SubscribeParamFloatChanged_, context, request, reactor);
+}
+
+::grpc::ClientAsyncReader< ::mavsdk::rpc::param_server::SubscribeParamFloatChangedResponse>* ParamServerService::Stub::AsyncSubscribeParamFloatChangedRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::param_server::SubscribeParamFloatChangedRequest& request, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::mavsdk::rpc::param_server::SubscribeParamFloatChangedResponse>::Create(channel_.get(), cq, rpcmethod_SubscribeParamFloatChanged_, context, request, true, tag);
+}
+
+::grpc::ClientAsyncReader< ::mavsdk::rpc::param_server::SubscribeParamFloatChangedResponse>* ParamServerService::Stub::PrepareAsyncSubscribeParamFloatChangedRaw(::grpc::ClientContext* context, const ::mavsdk::rpc::param_server::SubscribeParamFloatChangedRequest& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::mavsdk::rpc::param_server::SubscribeParamFloatChangedResponse>::Create(channel_.get(), cq, rpcmethod_SubscribeParamFloatChanged_, context, request, false, nullptr);
+}
+
 ParamServerService::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       ParamServerService_method_names[0],
@@ -211,6 +247,26 @@ ParamServerService::Service::Service() {
              ::mavsdk::rpc::param_server::RetrieveAllParamsResponse* resp) {
                return service->RetrieveAllParams(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      ParamServerService_method_names[5],
+      ::grpc::internal::RpcMethod::SERVER_STREAMING,
+      new ::grpc::internal::ServerStreamingHandler< ParamServerService::Service, ::mavsdk::rpc::param_server::SubscribeParamIntChangedRequest, ::mavsdk::rpc::param_server::SubscribeParamIntChangedResponse>(
+          [](ParamServerService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::mavsdk::rpc::param_server::SubscribeParamIntChangedRequest* req,
+             ::grpc::ServerWriter<::mavsdk::rpc::param_server::SubscribeParamIntChangedResponse>* writer) {
+               return service->SubscribeParamIntChanged(ctx, req, writer);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      ParamServerService_method_names[6],
+      ::grpc::internal::RpcMethod::SERVER_STREAMING,
+      new ::grpc::internal::ServerStreamingHandler< ParamServerService::Service, ::mavsdk::rpc::param_server::SubscribeParamFloatChangedRequest, ::mavsdk::rpc::param_server::SubscribeParamFloatChangedResponse>(
+          [](ParamServerService::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::mavsdk::rpc::param_server::SubscribeParamFloatChangedRequest* req,
+             ::grpc::ServerWriter<::mavsdk::rpc::param_server::SubscribeParamFloatChangedResponse>* writer) {
+               return service->SubscribeParamFloatChanged(ctx, req, writer);
+             }, this)));
 }
 
 ParamServerService::Service::~Service() {
@@ -248,6 +304,20 @@ ParamServerService::Service::~Service() {
   (void) context;
   (void) request;
   (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status ParamServerService::Service::SubscribeParamIntChanged(::grpc::ServerContext* context, const ::mavsdk::rpc::param_server::SubscribeParamIntChangedRequest* request, ::grpc::ServerWriter< ::mavsdk::rpc::param_server::SubscribeParamIntChangedResponse>* writer) {
+  (void) context;
+  (void) request;
+  (void) writer;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status ParamServerService::Service::SubscribeParamFloatChanged(::grpc::ServerContext* context, const ::mavsdk::rpc::param_server::SubscribeParamFloatChangedRequest* request, ::grpc::ServerWriter< ::mavsdk::rpc::param_server::SubscribeParamFloatChangedResponse>* writer) {
+  (void) context;
+  (void) request;
+  (void) writer;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 

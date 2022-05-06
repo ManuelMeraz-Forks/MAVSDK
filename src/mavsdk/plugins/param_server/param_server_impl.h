@@ -29,7 +29,15 @@ public:
 
     ParamServer::Result result_from_mavlink_parameters_result(MAVLinkParameters::Result result);
 
+    void subscribe_param_int_changed(ParamServer::ParamIntChangedCallback callback);
+    void subscribe_param_float_changed(ParamServer::ParamFloatChangedCallback callback);
+
 private:
+    void register_param_int(const std::string &name);
+    void register_param_float(const std::string &name);
+
+    ParamServer::ParamIntChangedCallback _param_int_changed_callback = [](const ParamServer::IntParam&) { /* noop */ };
+    ParamServer::ParamFloatChangedCallback _param_float_changed_callback = [](const ParamServer::FloatParam&) { /* noop */ };
 };
 
 } // namespace mavsdk
