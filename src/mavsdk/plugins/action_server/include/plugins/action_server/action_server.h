@@ -255,6 +255,15 @@ public:
     Result set_allow_takeoff(bool allow_takeoff) const;
 
     /**
+     * @brief Can the vehicle land
+     *
+     * This function is blocking.
+     *
+     * @return Result of request.
+     */
+    Result set_allow_land(bool allow_takeoff) const;
+
+    /**
      * @brief Can the vehicle arm when requested
      *
      * This function is blocking.

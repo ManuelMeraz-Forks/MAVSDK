@@ -65,6 +65,11 @@ ActionServer::Result ActionServer::set_allow_takeoff(bool allow_takeoff) const
     return _impl->set_allow_takeoff(allow_takeoff);
 }
 
+ActionServer::Result ActionServer::set_allow_land(bool allow_land) const
+{
+    return _impl->set_allow_land(allow_land);
+}
+
 ActionServer::Result ActionServer::set_armable(bool armable, bool force_armable) const
 {
     return _impl->set_armable(armable, force_armable);

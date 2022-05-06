@@ -118,6 +118,29 @@ void ActionServerImpl::init()
         },
         this);
 
+    _parent->register_mavlink_command_handler(
+        MAV_CMD_NAV_LAND,
+        [this](const MavlinkCommandReceiver::CommandLong& command) {
+            if (_allow_land) {
+                if (_land_callback) {
+                    _parent->call_user_callback(
+                        [this]() { _land_callback(ActionServer::Result::Success, true); });
+                }
+
+                return _parent->make_command_ack_message(command, MAV_RESULT::MAV_RESULT_ACCEPTED);
+            } else {
+                if (_land_callback) {
+                    _parent->call_user_callback([this]() {
+                        _land_callback(ActionServer::Result::CommandDenied, false);
+                    });
+                }
+
+                return _parent->make_command_ack_message(
+                    command, MAV_RESULT::MAV_RESULT_UNSUPPORTED);
+            }
+        },
+        this);
+
     // Flight mode
     _parent->register_mavlink_command_handler(
         MAV_CMD_DO_SET_MODE,
@@ -222,7 +245,8 @@ void ActionServerImpl::subscribe_takeoff(ActionServer::TakeoffCallback callback)
 
 void ActionServerImpl::subscribe_land(ActionServer::LandCallback callback)
 {
-    UNUSED(callback);
+    std::lock_guard<std::mutex> lock(_callback_mutex);
+    _land_callback = callback;
 }
 
 void ActionServerImpl::subscribe_reboot(ActionServer::RebootCallback callback)
@@ -243,6 +267,12 @@ void ActionServerImpl::subscribe_terminate(ActionServer::TerminateCallback callb
 ActionServer::Result ActionServerImpl::set_allow_takeoff(bool allow_takeoff)
 {
     _allow_takeoff = allow_takeoff;
+    return ActionServer::Result::Success;
+}
+
+ActionServer::Result ActionServerImpl::set_allow_land(bool allow_land)
+{
+    _allow_land = allow_land;
     return ActionServer::Result::Success;
 }
 
