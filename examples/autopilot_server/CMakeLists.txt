@@ -8,6 +8,10 @@ project(autopilot_server)
 add_executable(autopilot_server
     autopilot_server.cpp
 )
+add_executable(autopilot_only
+        autopilot_only.cpp
+        )
+
 
 find_package(MAVSDK REQUIRED)
 find_package(Threads REQUIRED)
@@ -17,8 +21,13 @@ target_link_libraries(autopilot_server
     Threads::Threads
 )
 
+target_link_libraries(autopilot_only
+        MAVSDK::mavsdk
+        )
+
 if(NOT MSVC)
     add_compile_options(autopilot_server PRIVATE -Wall -Wextra)
+    add_compile_options(autopilot_only PRIVATE -Wall -Wextra)
 else()
     add_compile_options(autopilot_server PRIVATE -WX -W2)
 endif()
