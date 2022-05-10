@@ -275,6 +275,7 @@ int main(int argc, char** argv)
 
     // Check if vehicle is ready to arm
     while (telemetry.health_all_ok() != true) {
+        std::cout << telemetry.health() << std::endl;
         std::cout << "Vehicle is getting ready to arm" << std::endl;
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }
