@@ -833,7 +833,10 @@ void SystemImpl::subscribe_param_int(
     _params.subscribe_param_changed(
         name,
         value_type,
-        [callback](MAVLinkParameters::ParamValue value) { callback(value.get<int32_t>()); },
+        [callback](MAVLinkParameters::ParamValue value) {
+            LogDebug() << "Callback param value: " << value;
+            callback(value.get<int32_t>());
+        },
         cookie);
 }
 

@@ -19,20 +19,10 @@ ParamServerImpl::~ParamServerImpl()
 
 void ParamServerImpl::init()
 {
-//    const std::map<std::string, MAVLinkParameters::ParamValue> params = _parent->get_all_params();
-//    for (const auto& [param_name, value] : params) {
-//        const bool is_int = value.is<uint8_t>() or value.is<int8_t>() or value.is<uint16_t>() or
-//                            value.is<int16_t>() or value.is<uint32_t>() or value.is<int32_t>() or
-//                            value.is<uint64_t>() or value.is<int64_t>();
-//
-//        const bool is_float = value.is<float>() or value.is<double>();
-//
-//        if (is_float) {
-//            register_param_float(param_name);
-//        } else if (is_int) {
-//            register_param_int(param_name);
-//        }
-//    }
+    //    _parent->register_mavlink_message_handler(
+    //        MAVLINK_MSG_ID_PARAM_SET,
+    //        [this](const mavlink_message_t& message) { process_message_set_param(message); },
+    //        this);
 }
 
 void ParamServerImpl::deinit() {}
@@ -54,16 +44,8 @@ std::pair<ParamServer::Result, int32_t> ParamServerImpl::retrieve_param_int(std:
 
 ParamServer::Result ParamServerImpl::provide_param_int(std::string name, int32_t value)
 {
-//    auto [current_value_result, current_value] = retrieve_param_int(name);
     _parent->provide_server_param_int(name, value);
-//    auto [new_value_result, new_value] = retrieve_param_int(name);
-//
-//    const bool is_param_registered = current_value_result == ParamServer::Result::Success and
-//                                     new_value_result == ParamServer::Result::Success;
-//    if (not is_param_registered) {
-//        register_param_int(name);
-//    }
-
+    register_param_int(name);
     return ParamServer::Result::Success;
 }
 
@@ -75,21 +57,12 @@ std::pair<ParamServer::Result, float> ParamServerImpl::retrieve_param_float(std:
         return {ParamServer::Result::Success, result.second};
     }
     return {ParamServer::Result::NotFound, NAN};
-
 }
 
 ParamServer::Result ParamServerImpl::provide_param_float(std::string name, float value)
 {
-//    auto [current_value_result, current_value] = retrieve_param_float(name);
     _parent->provide_server_param_float(name, value);
-//    auto [new_value_result, new_value] = retrieve_param_float(name);
-
-//    const bool is_param_registered = current_value_result == ParamServer::Result::Success and
-//                                     new_value_result == ParamServer::Result::Success;
-//    if (not is_param_registered) {
-//        register_param_float(name);
-//    }
-
+    register_param_float(name);
     return ParamServer::Result::Success;
 }
 
@@ -147,9 +120,22 @@ void ParamServerImpl::register_param_int(const std::string& name)
 {
     _parent->subscribe_param_int(
         name,
-        [this, &name](int new_value) {
-            _param_int_changed_callback(
-                ParamServer::IntParam{.name = name, .value = new_value});
+        [this, name](int32_t new_value) {
+            LogDebug() << "Param Server Int: " << new_value;
+            auto p = ParamServer::IntParam{.name = name, .value = new_value};
+            LogDebug() << "Construct Param Server Int: " << p;
+
+            LogDebug() << "Done copying";
+            _parent->call_user_callback([this, p] {
+              LogDebug() << "Check param int changed callback";
+              if (_param_int_changed_callback) {
+                    LogDebug() << "Scheduled Param Int: " << p;
+                    // TODO(manny): Figure out why this callback segfaults.
+                    // _param_int_changed_callback(p);
+                }
+            });
+
+            LogDebug() << "Done Param callback";
         },
         this);
 }
@@ -158,10 +144,53 @@ void ParamServerImpl::register_param_float(const std::string& name)
 {
     _parent->subscribe_param_float(
         name,
-        [this, &name](float new_value) {
+        [this, name](float new_value) {
             _param_float_changed_callback(
                 ParamServer::FloatParam{.name = name, .value = new_value});
         },
         this);
+}
+
+void ParamServerImpl::process_message_set_param(const mavlink_message_t& message)
+{
+    mavlink_param_set_t param_set;
+    mavlink_msg_param_set_decode(&message, &param_set);
+
+    switch (static_cast<MAV_PARAM_TYPE>(param_set.param_type)) {
+        case MAV_PARAM_TYPE_UINT8:
+        case MAV_PARAM_TYPE_INT8:
+        case MAV_PARAM_TYPE_UINT16:
+        case MAV_PARAM_TYPE_INT16:
+        case MAV_PARAM_TYPE_UINT32:
+        case MAV_PARAM_TYPE_INT32:
+        case MAV_PARAM_TYPE_UINT64:
+        case MAV_PARAM_TYPE_INT64:
+            _parent->provide_server_param_int(
+                param_set.param_id, static_cast<int>(param_set.param_value));
+            break;
+        case MAV_PARAM_TYPE_REAL32:
+        case MAV_PARAM_TYPE_REAL64:
+            _parent->provide_server_param_float(param_set.param_id, param_set.param_value);
+            break;
+        case MAV_PARAM_TYPE_ENUM_END:
+            return;
+    }
+
+    auto all_params = _parent->get_all_params();
+    auto param_count = all_params.size();
+    auto param_index = param_count - 1;
+
+    mavlink_message_t ack;
+    mavlink_msg_param_value_pack(
+        _parent->get_own_system_id(),
+        _parent->get_own_component_id(),
+        &ack,
+        param_set.param_id,
+        param_set.param_value,
+        param_set.param_type,
+        param_count,
+        param_index);
+
+    _parent->send_message(ack);
 }
 } // namespace mavsdk

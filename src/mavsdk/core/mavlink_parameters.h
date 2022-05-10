@@ -246,7 +246,7 @@ private:
 
     void notify_param_subscriptions(const mavlink_param_value_t& param_value);
 
-    static std::string extract_safe_param_id(const char param_id[]);
+    inline static std::string extract_safe_param_id(const char param_id[]);
 
     SystemImpl& _parent;
 

@@ -1178,13 +1178,12 @@ void MAVLinkParameters::receive_timeout()
     }
 }
 
-std::string MAVLinkParameters::extract_safe_param_id(const char param_id[])
+std::string MAVLinkParameters::extract_safe_param_id(const char param_id[PARAM_ID_LEN])
 {
-    // The param_id field of the MAVLink struct has length 16 and is not 0 terminated.
-    // Therefore, we make a 0 terminated copy first.
-    char param_id_long_enough[PARAM_ID_LEN + 1] = {};
-    std::memcpy(param_id_long_enough, param_id, PARAM_ID_LEN);
-    return {param_id_long_enough};
+    std::string param_id_long_enough(param_id);
+    std::copy(param_id, param_id + param_id_long_enough.size(), std::begin(param_id_long_enough));
+
+    return param_id_long_enough;
 }
 
 std::ostream& operator<<(std::ostream& strm, const MAVLinkParameters::ParamValue& obj)
@@ -1200,16 +1199,25 @@ void MAVLinkParameters::process_param_set(const mavlink_message_t& message)
 
     std::string safe_param_id = extract_safe_param_id(set_request.param_id);
     if (!safe_param_id.empty()) {
-        LogDebug() << "Set Param Request: " << safe_param_id;
+        LogDebug() << "Set Param Request: " << safe_param_id << " size: " << safe_param_id.size();
 
         // Use the ID
+        LogDebug() << "Print Params";
+        for (auto& [k,v]: _all_params)
+        {
+            LogDebug() << "Key: " << k << " Key Size: " << k.size() <<  " Value: " << v;
+        }
+
         if (_all_params.find(safe_param_id) != _all_params.end()) {
+            LogWarn() << "0";
             ParamValue value{};
             if (!value.set_from_mavlink_param_set_bytewise(set_request)) {
                 LogWarn() << "Invalid Param Set Request: " << safe_param_id;
                 return;
             }
+            LogWarn() << "1";
             _all_params[safe_param_id] = value;
+            LogWarn() << "2";
 
             auto new_work = std::make_shared<WorkItem>(_parent.timeout_s());
             new_work->type = WorkItem::Type::Value;
@@ -1217,17 +1225,25 @@ void MAVLinkParameters::process_param_set(const mavlink_message_t& message)
             new_work->param_value = _all_params.at(safe_param_id);
             new_work->extended = false;
             _work_queue.push_back(new_work);
+            LogWarn() << "3";
             std::lock_guard<std::mutex> lock(_param_changed_subscriptions_mutex);
+            LogWarn() << "4";
+
             for (const auto& subscription : _param_changed_subscriptions) {
+                LogWarn() << "check name id";
                 if (subscription.param_name != safe_param_id) {
                     continue;
                 }
+
+                LogWarn() << "Check if types match";
                 if (!subscription.any_type && !subscription.value_type.is_same_type(value)) {
                     LogErr() << "Received wrong param type in subscription for "
                              << subscription.param_name;
                     continue;
                 }
+                LogWarn() << "begin callback";
                 subscription.callback(value);
+                LogWarn() << "end callback";
             }
         } else {
             LogDebug() << "Missing Param: " << safe_param_id;

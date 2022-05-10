@@ -35,9 +35,10 @@ public:
 private:
     void register_param_int(const std::string &name);
     void register_param_float(const std::string &name);
+    void process_message_set_param(const mavlink_message_t& message);
 
-    ParamServer::ParamIntChangedCallback _param_int_changed_callback = [](const ParamServer::IntParam&) { /* noop */ };
-    ParamServer::ParamFloatChangedCallback _param_float_changed_callback = [](const ParamServer::FloatParam&) { /* noop */ };
+    ParamServer::ParamIntChangedCallback _param_int_changed_callback;
+    ParamServer::ParamFloatChangedCallback _param_float_changed_callback;
 };
 
 } // namespace mavsdk
