@@ -161,6 +161,7 @@ InfoServerImpl::set_autopilot_version(const InfoServer::AutopilotVersion& autopi
 {
     std::lock_guard<std::mutex> lock(_autopilot_version_mutex);
     _autopilot_version = autopilot_version;
+    _parent->add_capabilities(_autopilot_version.capabilities);
     return InfoServer::Result::Success;
 }
 
