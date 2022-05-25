@@ -18,7 +18,7 @@ find_package(Python3 COMPONENTS Interpreter REQUIRED)
 ExternalProject_add(
     mavlink
     GIT_REPOSITORY https://github.com/mavlink/mavlink
-    GIT_TAG a1cb2c0e71f191f04da3d92d92db8702a7e91ff6
+    GIT_TAG master
     GIT_SHALLOW TRUE
     PREFIX mavlink
     CONFIGURE_COMMAND Python3::Interpreter
